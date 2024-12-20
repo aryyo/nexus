@@ -11,7 +11,7 @@ const Dashboard = () => {
         <p>Overview</p>
       </div>
       <div className="header">
-        <button className="calendar">03 Jan 2023 % 10 Mar 2023</button>
+        <button className="calendar">03 Jan 2023 -{'>'} 10 Mar 2023</button>
         <button className="export">Export</button>
         <button className="add">Add</button>
       </div>
