@@ -1,20 +1,19 @@
 .App {
   height: 100vh;
-  width: 100vw;;
+  width: 100vw;
 }
 
 :root[data-theme="light"] {
-    --text: #04160f;
-    --background: #eefcf7;
-    --primary: #25da8c;
-    --secondary: #ea85c0;
-    --accent: #e5a266;
-  }
-  :root[data-theme="dark"] {
-    --text: #e9fbf4;
-    --background: #03110c;
-    --primary: #25da8c;
-    --secondary: #7a1550;
-    --accent: #99551a;
-  }
-  
+  --text: #04160f;
+  --background: #ffffff;
+  --primary: #25da8c;
+  --secondary: #ea85c0;
+  --accent: #e5a266;
+}
+:root[data-theme="dark"] {
+  --text: #e9fbf4;
+  --background: #161616;
+  --primary: #25da8c;
+  --secondary: #7a1550;
+  --accent: #99551a;
+}

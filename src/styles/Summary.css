@@ -1,10 +1,29 @@
-
 .summary {
-    display: flex;
-    flex-direction: column;
-    flex: 1 1;
-    justify-content: space-around;
-    background-color: white;
-    padding: .5rem;
-    border-radius: 12px;
-  }
+  display: flex;
+  flex-direction: column;
+  flex: 1 1;
+  background-color: white;
+  padding-block: 1rem;
+  padding-inline: 1rem;
+  border-radius: 12px;
+  gap: 1rem;
+  border: 2px solid rgb(226, 226, 226);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.summary-header {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  gap: 0.2rem;
+}
+
+.summary-header h2,
+.summary-row-two p {
+  margin-block: 0;
+}
+
+.summary-header h2 {
+  margin-right: auto;
+}

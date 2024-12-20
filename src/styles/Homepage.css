@@ -1,4 +1,4 @@
-@import url("https://fonts.googleapis.com/css2?family=Gloria+Hallelujah&family=Rethink+Sans:ital,wght@0,400..800;1,400..800&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Gloria+Hallelujah&family=Rethink+Sans:ital,wght@0,600;1,600&family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&family=Source+Sans+3:ital,wght@0,200..900;1,200..900&display=swap");
 
 body {
   margin: 0;
@@ -14,58 +14,4 @@ body {
   display: flex;
   flex-direction: row;
   height: 93vh;
-}
-
-.content {
-  background-color: rgb(221, 227, 224);
-  width: 100%;
-  height: auto;
-  
-}
-
-.overview {
-  background-color: var(--background);
-  width: 100%;
-  height: 3rem;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  border-bottom: 2px solid rgb(226, 226, 226);
-}
-
-.overview p {
-  margin: 0;
-  padding-left: 2rem;
-  font-size: 18px;
-  font-weight: 600;
-}
-
-.header {
-  display: flex;
-  flex-direction: row;
-  padding: 2rem;
-  padding-bottom: 1rem;
-  justify-content: flex-end;
-  gap: 1rem;
-  background-color: var(--background);
-}
-
-.calendar {
-  margin-right: auto;
-}
-
-.data {
-  padding-inline: 2rem;
-  padding-block: 1rem;
-  display: flex;
-  flex-direction: row;
-  gap: 1rem;
-}
-
-.data-cards {
-  display: flex;
-  flex-direction: column;
-  flex: 2 2;
-  justify-content: center;
-  gap: 1rem;
 }

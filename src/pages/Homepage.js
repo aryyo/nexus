@@ -1,10 +1,15 @@
 import React, { useState } from "react";
 import Navbar from "../components/Navbar";
 import Sidebar from "../components/Sidebar";
-import Cards from "../components/Card";
-import Charts from "../components/Charts";
-import Rate from "../components/Rate";
-import Summary from "../components/Summary";
+import Dashboard from "./Dashboard";
+import Orders from "./Orders";
+import Calendar from "./Calendar";
+import Projects from "./Projects";
+import Notifications from "./Notifications";
+import Inventory from "./Inventory";
+import Performance from "./Performance";
+import Settings from "./Settings";
+import Help from "./Help";
 import "../styles/Homepage.css";
 
 const Homepage = () => {
@@ -20,30 +25,36 @@ const Homepage = () => {
     }
   };
 
+  const RenderActiveComponent = () => {
+    switch (activeButton) {
+      case "dashboard":
+        return <Dashboard />;
+      case "orders":
+        return <Orders />;
+      case "calendar":
+        return <Calendar />;
+      case "projects":
+        return <Projects />;
+      case "notifications":
+        return <Notifications />;
+      case "inventory":
+        return <Inventory />;
+      case "performance":
+        return <Performance />;
+      case "settings":
+        return <Settings />;
+      case "help":
+        return <Help />;
+    }
+  };
+
   return (
     <div>
       <Navbar />
+      {/* <button onClick={changeTheme}>Change Theme</button> */}
       <div className="homepage">
         <Sidebar active={activeButton} setActive={setActiveButton} />
-        <div className="content">
-          {/* <button onClick={changeTheme}>Change Theme</button> */}
-          <div className="overview">
-            <p>Overview</p>
-          </div>
-          <div className="header">
-            <button className="calendar">calendar</button>
-            <button className="export">export</button>
-            <button className="add">add</button>
-          </div>
-          <Cards />
-          <div className="data">
-            <Charts />
-            <div className="data-cards">
-              <Rate />
-              <Summary />
-            </div>
-          </div>
-        </div>
+        {RenderActiveComponent()}
       </div>
     </div>
   );

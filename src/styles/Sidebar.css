@@ -4,11 +4,10 @@
   align-items: flex-start;
   gap: 1rem;
   background-color: var(--background);
-  width: 10%;
+  width: 15%;
   padding: 1rem;
   border-right: 2px solid rgb(226, 226, 226);
-
-} 
+}
 
 .general,
 .management,
@@ -43,7 +42,8 @@
   height: auto;
 }
 
-.activeButton, .dormantButton {
+.activeButton,
+.dormantButton {
   display: flex;
   flex-direction: row;
   align-items: center;
@@ -54,10 +54,11 @@
   color: var(--text);
   font-size: 14px;
   font-weight: 400;
+  font-family: "Roboto", serif;
   padding-block: 0.5rem;
   width: 100%;
   gap: 0.5rem;
-  transition: background .3s ease, border-color .3s ease;
+  transition: background 0.3s ease, border-color 0.3s ease;
 }
 
 .activeButton {

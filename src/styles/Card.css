@@ -1,66 +1,67 @@
 .cards {
-    display: flex;
-    flex-direction: row;
-    padding-inline: 2rem;
-    padding-block: 1rem;
-    gap: 1rem ;
-  }
-  
-  .card {
-    display: flex;
-    flex-direction: column;
-    flex: 1 1 calc((100% - 3rem) / 4);
-    justify-content: space-around;
-    background-color: white;
-    padding: .5rem;
-    border-radius: 12px;
-    height: 6rem;
-  }
-  
-  .card img {
-    width: 14px;
-    height: 14px;
-  }
-  
-  .card-row-one {
-    display: flex;
-    flex-direction: row;
-    font-size: 12px;
-    align-items: flex-start;
-    gap: .2rem;
-    padding-inline: .5rem;
-    color: rgb(108, 108, 108);
-  }
-  
-  .card-row-one p, .card-row-two p {
-    margin-block: 0;
-  }
-  
-  .card-row-two {
-    display: flex;
-    flex-direction: row;
-    padding-inline: .5rem;
-    align-items: center;
-    justify-content: flex-end;
-    gap: .2rem;
-  }
-  
-  .count {
-    font-size: 22px;
-    font-weight: 600;
-    margin-right: auto;
-  }
-  
-  .percent {
-    font-size: 12px;
-    font-weight: 600;
-    color: rgb(35, 183, 35);
-  }
-  
-  .date {
-    font-size: 10px;
-    color: rgb(159, 159, 159);
-  }
-  
-  
-  
+  display: flex;
+  flex-direction: row;
+  padding-inline: 2rem;
+  padding-block: 1rem;
+  gap: 1rem;
+}
+
+.card {
+  display: flex;
+  flex-direction: column;
+  flex: 1 1 calc((100% - 3rem) / 4);
+  justify-content: space-around;
+  background-color: white;
+  padding: 0.5rem;
+  border-radius: 12px;
+  height: 6rem;
+  border: 2px solid rgb(226, 226, 226);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.card img {
+  width: 14px;
+  height: 14px;
+}
+
+.card-row-one {
+  display: flex;
+  flex-direction: row;
+  font-size: 12px;
+  align-items: flex-start;
+  gap: 0.2rem;
+  padding-inline: 0.5rem;
+  color: rgb(108, 108, 108);
+}
+
+.card-row-one p,
+.card-row-two p {
+  margin-block: 0;
+  font-weight: 400;
+}
+
+.card-row-two {
+  display: flex;
+  flex-direction: row;
+  padding-inline: 0.5rem;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 0.2rem;
+}
+
+.count {
+  font-size: 22px;
+  font-weight: 600;
+  margin-right: auto;
+}
+
+.percent {
+  font-size: 12px;
+  font-weight: 600;
+  color: rgb(35, 183, 35);
+}
+
+.date {
+  font-size: 10px;
+  color: rgb(159, 159, 159);
+}
