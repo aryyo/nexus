@@ -5,7 +5,7 @@ const Orders = () => {
     {
       name: "Classic Slip-On Checkerboard Shoe",
       orderNumber: "29172736",
-      datePlaced: "01012023",
+      datePlaced: "07012024",
       quantity: "4",
       shippingCost: "2.16",
       tax: "21.59",
@@ -15,7 +15,7 @@ const Orders = () => {
     },
     {
       name: "Era Core Classics Shoe",
-      orderNumber: "84489559",
+      orderNumber: "34489559",
       datePlaced: "05272024",
       quantity: "4",
       shippingCost: "1.38",
@@ -26,7 +26,7 @@ const Orders = () => {
     },
     {
       name: "Sk8-Hi High-Top Shoe",
-      orderNumber: "02494332",
+      orderNumber: "04494332",
       datePlaced: "08222024",
       quantity: "5",
       shippingCost: "1.86",
@@ -37,8 +37,8 @@ const Orders = () => {
     },
     {
       name: "Era Core Classics Shoe",
-      orderNumber: "58435641",
-      datePlaced: "06092023",
+      orderNumber: "8435641",
+      datePlaced: "02092023",
       quantity: "5",
       shippingCost: "5.33",
       tax: "61.94",
@@ -87,13 +87,23 @@ const Orders = () => {
     return `${getMonthName(month)} ${day}, ${year}`;
   };
 
+  const sortedOrderData = orderData.sort((a,b) => {
+    const parseDate = (date) => {
+      const day = date.slice(2,4)
+      const month = date.slice(0,2)
+      const year = date.slice(4)
+      return `${year}-${month}-${day}`
+    }
+    return new Date(parseDate(b.datePlaced)) - new Date(parseDate(a.datePlaced))
+  })
+
   return (
     <div className="orders-content">
       <div className="orders-overview">
         <p>Orders</p>
       </div>
       <div className="orders-data">
-        {orderData.map((order) => {
+        {sortedOrderData.map((order) => {
           return (
             <div className="orders-card" key={order.orderNumber}>
               <div className="product-header">
