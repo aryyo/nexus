@@ -1,144 +1,278 @@
 import "../styles/Orders.css";
 
+const formatName = (name) => {
+  if (name.length > 18) {
+    const clippedName = name.slice(0, 15);
+    return `${clippedName}...`;
+  } else {
+    return name;
+  }
+};
+
+const formatDate = (date) => {
+  const month = date.slice(5, 7);
+  const day = date.slice(8, 10);
+  switch (month) {
+    case "01":
+      return `Jan ${day}`;
+    case "02":
+      return `Feb ${day}`;
+    case "03":
+      return `Mar ${day}`;
+    case "04":
+      return `Apr ${day}`;
+    case "05":
+      return `May ${day}`;
+    case "06":
+      return `Jun ${day}`;
+    case "07":
+      return `Jul ${day}`;
+    case "08":
+      return `Aug ${day}`;
+    case "09":
+      return `Sep ${day}`;
+    case "10":
+      return `Oct ${day}`;
+    case "11":
+      return `Nov ${day}`;
+    case "12":
+      return `Dec ${day}`;
+  }
+};
+
+const formatTotal = (total) => {
+  return `$${total}`;
+};
+
+const formatOrderId = (id) => {
+  return `#${id}`;
+};
+
+const orderData = [
+  {
+    id: "192541",
+    customerName: "Esther Howard",
+    type: "Shipping",
+    status: "Paid",
+    product: "Violin",
+    total: "3127.00",
+    datePlaced: "2024-05-27",
+  },
+  {
+    id: "485372",
+    customerName: "John Doe",
+    type: "Pickup",
+    status: "Pending",
+    product: "Guitar",
+    total: "1520.00",
+    datePlaced: "2024-04-15",
+  },
+  {
+    id: "839174",
+    customerName: "Sophia Smith",
+    type: "Shipping",
+    status: "Paid",
+    product: "Piano",
+    total: "8250.50",
+    datePlaced: "2024-03-01",
+  },
+  {
+    id: "274839",
+    customerName: "Liam Johnson",
+    type: "Pickup",
+    status: "Cancelled",
+    product: "Trumpet",
+    total: "780.00",
+    datePlaced: "2024-05-20",
+  },
+  {
+    id: "947382",
+    customerName: "Emma Wilson",
+    type: "Shipping",
+    status: "Paid",
+    product: "Flute",
+    total: "430.99",
+    datePlaced: "2024-12-05",
+  },
+  {
+    id: "615273",
+    customerName: "Mason Brown",
+    type: "Shipping",
+    status: "Pending",
+    product: "Drum Set",
+    total: "3250.75",
+    datePlaced: "2024-08-18",
+  },
+  {
+    id: "721984",
+    customerName: "Olivia Davis",
+    type: "Pickup",
+    status: "Paid",
+    product: "Keyboard",
+    total: "1699.00",
+    datePlaced: "2024-05-29",
+  },
+  {
+    id: "381942",
+    customerName: "James Garcia",
+    type: "Shipping",
+    status: "Refunded",
+    product: "Viola",
+    total: "1999.99",
+    datePlaced: "2024-05-12",
+  },
+  {
+    id: "523198",
+    customerName: "Ava Martinez",
+    type: "Pickup",
+    status: "Paid",
+    product: "Cello",
+    total: "4850.00",
+    datePlaced: "2024-07-03",
+  },
+  {
+    id: "849273",
+    customerName: "Noah Hernandez",
+    type: "Shipping",
+    status: "Cancelled",
+    product: "Saxophone",
+    total: "1125.45",
+    datePlaced: "2024-04-25",
+  },
+  {
+    id: "103948",
+    customerName: "Lucas Taylor",
+    type: "Shipping",
+    status: "Paid",
+    product: "Electric Guitar",
+    total: "2999.99",
+    datePlaced: "2024-02-10",
+  },
+  {
+    id: "928374",
+    customerName: "Charlotte Walker",
+    type: "Pickup",
+    status: "Pending",
+    product: "Bass Guitar",
+    total: "1450.00",
+    datePlaced: "2024-01-11",
+  },
+  {
+    id: "203948",
+    customerName: "William Adams",
+    type: "Shipping",
+    status: "Paid",
+    product: "Cello",
+    total: "2300.50",
+    datePlaced: "2024-10-12",
+  },
+  {
+    id: "847362",
+    customerName: "Grace King",
+    type: "Pickup",
+    status: "Cancelled",
+    product: "Trumpet",
+    total: "850.00",
+    datePlaced: "2024-09-13",
+  },
+  {
+    id: "678932",
+    customerName: "Ethan Lee",
+    type: "Shipping",
+    status: "Refunded",
+    product: "Piano",
+    total: "4200.75",
+    datePlaced: "2024-08-14",
+  },
+  {
+    id: "384756",
+    customerName: "Amelia Martinez",
+    type: "Pickup",
+    status: "Paid",
+    product: "Flute",
+    total: "500.00",
+    datePlaced: "2024-03-15",
+  },
+  {
+    id: "538267",
+    customerName: "Henry Perez",
+    type: "Shipping",
+    status: "Pending",
+    product: "Viola",
+    total: "3100.00",
+    datePlaced: "2024-04-16",
+  },
+  {
+    id: "739184",
+    customerName: "Isabella Garcia",
+    type: "Pickup",
+    status: "Paid",
+    product: "Drum Set",
+    total: "2200.00",
+    datePlaced: "2024-01-17",
+  },
+  {
+    id: "839712",
+    customerName: "Sebastian Roberts",
+    type: "Shipping",
+    status: "Paid",
+    product: "Saxophone",
+    total: "700.00",
+    datePlaced: "2024-02-18",
+  },
+  {
+    id: "902846",
+    customerName: "Chloe Wright",
+    type: "Pickup",
+    status: "Pending",
+    product: "Guitar",
+    total: "1200.00",
+    datePlaced: "2024-11-19",
+  },
+];
+
+const columns = [
+  { label: "Order", key: "id", formatter: formatOrderId },
+  { label: "Customer", key: "customerName", formatter: formatName },
+  { label: "Type", key: "type" },
+  { label: "Status", key: "status" },
+  { label: "Product", key: "product" },
+  { label: "Total", key: "total", formatter: formatTotal },
+  { label: "Date", key: "datePlaced", formatter: formatDate },
+];
+
 const Orders = () => {
-  const orderData = [
-    {
-      name: "Classic Slip-On Checkerboard Shoe",
-      orderNumber: "29172736",
-      datePlaced: "07012024",
-      quantity: "4",
-      shippingCost: "2.16",
-      tax: "21.59",
-      total: "290.22",
-      status: "pending",
-      img: "./product-images/shoe-2.png",
-    },
-    {
-      name: "Era Core Classics Shoe",
-      orderNumber: "34489559",
-      datePlaced: "05272024",
-      quantity: "4",
-      shippingCost: "1.38",
-      tax: "40.34",
-      total: "544.6",
-      status: "shipped",
-      img: "./product-images/shoe-3.png",
-    },
-    {
-      name: "Sk8-Hi High-Top Shoe",
-      orderNumber: "04494332",
-      datePlaced: "08222024",
-      quantity: "5",
-      shippingCost: "1.86",
-      tax: "16.87",
-      total: "227.73",
-      status: "delivered",
-      img: "./product-images/shoe-1.png",
-    },
-    {
-      name: "Era Core Classics Shoe",
-      orderNumber: "8435641",
-      datePlaced: "02092023",
-      quantity: "5",
-      shippingCost: "5.33",
-      tax: "61.94",
-      total: "836.22",
-      status: "in-progress",
-      img: "./product-images/shoe-4.png",
-    },
-  ];
-
-  const getDate = (date) => {
-    const month = date.slice(0, 2);
-    const day = parseInt(date.slice(2, 4), 10);
-    const year = date.slice(4);
-
-    const getMonthName = (month) => {
-      switch (month) {
-        case "01":
-          return "January";
-        case "02":
-          return "February";
-        case "03":
-          return "March";
-        case "04":
-          return "April";
-        case "05":
-          return "May";
-        case "06":
-          return "June";
-        case "07":
-          return "July";
-        case "08":
-          return "August";
-        case "09":
-          return "September";
-        case "10":
-          return "October";
-        case "11":
-          return "November";
-        case "12":
-          return "December";
-        default:
-          return "Invalid month";
-      }
-    };
-
-    return `${getMonthName(month)} ${day}, ${year}`;
-  };
-
-  const sortedOrderData = orderData.sort((a,b) => {
-    const parseDate = (date) => {
-      const day = date.slice(2,4)
-      const month = date.slice(0,2)
-      const year = date.slice(4)
-      return `${year}-${month}-${day}`
-    }
-    return new Date(parseDate(b.datePlaced)) - new Date(parseDate(a.datePlaced))
-  })
-
   return (
     <div className="orders-content">
-      <div className="orders-overview">
-        <p>Orders</p>
-      </div>
-      <div className="orders-data">
-        {sortedOrderData.map((order) => {
-          return (
-            <div className="orders-card" key={order.orderNumber}>
-              <div className="product-header">
-                <img src={order.img} alt="product-img"></img>
-                <h2>{order.name}</h2>
+      <div className="orders-main">
+        <div className="orders-overview">
+          <p>Orders</p>
+        </div>
+        <div className="orders-table">
+          <div className="table-header">
+            {columns.map((column) => {
+              return <p key={column.key}>{column.label}</p>;
+            })}
+          </div>
+          {orderData.map((order) => {
+            return (
+              <div className="table-row">
+                {columns.map((column) => {
+                  const value = order[column.key];
+                  const formatter = column.formatter;
+                  return (
+                    <div className="table-column">
+                      {order.status === value ? <img src={`../icons/${value}.png`}  alt=""/> : ''}
+                      <p className={order.status === value ? order.status.toLowerCase() : ''}>{formatter ? formatter(value) : value}</p>
+                    </div>
+                  );
+                })}
               </div>
-              <div className="product-info">
-                <div className="product-row-one">
-                  <p>Order: </p>
-                  <p className="product-number">#{order.orderNumber}</p>
-                </div>
-                <div className="product-row-two">
-                  <p>{getDate(order.datePlaced)}</p>
-                </div>
-                <div className="product-row-three">
-                  <p>Items Ordered: </p>
-                  <p className="product-quantity">{order.quantity}</p>
-                </div>
-                <div className="product-row-four">
-                  <p>Estimated Shipping: </p>
-                  <p className="product-shipping">${order.shippingCost}</p>
-                </div>
-                <div className="product-row-five">
-                  <p>Estimated Tax: </p>
-                  <p className="product-tax">${order.tax}</p>
-                </div>
-                <div className="product-row-six">
-                  <p>Estimated Total: </p>
-                  <p className="product-Total">${order.total}</p>
-                </div>
-              </div>
-            </div>
-          );
-        })}
+            );
+          })}
+        </div>
       </div>
+      <div className="orders-sidebar"></div>
     </div>
   );
 };
