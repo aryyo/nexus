@@ -10,7 +10,7 @@
 }
 
 .general,
-.management,
+.account,
 .others {
   display: flex;
   flex-direction: column;
@@ -27,7 +27,7 @@
 }
 
 .general p,
-.management p,
+.account p,
 .others p {
   color: rgb(169, 169, 170);
   font-size: 12px;
@@ -36,7 +36,7 @@
 }
 
 .general img,
-.management img,
+.account img,
 .others img {
   width: 16px;
   height: auto;

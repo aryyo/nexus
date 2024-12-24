@@ -3,12 +3,6 @@ import Navbar from "../components/Navbar";
 import Sidebar from "../components/Sidebar";
 import Dashboard from "./Dashboard";
 import Orders from "./Orders";
-import Calendar from "./Calendar";
-import Projects from "./Projects";
-import Notifications from "./Notifications";
-import Inventory from "./Inventory";
-import Performance from "./Performance";
-import Settings from "./Settings";
 import Help from "./Help";
 import "../styles/Homepage.css";
 
@@ -31,18 +25,6 @@ const Homepage = () => {
         return <Dashboard />;
       case "orders":
         return <Orders />;
-      case "calendar":
-        return <Calendar />;
-      case "projects":
-        return <Projects />;
-      case "notifications":
-        return <Notifications />;
-      case "inventory":
-        return <Inventory />;
-      case "performance":
-        return <Performance />;
-      case "settings":
-        return <Settings />;
       case "help":
         return <Help />;
     }

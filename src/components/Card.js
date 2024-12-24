@@ -6,7 +6,7 @@ const Cards = () => {
       <div className="card">
         <div className="card-row-one">
           <img src="./icons/employee.png" alt=""></img>
-          <p>Total Employee</p>
+          <p>Total Income</p>
         </div>
         <div className="card-row-two">
           <p className="count">3540</p>
@@ -17,7 +17,7 @@ const Cards = () => {
       <div className="card">
         <div className="card-row-one">
           <img src="./icons/employee.png" alt=""></img>
-          <p>New Employee</p>
+          <p>Total Sales</p>
         </div>
         <div className="card-row-two">
           <p className="count">874</p>
@@ -28,7 +28,7 @@ const Cards = () => {
       <div className="card">
         <div className="card-row-one">
           <img src="./icons/employee.png" alt=""></img>
-          <p>Freelance Employee</p>
+          <p>Total Expenses</p>
         </div>
         <div className="card-row-two">
           <p className="count">34</p>
@@ -39,7 +39,7 @@ const Cards = () => {
       <div className="card">
         <div className="card-row-one">
           <img src="./icons/employee.png" alt=""></img>
-          <p>Resign Employee</p>
+          <p>Net Profit</p>
         </div>
         <div className="card-row-two">
           <p className="count">29</p>
