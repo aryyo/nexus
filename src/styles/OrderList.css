@@ -1,0 +1,74 @@
+.table-header {
+    display: flex;
+    flex-direction: row;
+    padding-inline: 1rem;
+    justify-content: space-between;
+    gap: .2rem;
+  }
+  
+  .table-header p {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    flex: 1 1;
+    background-color: rgb(255, 255, 255);
+    padding-top: .5rem;
+    font-weight: 500;
+    font-size: 16px;
+    font-family: "Roboto", serif;
+    color: rgb(158, 158, 158);
+  }
+  
+  .table-row:nth-child(even) {
+    display: flex;
+    flex-direction: row;
+    padding-inline: 1rem;
+    justify-content: space-between;
+    background-color: rgb(255, 255, 255);
+    gap: .2rem;
+  }
+  
+  .table-row:nth-child(odd) {
+    display: flex;
+    flex-direction: row;
+    padding-inline: 1rem;
+    justify-content: space-between;
+    background-color: rgb(242, 242, 242);
+    gap: .2rem;
+  }
+  
+  .table-column {
+    display: flex;
+    flex-direction: row;
+    flex: 1 1;
+    padding-block: 1rem;
+    font-size: 14px;
+    gap: .2rem;
+    align-items: center;
+  }
+  
+  .table-row p {
+    margin: 0;
+  }
+  
+  .table-row img {
+    width: 12px;
+    height: auto;
+  }
+  
+  .paid {
+    color: #3CB371;
+  }
+  
+  .pending {
+    color: #FFC107;
+  }
+  
+  .cancelled {
+    color: #DC143C;
+  }
+  
+  .refunded {
+    color: #000000;
+  }
+  
