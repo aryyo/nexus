@@ -1,5 +1,6 @@
 import "../styles/Orders.css";
 import OrderList from "../components/OrderList";
+import OrderSidebar from "../components/OrderSidebar";
 
 const Orders = () => {
   return (
@@ -10,7 +11,7 @@ const Orders = () => {
         </div>
        <OrderList/>
       </div>
-      <div className="orders-sidebar"></div>
+      <OrderSidebar/>
     </div>
   );
 };

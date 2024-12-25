@@ -1,0 +1,21 @@
+.orders-sidebar {
+    display: flex;
+    flex-direction: column;
+    flex: 1 1;
+    background-color: white;
+    border-left: 2px solid rgb(226, 226, 226);
+    align-items: center;
+    /* gap: 2rem; */
+}
+
+.receipt-of-goods, .orders-summary {
+    flex: 8 1;
+    background-color: rgb(255, 238, 252);
+    width: 100%;
+}
+
+.orders-status {
+    flex: 7 1;
+    background-color: rgb(238, 255, 245);
+    width: 100%;
+}
