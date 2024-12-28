@@ -1,5 +1,5 @@
 import '../styles/OrderList.css';
-import OrderData from './OrderData';
+import OrderData from '../data/OrderData';
 
 const formatName = (name) => {
     if (name.length > 18) {
@@ -69,12 +69,12 @@ const OrderList = () => {
         </div>
         {OrderData.map((order) => {
           return (
-            <div className="table-row">
+            <div className="table-row" key={order.id}>
               {columns.map((column) => {
                 const value = order[column.key];
                 const formatter = column.formatter;
                 return (
-                  <div className="table-column">
+                  <div className="table-column" key={column.key}>
                     {order.status === value ? <img src={`../icons/${value}.png`}  alt=""/> : ''}
                     <p className={order.status === value ? order.status.toLowerCase() : ''}>{formatter ? formatter(value) : value}</p>
                   </div>

@@ -1,3 +1,5 @@
+
+
 .orders-sidebar {
   display: flex;
   flex-direction: column;
@@ -10,52 +12,90 @@
 
 .receipt-of-goods,
 .orders-summary {
-  flex: 8 1;
+  flex:1 1;
   background-color: rgb(255, 238, 252);
   width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
 }
 
 .bar {
   display: flex;
   flex-direction: row;
+  padding-inline: 1rem;
+  padding-block: 1rem;
+}
+
+.bar-data {
+  display: flex;
+  flex-direction: column;
+  padding-inline: 1rem;
+  font-weight: 500;
+  font-size: 14px;
+  font-family: "Roboto", serif;
+  color: rgb(30, 30, 30);
+  gap: 1rem;
 }
 
 .line-one {
   height: 0.5rem;
-  background-color: rgb(219, 176, 176);
+  background-color: #3CB371;
   border-radius: 12px;
 }
 
 .line-two {
   height: 0.5rem;
-  background-color: rgb(176, 219, 178);
+  background-color: #DC143C;
   border-radius: 12px;
 }
 
 .line-three {
   height: 0.5rem;
-  background-color: rgb(176, 186, 219);
+  background-color: #000000;
   border-radius: 12px;
 }
 
 .orders-status {
-  flex: 7 1;
-  background-color: rgb(238, 255, 245);
+  background-color: rgb(255, 255, 255);
   width: 100%;
-}
-
-.bar-data {
-    display: flex;
-    flex-direction: column;
+  display: flex;
+  flex-direction: column;
+  border-block: 2px solid rgb(226, 226, 226);
+  justify-content: space-between;
+  padding-block: 1rem;
 }
 
 .paid-data, .cancelled-data, .refunded-data {
     display: flex;
     flex-direction: row;
     justify-content: space-between;
-    padding-inline: 1rem;
 }
 
 .paid-data p, .cancelled-data p, .refunded-data p{
     margin: 0;
+}
+
+.paid-data img, .cancelled-data img, .refunded-data img{
+  width: .5rem;
+  height: .5rem;
+}
+
+.icon-data {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  gap: .2rem;
+}
+
+.orders-status-header p {
+  margin: 0;
+  font-weight: 500;
+  font-size: 16px;
+  font-family: "Roboto", serif;
+}
+
+.orders-status-header {
+  padding-inline: 1rem;
 }
