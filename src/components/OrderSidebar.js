@@ -35,7 +35,7 @@ const OrderSidebar = () => {
     }, 0);
 
     const averagePrice = totalRevenue / totalOrders;
-    const rejectRate = (totalCancelled * 100) / totalOrders;
+    const rejectRate = ((totalCancelled + totalRefunded) * 100) / totalOrders;
     const shippingRate =
       orders.reduce((acc, order) => {
         acc += order.type === "Shipping" ? 1 : 0;
@@ -115,8 +115,8 @@ const OrderSidebar = () => {
             <p className="summary-title">Total Revenue</p>
           </div>
           <div className="summary-line">
-            {cachedMetrics.rejectRate}%
-            <p className="summary-title">Reject Rate</p>
+            {cachedMetrics.totalCancelled + cachedMetrics.totalRefunded}
+            <p className="summary-title">Orders Lost</p>
           </div>
           <div className="summary-line">
             <p className="summary-value">
