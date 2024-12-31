@@ -1,5 +1,4 @@
 
-
 .orders-sidebar {
   display: flex;
   flex-direction: column;
@@ -10,14 +9,23 @@
   /* gap: 2rem; */
 }
 
-.receipt-of-goods,
-.orders-summary {
+.receipt-of-goods {
   flex:1 1;
   background-color: rgb(255, 238, 252);
   width: 100%;
   display: flex;
   flex-direction: column;
   gap: 1rem;
+}
+
+.orders-summary {
+  flex:1 1;
+  background-color: rgb(255, 255, 255);
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  padding-block: 1rem;
 }
 
 .bar {
@@ -89,13 +97,39 @@
   gap: .2rem;
 }
 
-.orders-status-header p {
+.orders-sidebar-header p {
   margin: 0;
   font-weight: 500;
-  font-size: 16px;
+  font-size: 14px;
   font-family: "Roboto", serif;
 }
 
-.orders-status-header {
+.orders-sidebar-header {
   padding-inline: 1rem;
+}
+
+.summary-stats p {
+  margin: 0;
+}
+
+.summary-stats {
+  display: flex;
+  flex-direction: row;
+  padding-inline: 1rem;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+
+.summary-line {
+  width: 45%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+  gap: .2rem;
+}
+
+.summary-title {
+  color: rgb(143, 143, 143);
+  font-size: 12px;
 }
