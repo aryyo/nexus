@@ -4,6 +4,7 @@ import Sidebar from "../components/Sidebar";
 import Dashboard from "./Dashboard";
 import Orders from "./Orders";
 import Help from "./Help";
+import Product from "./Product";
 import "../styles/Homepage.css";
 
 const Homepage = () => {
@@ -27,6 +28,8 @@ const Homepage = () => {
         return <Orders />;
       case "help":
         return <Help />;
+      case "products":
+        return <Product/>
     }
   };
 

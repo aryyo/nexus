@@ -177,7 +177,7 @@ const OrderSidebar = () => {
                 <p>Paid</p>
               </div>
               <p>
-                {(cachedMetrics.totalPaid * 100) / cachedMetrics.totalOrders}%
+                {((cachedMetrics.totalPaid * 100) / cachedMetrics.totalOrders).toFixed(2)}%
               </p>
             </div>
             <div className="cancelled-data">
@@ -186,8 +186,8 @@ const OrderSidebar = () => {
                 <p>Cancelled</p>
               </div>
               <p>
-                {(cachedMetrics.totalCancelled * 100) /
-                  cachedMetrics.totalOrders}
+                {((cachedMetrics.totalCancelled * 100) /
+                  cachedMetrics.totalOrders).toFixed(2)}
                 %
               </p>
             </div>
@@ -197,8 +197,8 @@ const OrderSidebar = () => {
                 <p>Refunded</p>
               </div>
               <p>
-                {(cachedMetrics.totalRefunded * 100) /
-                  cachedMetrics.totalOrders}
+                {((cachedMetrics.totalRefunded * 100) /
+                  cachedMetrics.totalOrders).toFixed(2)}
                 %
               </p>
             </div>
