@@ -32,7 +32,9 @@ const Homepage = () => {
       case "products":
         return <Product/>;
       case "billing":
-        return <Billing/>
+        return <Billing/>;
+      case "get-help":
+        return <Help/>;
     }
   };
 
