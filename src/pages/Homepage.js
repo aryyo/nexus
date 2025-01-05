@@ -5,6 +5,7 @@ import Dashboard from "./Dashboard";
 import Orders from "./Orders";
 import Help from "./Help";
 import Product from "./Product";
+import Billing from "./Billing";
 import "../styles/Homepage.css";
 
 const Homepage = () => {
@@ -29,7 +30,9 @@ const Homepage = () => {
       case "help":
         return <Help />;
       case "products":
-        return <Product/>
+        return <Product/>;
+      case "billing":
+        return <Billing/>
     }
   };
 

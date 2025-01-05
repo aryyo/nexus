@@ -35,12 +35,6 @@ const Sidebar = ({ active, setActive }) => {
           icon: "./icons/invoice.png",
           activeIcon: "./icons/invoice-g.png",
         },
-        {
-          id: "customers",
-          label: "Customers",
-          icon: "./icons/customer.png",
-          activeIcon: "./icons/customer-g.png",
-        },
       ],
     },
     {
