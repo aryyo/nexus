@@ -6,6 +6,9 @@ import Orders from "./Orders";
 import Help from "./Help";
 import Product from "./Product";
 import Billing from "./Billing";
+import Account from "./Account";
+import Report from "./Report";
+import Settings from "./Settings";
 import "../styles/Homepage.css";
 
 const Homepage = () => {
@@ -35,6 +38,12 @@ const Homepage = () => {
         return <Billing/>;
       case "get-help":
         return <Help/>;
+      case "my-account":
+        return <Account/>;
+      case "report":
+        return <Report/>
+      case "settings":
+        return <Settings/>;
     }
   };
 
