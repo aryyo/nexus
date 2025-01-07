@@ -50,8 +50,7 @@
 
 .interface-theme h3,
 .transparent-sidebar h3,
-.tables-view h3,
-p {
+.tables-view h3 {
   margin: 0;
   font-weight: 500;
   font-size: 16px;
