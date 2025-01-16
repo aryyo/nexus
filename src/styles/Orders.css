@@ -1,5 +1,5 @@
 .orders-content {
-  background-color: #f7f9fb;
+  background-color: var(--background);
   width: 100%;
   height: auto;
   display: flex;
@@ -8,7 +8,7 @@
 
 .orders-main {
   flex: 3 1;
-  background-color: #fff;
+  background-color: var(--background);
   overflow-y: scroll;
 }
 
@@ -18,7 +18,7 @@
   display: flex;
   flex-direction: column;
   justify-content: center;
-  border-bottom: 2px solid #e2e2e2;
+  border-bottom: 2px solid var(--border);
   flex-shrink: 0;
 }
 
@@ -27,4 +27,5 @@
   padding-left: 2rem;
   font-size: 18px;
   font-weight: 600;
+  color: var(--text);
 }

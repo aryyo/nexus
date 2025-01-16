@@ -4,7 +4,7 @@ const Account = () => {
   return (
     <div className="account-container">
       <div className="account-overview">
-        <p>Products</p>
+        <p>My Account</p>
       </div>
       <div className="account-wrapper">
         <div className="account-content">
@@ -12,7 +12,7 @@ const Account = () => {
             <div className="profile-picture">
               <img src="/profile.jpg" alt="" />
               <div className="picture-buttons">
-                <button className="upload-button">Upload New</button>
+                <button className="upload-button">Upload</button>
                 <button className="remove-button">Remove</button>
               </div>
             </div>
@@ -42,7 +42,6 @@ const Account = () => {
                 />
               </div>
             </div>
-
             <div className="save-container">
               <button className="save-button">Save</button>
             </div>

@@ -1,6 +1,17 @@
 import "../styles/Settings.css";
 
 const Settings = () => {
+
+  const changeTheme = () => {
+    const html = document.querySelector("html");
+    const currTheme = html.getAttribute("data-theme");
+    if (currTheme === "dark") {
+      html.setAttribute("data-theme", "light");
+    } else {
+      html.setAttribute("data-theme", "dark");
+    }
+  };
+
   return (
     <div className="settings-container">
       <div className="settings-title">
@@ -26,9 +37,19 @@ const Settings = () => {
             <h3>Transparent sidebar</h3>
             <p>Make the sidebar transparent.</p>
           </div>
-          <label class="toggle-label">
-            <input type="checkbox" name="some-setting" class="toggle-input" />
-            <span class="toggle-slider"></span>
+          <label className="toggle-label">
+            <input type="checkbox" name="some-setting" className="toggle-input" />
+            <span className="toggle-slider"></span>
+          </label>
+        </div>
+        <div className="transparent-sidebar">
+          <div className="interface-header">
+            <h3>Dark Mode</h3>
+            <p>Toggle Dark Mode.</p>
+          </div>
+          <label className="toggle-label">
+            <input type="checkbox" name="some-setting" className="toggle-input" onChange={changeTheme}/>
+            <span className="toggle-slider"></span>
           </label>
         </div>
         <div className="tables-view">
@@ -45,6 +66,7 @@ const Settings = () => {
             </div>
           </div>
         </div>
+
       </div>
     </div>
   );

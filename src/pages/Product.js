@@ -8,7 +8,6 @@ const products = [
     name: "Gaming Mouse",
     price: 79.99,
     stock: 23,
-    category: "Gaming",
     image: "https://images.unsplash.com/photo-1527864550417-7fd91fc51a46?w=300",
   },
   {
@@ -16,7 +15,6 @@ const products = [
     name: "Mechanical Keyboard",
     price: 159.99,
     stock: 15,
-    category: "Gaming",
     image: "https://images.unsplash.com/photo-1511467687858-23d96c32e4ae?w=300",
   },
   {
@@ -24,7 +22,6 @@ const products = [
     name: "Gaming Headset",
     price: 129.99,
     stock: 31,
-    category: "Gaming",
     image: "https://images.unsplash.com/photo-1599669454699-248893623440?w=300",
   },
   {
@@ -32,7 +29,6 @@ const products = [
     name: "Gaming Headset",
     price: 129.99,
     stock: 31,
-    category: "Gaming",
     image: "https://images.unsplash.com/photo-1599669454699-248893623440?w=300",
   },
   {
@@ -40,7 +36,6 @@ const products = [
     name: "Gaming Headset",
     price: 129.99,
     stock: 31,
-    category: "Gaming",
     image: "https://images.unsplash.com/photo-1599669454699-248893623440?w=300",
   },
   {
@@ -48,7 +43,6 @@ const products = [
     name: "Gaming Headset",
     price: 129.99,
     stock: 31,
-    category: "Gaming",
     image: "https://images.unsplash.com/photo-1599669454699-248893623440?w=300",
   },
 ];
@@ -91,7 +85,6 @@ const Product = () => {
                 <div className="product-header">
                   <div>
                     <h3 className="product-name">{product.name}</h3>
-                    <p className="product-category">{product.category}</p>
                   </div>
                   <button className="more-button">
                     <MoreVertical className="icon" />

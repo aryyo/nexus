@@ -2,13 +2,13 @@
   display: flex;
   flex-direction: column;
   flex: 3 2;
-  background-color: white;
+  background-color: var(--background);
   padding-block: 1rem;
   padding-inline: 1rem;
   border-radius: 12px;
   gap: 1rem;
   aspect-ratio: 2/1;
-  border: 2px solid rgb(226, 226, 226);
+  border: 2px solid var(--border);
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
 }
 
@@ -18,10 +18,12 @@
   justify-content: space-between;
   align-items: center;
   margin-bottom: auto;
+  color: var(--text);
 }
 
 .charts-header h2 {
   margin-block: 0;
+  
 }
 
 .charts-graph {
@@ -34,12 +36,13 @@
 }
 
 .timeframe {
-  background-color: white;
+  background-color: var(--background);
   font-family: "Roboto", serif;
   font-size: 14px;
   font-weight: 400;
   padding-block: 0.3rem;
   padding-inline: 0.5rem;
   border-radius: 8px;
-  border: 2px solid rgb(226, 226, 226);
+  border: 2px solid var(--border);
+  color: var(--text);
 }

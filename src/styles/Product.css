@@ -38,8 +38,8 @@
   
   .search-input {
     padding: 0.5rem 0.5rem 0.5rem 2rem;
-    background-color: #f2f2f2;
-    border: 1px solid rgb(226, 226, 226);
+    background-color: var(--background);
+    border: 1px solid var(--border);
     border-radius: 8px;
     color: #9e9e9e;
     outline: none;
@@ -48,7 +48,7 @@
   
   .filter-button {
     background-color: #f2f2f2;
-    border: 1px solid rgb(226, 226, 226);
+    border: 1px solid var(--border);
     border-radius: 8px;
   }
   
@@ -68,9 +68,9 @@
   }
   
   .product-card {
-    background-color: white;
+    background-color: var(--background);
     border-radius: 12px;
-    border: 2px solid rgb(226, 226, 226);
+    border: 2px solid var(--border);
     box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
     overflow: hidden;
     flex: 1 1;
@@ -125,18 +125,17 @@
   .product-name {
     font-weight: 500;
     font-size: 16px;
-    color: #9e9e9e;
-  }
-  
-  .product-category {
-    color: #9e9e9e;
-    font-size: 14px;
+    color: var(--text);
   }
   
   .more-button {
     background: none;
     border: none;
     cursor: pointer;
+  }
+
+  .icon {
+    color: var(--text);
   }
   
   .product-footer {
@@ -152,7 +151,7 @@
   }
   
   .product-stock {
-    color: #9e9e9e;
+    color: grey;
     font-size: 14px;
   }
   

@@ -6,14 +6,21 @@
 :root[data-theme="light"] {
   --text: #04160f;
   --background: #ffffff;
-  --primary: #25da8c;
-  --secondary: #ea85c0;
-  --accent: #e5a266;
-}
-:root[data-theme="dark"] {
-  --text: #e9fbf4;
-  --background: #161616;
+  --border: #e2e2e2;
   --primary: #25da8c;
   --secondary: #7a1550;
+  --accent: #e5a266;
+  --background-odd: #f2f2f2;
+  --background-even: #222222;
+  
+}
+:root[data-theme="dark"] {
+  --text: #b9b9b9;
+  --background: #0f0f0f;
+  --border: #3b3b3b;
+  --primary: #25da8c;
+  --secondary: #ea85c0;
   --accent: #99551a;
+  --background-odd: #222222;
+  --background-even: #f2f2f2;
 }

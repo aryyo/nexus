@@ -19,7 +19,7 @@
   margin-bottom: 2rem;
   background-color: var(--background);
   height: 3rem;
-  border-bottom: 2px solid #e2e2e2;
+  border-bottom: 2px solid var(--border);
   padding-inline: 2rem;
 }
 
@@ -53,10 +53,10 @@
 
 .summary-card {
   padding: 1.5rem;
-  border: 2px solid var(--secondary);
+  border: 2px solid var(--border);
   border-radius: 8px;
   background-color: var(--background);
-  box-shadow: 0 1px 3px var(--secondary);
+  box-shadow: 0 1px 3px var(--border);
 }
 
 .summary-card h2 {
@@ -87,9 +87,8 @@
 /* Payment History */
 .billing-history {
   background-color: var(--background);
-  padding: 1.5rem;
+  padding-block: 1.5rem;
   border-radius: 8px;
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
 }
 
 .history-header {
@@ -105,17 +104,20 @@
 }
 
 .download-all-button {
-  background-color: var(--primary);
-  color: #fff;
-  border: none;
-  padding: 0.6rem 1rem;
+  background-color: var(--background);
+  font-family: "Roboto", serif;
+  font-size: 14px;
+  font-weight: 500;
+  padding-block: 0.3rem;
+  padding-inline: 0.5rem;
   border-radius: 8px;
-  cursor: pointer;
-  transition: background-color 0.3s ease;
+  border: 2px solid var(--border);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  color: var(--text);
 }
 
 .download-all-button:hover {
-  background-color: var(--secondary);
+  background-color: var(--background-odd);
 }
 
 /* Table */
@@ -127,7 +129,7 @@
 .history-table th,
 .history-table td {
   padding: 1rem;
-  border-bottom: 1px solid #e0e0e0;
+  border-bottom: 1px solid var(--border);
   text-align: left;
 }
 

@@ -14,16 +14,6 @@ import "../styles/Homepage.css";
 const Homepage = () => {
   const [activeButton, setActiveButton] = useState("dashboard");
 
-  const changeTheme = () => {
-    const html = document.querySelector("html");
-    const currTheme = html.getAttribute("data-theme");
-    if (currTheme === "dark") {
-      html.setAttribute("data-theme", "light");
-    } else {
-      html.setAttribute("data-theme", "dark");
-    }
-  };
-
   const RenderActiveComponent = () => {
     switch (activeButton) {
       case "dashboard":

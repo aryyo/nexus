@@ -16,7 +16,7 @@
   display: flex;
   flex-direction: column;
   justify-content: center;
-  border-bottom: 2px solid #e2e2e2;
+  border-bottom: 2px solid var(--border);
 }
 
 .settings-title p {
@@ -34,7 +34,7 @@
   margin: 0;
   justify-content: space-between;
   max-width: 1000px;
-  border-bottom: 1px solid #e0e0e0;
+  border-bottom: 1px solid var(--border);
   padding-block: 1rem;
 }
 
