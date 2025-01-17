@@ -30,7 +30,7 @@
   align-items: flex-start;
   gap: 0.2rem;
   padding-inline: 0.5rem;
-  color: var(--text);
+  color: #999999;
 }
 
 .card-row-one p,
@@ -63,5 +63,5 @@
 
 .date {
   font-size: 10px;
-  color: var(--text);
+  color: #999999;
 }

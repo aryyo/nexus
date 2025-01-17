@@ -101,6 +101,10 @@
   font-weight: 500;
 }
 
+.buttons button:hover {
+  cursor: pointer;
+}
+
 .buttons img {
   width: 20px;
   height: auto;

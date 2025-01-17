@@ -43,23 +43,23 @@
 }
 
 .generate-button {
-  background-color: var(--background);
   font-family: "Roboto", serif;
   font-size: 14px;
   font-weight: 500;
-  padding-block: 0.6rem;
-  padding-inline: 1rem;
+  padding-block: 0.3rem;
+  padding-inline: .5rem;
   border-radius: 8px;
-  border: 2px solid var(--border);
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
-  color: var(--text);
-  cursor: pointer;
-  transition: background-color 0.3s ease;
+  transition: background-color 0.3s border-color 0.3s ease;
   margin-left: auto;
+  color: white;
+  background-color: #1ab369;
+  border: 2px solid #1ab369;
 }
 
 .generate-button:hover {
-  background-color: var(--background-odd);
+  cursor: pointer;
+  background-color: #1ecd78;
+  border: 2px solid #1ecd78;
 }
 
 .user-info {

@@ -46,3 +46,7 @@
   border: 2px solid var(--border);
   color: var(--text);
 }
+
+.timeframe:hover {
+  background-color: var(--background-odd);
+}

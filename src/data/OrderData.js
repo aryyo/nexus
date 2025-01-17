@@ -1,3 +1,5 @@
+//use 7.25% for sales tax, 5.99 for shipping, income = profit / month, net profit = total paid - sales tax - if(shipping), expenses = shipping costs
+
 const OrderData = [
   {
     id: "192541",

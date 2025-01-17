@@ -81,7 +81,10 @@
   border-radius: 12px;
   gap: 1rem;
   overflow: hidden;
-  background-color: green;
+}
+
+.interface-card:hover {
+  cursor: pointer;
 }
 
 .interface-card img {

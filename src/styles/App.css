@@ -8,8 +8,9 @@
   --background: #ffffff;
   --border: #e2e2e2;
   --primary: #25da8c;
-  --secondary: #7a1550;
-  --accent: #e5a266;
+  --secondary: #ffcc4c;
+  --primary-accent: #926cfd;
+  --secondary-accent: #1d6aec;
   --background-odd: #f2f2f2;
   --background-even: #222222;
   
@@ -19,8 +20,9 @@
   --background: #0f0f0f;
   --border: #3b3b3b;
   --primary: #25da8c;
-  --secondary: #ea85c0;
-  --accent: #99551a;
+  --secondary: #ffcc4c;
+  --primary-accent: #926cfd;
+  --secondary-accent: #1d6aec;
   --background-odd: #222222;
   --background-even: #f2f2f2;
 }

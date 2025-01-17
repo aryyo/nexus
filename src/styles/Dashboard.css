@@ -32,6 +32,7 @@
   padding-top: 1rem;
   justify-content: flex-end;
   gap: 1rem;
+  max-height: 30px;
 }
 
 .calendar,
@@ -53,9 +54,20 @@
   margin-right: auto;
 }
 
-.calendar:hover,
-.export:hover,
+.add {
+  color: white;
+  background-color: #1ab369;
+  border: 2px solid #1ab369;
+}
+
 .add:hover {
+  cursor: pointer;
+  background-color: #1ecd78;
+  border: 2px solid #1ecd78;
+}
+
+.calendar:hover,
+.export:hover {
   cursor: pointer;
   background-color: var(--background-odd);
 }
@@ -65,6 +77,7 @@
   display: flex;
   flex-direction: row;
   gap: 1rem;
+  max-height: 50%;
 }
 
 .data-cards {

@@ -74,9 +74,9 @@
 }
 
 .cancelled {
-  color: #dc143c;
+  color: #fd9b52;
 }
 
 .refunded {
-  color: var(--background-even);
+  color: #926cfd;
 }

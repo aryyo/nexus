@@ -11,14 +11,14 @@ const OrderSidebar = () => {
 
   const formatRevenue = (value) => {
     if (value >= 1_000_000) {
-      return `$${(value / 1_000_000).toFixed(2)}M`; 
+      return `$${(value / 1_000_000).toFixed(2)}M`;
     } else if (value >= 1_000) {
       return `$${value.toLocaleString(undefined, {
         minimumFractionDigits: 2,
         maximumFractionDigits: 2,
-      })}`; 
+      })}`;
     } else {
-      return `$${value.toFixed(2)}`; 
+      return `$${value.toFixed(2)}`;
     }
   };
 
@@ -84,7 +84,7 @@ const OrderSidebar = () => {
       totalPickups,
       revenueFromShipments,
       revenueFromPickups,
-      mostOrderedProduct: mostOrderedProduct.product, 
+      mostOrderedProduct: mostOrderedProduct.product,
     };
   }, [orders]);
 
@@ -94,9 +94,9 @@ const OrderSidebar = () => {
       {
         label: "Order Fulfillment",
         data: [cachedMetrics.totalShipments, cachedMetrics.totalPickups],
-        backgroundColor: ["#3cb371", "#34495e"],
-        hoverBackgroundColor: ["#26a65b", "#3d566e"],
-        borderColor: ["#145a32", "#2c3e50"],
+        backgroundColor: ["#1bb36a", "#ffcd47"],
+        hoverBackgroundColor: ["#1bb36a", "#ffcd47"],
+        borderColor: ["#141824"],
         borderWidth: 2,
       },
     ],
@@ -110,10 +110,10 @@ const OrderSidebar = () => {
         display: false,
       },
       tooltip: {
-        backgroundColor: "#1d1f1e",
+        backgroundColor: "#141824",
         titleColor: "#ffffff",
         bodyColor: "#ffffff",
-        borderColor: "#145a32",
+        borderColor: "#141824",
         borderWidth: 1,
       },
     },
@@ -173,32 +173,40 @@ const OrderSidebar = () => {
           <div className="bar-data">
             <div className="paid-data">
               <div className="icon-data">
-                <img src="../icons/product.png" alt=""></img>
+                <div className="rate-bar-color" style={{backgroundColor:'#3cb371'}}></div>
                 <p>Paid</p>
               </div>
               <p>
-                {((cachedMetrics.totalPaid * 100) / cachedMetrics.totalOrders).toFixed(2)}%
+                {(
+                  (cachedMetrics.totalPaid * 100) /
+                  cachedMetrics.totalOrders
+                ).toFixed(2)}
+                %
               </p>
             </div>
             <div className="cancelled-data">
               <div className="icon-data">
-                <img src="../icons/product.png" alt=""></img>
+                <div className="rate-bar-color" style={{backgroundColor:'#fd9b52'}}></div>
                 <p>Cancelled</p>
               </div>
               <p>
-                {((cachedMetrics.totalCancelled * 100) /
-                  cachedMetrics.totalOrders).toFixed(2)}
+                {(
+                  (cachedMetrics.totalCancelled * 100) /
+                  cachedMetrics.totalOrders
+                ).toFixed(2)}
                 %
               </p>
             </div>
             <div className="refunded-data">
               <div className="icon-data">
-                <img src="../icons/product.png" alt=""></img>
+                <div className="rate-bar-color" style={{backgroundColor:'#926cfd'}}></div>
                 <p>Refunded</p>
               </div>
               <p>
-                {((cachedMetrics.totalRefunded * 100) /
-                  cachedMetrics.totalOrders).toFixed(2)}
+                {(
+                  (cachedMetrics.totalRefunded * 100) /
+                  cachedMetrics.totalOrders
+                ).toFixed(2)}
                 %
               </p>
             </div>
@@ -249,12 +257,16 @@ const OrderSidebar = () => {
           <p>Top Seller</p>
         </div>
         <div className="product-sold">
-        <img src="../icons/product.png" alt=""></img>
+          <img src="../icons/product.png" alt=""></img>
           <div className="product-sold-details">
-          <p>{cachedMetrics.mostOrderedProduct || "No Product"}</p>
-          <p>{
-          orders.filter(order => order.product === cachedMetrics.mostOrderedProduct).length
-        }</p>
+            <p>{cachedMetrics.mostOrderedProduct || "No Product"}</p>
+            <p>
+              {
+                orders.filter(
+                  (order) => order.product === cachedMetrics.mostOrderedProduct
+                ).length
+              }
+            </p>
           </div>
         </div>
       </div>

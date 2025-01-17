@@ -61,7 +61,7 @@
 }
 
 .get-started-link {
-  color: var(--primary);
+  color: var(--secondary);
   font-weight: bold;
   text-decoration: none;
 }

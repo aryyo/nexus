@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Plus, Search, Filter, MoreVertical } from "lucide-react";
+import { Search, MoreVertical } from "lucide-react";
 import "../styles/Product.css";
 
 const products = [
@@ -69,7 +69,7 @@ const Product = () => {
               />
             </div>
           </div>
-          <button className="add">Remove</button>
+          <button className="export">Remove</button>
           <button className="add">Add</button>
         </div>
         <div className="product-grid">

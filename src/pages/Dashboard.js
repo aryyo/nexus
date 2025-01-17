@@ -4,7 +4,21 @@ import Summary from "../components/Summary";
 import Cards from "../components/Card";
 import "../styles/Dashboard.css";
 
-const Dashboard = () => {
+const Dashboard = ({
+  totalOrders,
+  totalRevenue,
+  totalPaid,
+  totalCancelled,
+  totalRefunded,
+  averagePrice,
+  rejectRate,
+  shippingRate,
+  totalShipments,
+  totalPickups,
+  revenueFromShipments,
+  revenueFromPickups,
+  mostOrderedProduct
+}) => {
   return (
     <div className="content">
       <div className="overview">
