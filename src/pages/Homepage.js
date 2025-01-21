@@ -23,49 +23,55 @@ const Homepage = () => {
       (acc, order) => acc + (order.status === "Paid" ? order.total : 0),
       0
     );
+  
     const totalPaid = orders.filter((order) => order.status === "Paid").length;
-    const totalCancelled = orders.filter(
-      (order) => order.status === "Cancelled"
-    ).length;
-    const totalRefunded = orders.filter(
-      (order) => order.status === "Refunded"
-    ).length;
-
+    const totalCancelled = orders.filter((order) => order.status === "Cancelled").length;
+    const totalRefunded = orders.filter((order) => order.status === "Refunded").length;
+  
     const averagePrice = totalOrders > 0 ? totalRevenue / totalOrders : 0;
     const rejectRate =
       totalOrders > 0
         ? ((totalCancelled + totalRefunded) * 100) / totalOrders
         : 0;
+    
     const totalShipments = orders.filter(
       (order) => order.type === "Shipping"
     ).length;
+    
     const totalPickups = orders.filter(
       (order) => order.type === "Pickup"
     ).length;
+    
     const shippingRate =
       totalOrders > 0 ? (totalShipments * 100) / totalOrders : 0;
-
-    // Calculate the revenue from shipments and pickups
+  
     const revenueFromShipments = orders
       .filter((order) => order.type === "Shipping" && order.status === "Paid")
       .reduce((acc, order) => acc + order.total, 0);
-
+  
     const revenueFromPickups = orders
       .filter((order) => order.type === "Pickup" && order.status === "Paid")
       .reduce((acc, order) => acc + order.total, 0);
-
-    // Find the most ordered product
+  
     const productCount = orders.reduce((acc, order) => {
       const product = order.product;
       acc[product] = (acc[product] || 0) + 1;
       return acc;
     }, {});
-
+  
     const mostOrderedProduct = Object.entries(productCount).reduce(
       (max, [product, count]) => (count > max.count ? { product, count } : max),
       { product: "", count: 0 }
     );
-
+  
+    const salesTax = totalRevenue * 0.0725;
+  
+    const shippingCosts = totalShipments * 5.99;
+  
+    const netProfit = totalPaid - salesTax - (totalShipments > 0 ? shippingCosts : 0);
+  
+    const income = totalPaid > 0 ? netProfit / totalPaid : 0;
+  
     return {
       totalOrders,
       totalRevenue,
@@ -80,6 +86,10 @@ const Homepage = () => {
       revenueFromShipments,
       revenueFromPickups,
       mostOrderedProduct: mostOrderedProduct.product,
+      salesTax,
+      shippingCosts,
+      netProfit,
+      income,
     };
   }, [orders]);
 

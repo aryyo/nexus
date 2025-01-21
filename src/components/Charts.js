@@ -7,7 +7,7 @@ import '../styles/Charts.css'
 ChartJS.register(CategoryScale, LinearScale, PointElement, LineElement, Title, Tooltip, Legend);
 
 const Charts = ({ orders, cachedMetrics }) => {
-  const getMonthlyRevenueData = () => {
+  const getMonthlyData = () => {
     const currentDate = new Date();
     const lastSixMonths = Array.from({ length: 6 }, (_, i) => {
       const date = new Date(currentDate);
@@ -15,37 +15,61 @@ const Charts = ({ orders, cachedMetrics }) => {
       return date;
     });
 
-    const monthlyRevenue = new Array(6).fill(0); 
+    const monthlyRevenue = new Array(6).fill(0);
+    const monthlyExpenses = new Array(6).fill(0);
+    const monthlySalesTax = new Array(6).fill(0);
+    const monthlyNetProfit = new Array(6).fill(0);
 
     orders.forEach(order => {
       const orderDate = new Date(order.datePlaced);
       if (orderDate >= lastSixMonths[5]) { 
         const monthIndex = lastSixMonths.findIndex(date => date.getMonth() === orderDate.getMonth() && date.getFullYear() === orderDate.getFullYear());
+        
         if (order.status === "Paid") {
-          monthlyRevenue[monthIndex] += order.total; 
+          monthlyRevenue[monthIndex] += cachedMetrics.revenueFromShipments + cachedMetrics.revenueFromPickups;
+          monthlySalesTax[monthIndex] += cachedMetrics.salesTax;
+          monthlyExpenses[monthIndex] += cachedMetrics.shippingCosts;
         }
       }
     });
 
+    for (let i = 0; i < 6; i++) {
+      monthlyNetProfit[i] = monthlyRevenue[i] - monthlySalesTax[i] - monthlyExpenses[i];
+    }
+
     return {
-      labels: lastSixMonths.map(date => date.toLocaleString("default", { month: "short", year: "numeric" })), // Month labels
-      data: monthlyRevenue, 
+      labels: lastSixMonths.map(date => date.toLocaleString("default", { month: "short", year: "numeric" })),
+      revenueData: monthlyRevenue,
+      expensesData: monthlyExpenses,
+      netProfitData: monthlyNetProfit,
     };
   };
 
-
-  const { labels, data } = useMemo(() => getMonthlyRevenueData(), [orders]);
-
+  const { labels, revenueData, expensesData, netProfitData } = useMemo(() => getMonthlyData(), [orders, cachedMetrics]);
 
   const chartData = {
     labels,
     datasets: [
       {
         label: "Revenue",
-        data,
+        data: revenueData,
         fill: false,
         borderColor: "#25da8c", 
-        tension: 0.1,
+        tension: .1,
+      },
+      {
+        label: "Expenses",
+        data: expensesData,
+        fill: false,
+        borderColor: "#ea85c0", 
+        tension: .1,
+      },
+      {
+        label: "Net Profit",
+        data: netProfitData,
+        fill: false,
+        borderColor: "#99551a", 
+        tension: .1,
       },
     ],
   };
@@ -58,12 +82,10 @@ const Charts = ({ orders, cachedMetrics }) => {
   return (
     <div className="charts">
       <div className="charts-header">
-        <h2>Revenue Trends</h2>
-        <button className="timeframe">Last 6 Months</button>
+        <h2>Trends</h2>
       </div>
       <div className="charts-graph">
-        <Line data={chartData} options={chartOptions}
-        />
+        <Line data={chartData} options={chartOptions} />
       </div>
     </div>
   );
