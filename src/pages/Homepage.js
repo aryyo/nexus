@@ -13,6 +13,7 @@ import "../styles/Homepage.css";
 
 const Homepage = () => {
   const [activeButton, setActiveButton] = useState("dashboard");
+  const [previousButton, setPreviousButton] = useState("dashboard");
 
   const RenderActiveComponent = () => {
     switch (activeButton) {
@@ -23,26 +24,53 @@ const Homepage = () => {
       case "help":
         return <Help />;
       case "products":
-        return <Product/>;
+        return <Product />;
       case "billing":
-        return <Billing/>;
+        return <Billing />;
       case "get-help":
-        return <Help/>;
+        return <Help />;
       case "my-account":
-        return <Account/>;
+        return <Account />;
       case "report":
-        return <Report/>
+        return <Report />;
       case "settings":
-        return <Settings/>;
+        return <Settings />;
+
+
+      case "log-out":
+        switch (previousButton) {
+          case "dashboard":
+            return <Dashboard />;
+          case "orders":
+            return <Orders />;
+          case "help":
+            return <Help />;
+          case "products":
+            return <Product />;
+          case "billing":
+            return <Billing />;
+          case "get-help":
+            return <Help />;
+          case "my-account":
+            return <Account />;
+          case "report":
+            return <Report />;
+          case "settings":
+            return <Settings />;
+        }
     }
   };
 
   return (
     <div>
       <Navbar />
-      {/* <button onClick={changeTheme}>Change Theme</button> */}
       <div className="homepage">
-        <Sidebar active={activeButton} setActive={setActiveButton} />
+        <Sidebar
+          active={activeButton}
+          setActive={setActiveButton}
+          previous={previousButton}
+          setPrevious={setPreviousButton}
+        />
         {RenderActiveComponent()}
       </div>
     </div>

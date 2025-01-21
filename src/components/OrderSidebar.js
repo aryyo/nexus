@@ -11,8 +11,12 @@ const OrderSidebar = () => {
 
   const formatRevenue = (value) => {
     if (value >= 1_000_000) {
+      console.log(value)
       return `$${(value / 1_000_000).toFixed(2)}M`;
-    } else if (value >= 1_000) {
+    // } else if (value >= 100_000) {
+    //   return `$${(value / 1_000).toFixed(1)}K`
+    }
+    else if (value >= 1_000) {
       return `$${value.toLocaleString(undefined, {
         minimumFractionDigits: 2,
         maximumFractionDigits: 2,

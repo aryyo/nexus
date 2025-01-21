@@ -1,8 +1,17 @@
 import "../styles/Sidebar.css";
 
-const Sidebar = ({ active, setActive }) => {
+const Sidebar = ({ active, setActive, previous, setPrevious }) => {
   const handleClick = (id) => {
-    setActive((prev) => (prev === id ? prev : id));
+    setActive((active) => {
+      if(active === id) {
+        setPrevious((prev) => {return id})
+        return active
+      }
+      else {
+        setPrevious((prev) => {return active})
+        return id
+      }
+    })
     //an arrow function without braces implicitly returns a value(expression)
     //prev here serves as a local variable so updating it be default doesn't do anything, you must return the value
   };
