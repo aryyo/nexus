@@ -1,22 +1,17 @@
 import "../styles/OrderSidebar.css";
-import { useState, useMemo } from "react";
 import { Doughnut } from "react-chartjs-2";
 import { Chart as ChartJS, ArcElement, Tooltip, Legend } from "chart.js";
-import OrderData from "../data/OrderData";
 
 ChartJS.register(ArcElement, Tooltip, Legend);
 
-const OrderSidebar = () => {
-  const [orders, setOrders] = useState(OrderData);
-
+const OrderSidebar = ({ orders, cachedMetrics }) => {
   const formatRevenue = (value) => {
     if (value >= 1_000_000) {
-      console.log(value)
+      console.log(value);
       return `$${(value / 1_000_000).toFixed(2)}M`;
-    // } else if (value >= 100_000) {
-    //   return `$${(value / 1_000).toFixed(1)}K`
-    }
-    else if (value >= 1_000) {
+      // } else if (value >= 100_000) {
+      //   return `$${(value / 1_000).toFixed(1)}K`
+    } else if (value >= 1_000) {
       return `$${value.toLocaleString(undefined, {
         minimumFractionDigits: 2,
         maximumFractionDigits: 2,
@@ -25,72 +20,6 @@ const OrderSidebar = () => {
       return `$${value.toFixed(2)}`;
     }
   };
-
-  const cachedMetrics = useMemo(() => {
-    const totalOrders = orders.length;
-    const totalRevenue = orders.reduce(
-      (acc, order) => acc + (order.status === "Paid" ? order.total : 0),
-      0
-    );
-    const totalPaid = orders.filter((order) => order.status === "Paid").length;
-    const totalCancelled = orders.filter(
-      (order) => order.status === "Cancelled"
-    ).length;
-    const totalRefunded = orders.filter(
-      (order) => order.status === "Refunded"
-    ).length;
-
-    const averagePrice = totalOrders > 0 ? totalRevenue / totalOrders : 0;
-    const rejectRate =
-      totalOrders > 0
-        ? ((totalCancelled + totalRefunded) * 100) / totalOrders
-        : 0;
-    const totalShipments = orders.filter(
-      (order) => order.type === "Shipping"
-    ).length;
-    const totalPickups = orders.filter(
-      (order) => order.type === "Pickup"
-    ).length;
-    const shippingRate =
-      totalOrders > 0 ? (totalShipments * 100) / totalOrders : 0;
-
-    // Calculate the revenue from shipments and pickups
-    const revenueFromShipments = orders
-      .filter((order) => order.type === "Shipping" && order.status === "Paid")
-      .reduce((acc, order) => acc + order.total, 0);
-
-    const revenueFromPickups = orders
-      .filter((order) => order.type === "Pickup" && order.status === "Paid")
-      .reduce((acc, order) => acc + order.total, 0);
-
-    // Find the most ordered product
-    const productCount = orders.reduce((acc, order) => {
-      const product = order.product;
-      acc[product] = (acc[product] || 0) + 1;
-      return acc;
-    }, {});
-
-    const mostOrderedProduct = Object.entries(productCount).reduce(
-      (max, [product, count]) => (count > max.count ? { product, count } : max),
-      { product: "", count: 0 }
-    );
-
-    return {
-      totalOrders,
-      totalRevenue,
-      totalPaid,
-      totalCancelled,
-      totalRefunded,
-      averagePrice,
-      rejectRate,
-      shippingRate,
-      totalShipments,
-      totalPickups,
-      revenueFromShipments,
-      revenueFromPickups,
-      mostOrderedProduct: mostOrderedProduct.product,
-    };
-  }, [orders]);
 
   const doughnutData = {
     labels: ["Shipments", "Pickups"],
@@ -177,7 +106,10 @@ const OrderSidebar = () => {
           <div className="bar-data">
             <div className="paid-data">
               <div className="icon-data">
-                <div className="rate-bar-color" style={{backgroundColor:'#3cb371'}}></div>
+                <div
+                  className="rate-bar-color"
+                  style={{ backgroundColor: "#3cb371" }}
+                ></div>
                 <p>Paid</p>
               </div>
               <p>
@@ -190,7 +122,10 @@ const OrderSidebar = () => {
             </div>
             <div className="cancelled-data">
               <div className="icon-data">
-                <div className="rate-bar-color" style={{backgroundColor:'#fd9b52'}}></div>
+                <div
+                  className="rate-bar-color"
+                  style={{ backgroundColor: "#fd9b52" }}
+                ></div>
                 <p>Cancelled</p>
               </div>
               <p>
@@ -203,7 +138,10 @@ const OrderSidebar = () => {
             </div>
             <div className="refunded-data">
               <div className="icon-data">
-                <div className="rate-bar-color" style={{backgroundColor:'#926cfd'}}></div>
+                <div
+                  className="rate-bar-color"
+                  style={{ backgroundColor: "#926cfd" }}
+                ></div>
                 <p>Refunded</p>
               </div>
               <p>
