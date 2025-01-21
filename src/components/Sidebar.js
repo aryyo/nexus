@@ -2,16 +2,12 @@ import "../styles/Sidebar.css";
 
 const Sidebar = ({ active, setActive, previous, setPrevious }) => {
   const handleClick = (id) => {
-    setActive((active) => {
-      if(active === id) {
-        setPrevious((prev) => {return id})
-        return active
+    setActive((currentActive) => {
+      if (currentActive !== "log-out") {
+        setPrevious(currentActive);
       }
-      else {
-        setPrevious((prev) => {return active})
-        return id
-      }
-    })
+      return currentActive === id ? currentActive : id;
+    });
     //an arrow function without braces implicitly returns a value(expression)
     //prev here serves as a local variable so updating it be default doesn't do anything, you must return the value
   };
@@ -98,7 +94,13 @@ const Sidebar = ({ active, setActive, previous, setPrevious }) => {
               key={button.id}
               onClick={() => handleClick(button.id)}
               className={`${
-                active === button.id ? "activeButton" : "dormantButton"
+                button.label === "Log Out"
+                  ? active === button.id
+                    ? "logoutActiveButton"
+                    : "logoutDormantButton"
+                  : active === button.id
+                  ? "activeButton"
+                  : "dormantButton"
               }`}
             >
               <img
@@ -110,6 +112,15 @@ const Sidebar = ({ active, setActive, previous, setPrevious }) => {
           ))}
         </div>
       ))}
+      {active === "log-out" && (
+        <div className="logout-modal">
+          <p>Are you sure you want to log out?</p>
+          <div className="logout-options">
+            <button className="logout-cancel">Cancel</button>
+            <button className="logout-confirm">Log Out</button>
+          </div>
+        </div>
+      )}
     </div>
   );
 };
