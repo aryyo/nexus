@@ -7,7 +7,7 @@ import '../styles/Charts.css'
 ChartJS.register(CategoryScale, LinearScale, PointElement, LineElement, Title, Tooltip, Legend);
 
 const Charts = ({ orders, cachedMetrics }) => {
-  const getMonthlyData = () => {
+  const { labels, revenueData, expensesData, netProfitData } = useMemo(() => {
     const currentDate = new Date();
     const lastSixMonths = Array.from({ length: 6 }, (_, i) => {
       const date = new Date(currentDate);
@@ -43,9 +43,7 @@ const Charts = ({ orders, cachedMetrics }) => {
       expensesData: monthlyExpenses,
       netProfitData: monthlyNetProfit,
     };
-  };
-
-  const { labels, revenueData, expensesData, netProfitData } = useMemo(() => getMonthlyData(), [orders, cachedMetrics]);
+  }, [orders, cachedMetrics]);  
 
   const chartData = {
     labels,
@@ -61,14 +59,14 @@ const Charts = ({ orders, cachedMetrics }) => {
         label: "Expenses",
         data: expensesData,
         fill: false,
-        borderColor: "#ea85c0", 
+        borderColor: "#ffcc4c", 
         tension: .1,
       },
       {
         label: "Net Profit",
         data: netProfitData,
         fill: false,
-        borderColor: "#99551a", 
+        borderColor: "#1d6aec", 
         tension: .1,
       },
     ],
