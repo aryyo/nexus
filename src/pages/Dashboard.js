@@ -15,7 +15,7 @@ const Dashboard = ({ orders, cachedMetrics }) => {
         <button className="export">Export</button>
         <button className="add">Add</button>
       </div>
-      <Cards />
+      <Cards cachedMetrics={cachedMetrics}/>
       <div className="data">
         <div className="data-graph">
           <Charts orders={orders} cachedMetrics={cachedMetrics} />

@@ -1,6 +1,6 @@
 import "../styles/Card.css";
 
-const Cards = () => {
+const Cards = ({ cachedMetrics }) => {
   return (
     <div className="cards">
       <div className="card">
@@ -9,7 +9,7 @@ const Cards = () => {
           <p>Total Income</p>
         </div>
         <div className="card-row-two">
-          <p className="count">3540</p>
+          <p className="count">${cachedMetrics.income.toFixed(2)}</p>
           <p className="percent">5%</p>
           <p className="date">Last Year</p>
         </div>
@@ -20,7 +20,7 @@ const Cards = () => {
           <p>Total Sales</p>
         </div>
         <div className="card-row-two">
-          <p className="count">874</p>
+          <p className="count">{cachedMetrics.totalOrders}</p>
           <p className="percent">5%</p>
           <p className="date">Last Year</p>
         </div>
@@ -31,7 +31,7 @@ const Cards = () => {
           <p>Total Expenses</p>
         </div>
         <div className="card-row-two">
-          <p className="count">34</p>
+          <p className="count">${cachedMetrics.totalExpenses.toFixed(2)}</p>
           <p className="percent">5%</p>
           <p className="date">Last Year</p>
         </div>
@@ -42,7 +42,7 @@ const Cards = () => {
           <p>Net Profit</p>
         </div>
         <div className="card-row-two">
-          <p className="count">29</p>
+          <p className="count">${cachedMetrics.totalNetProfit.toFixed(2)}</p>
           <p className="percent">5%</p>
           <p className="date">Last Year</p>
         </div>

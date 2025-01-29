@@ -1,5 +1,4 @@
-import React, { useState, useMemo } from "react";
-import OrderData from "../data/OrderData";
+import React, { useState, useEffect, useMemo } from "react";
 import Navbar from "../components/Navbar";
 import Sidebar from "../components/Sidebar";
 import Dashboard from "./Dashboard";
@@ -10,40 +9,27 @@ import Billing from "./Billing";
 import Account from "./Account";
 import Report from "./Report";
 import Settings from "./Settings";
+import OrderData from "../data/OrderData";
 import "../styles/Homepage.css";
 
 const Homepage = () => {
   const [activeButton, setActiveButton] = useState("dashboard");
   const [previousButton, setPreviousButton] = useState("dashboard");
-  const [orders, setOrders] = useState(OrderData);
+  const [orders, setOrders] = useState([]);
+
+  useEffect(() => {
+    fetch("http://localhost:3000/orders")
+      .then((res) => res.json())
+      .then((data) => {
+        setOrders(data);
+      })
+      .catch((err) => {
+        console.error(err);
+      });
+  }, []);
 
   const cachedMetrics = useMemo(() => {
     const totalOrders = orders.length;
-    const totalRevenue = orders.reduce(
-      (acc, order) => acc + (order.status === "Paid" ? order.total : 0),
-      0
-    );
-  
-    const totalPaid = orders.filter((order) => order.status === "Paid").length;
-    const totalCancelled = orders.filter((order) => order.status === "Cancelled").length;
-    const totalRefunded = orders.filter((order) => order.status === "Refunded").length;
-  
-    const averagePrice = totalOrders > 0 ? totalRevenue / totalOrders : 0;
-    const rejectRate =
-      totalOrders > 0
-        ? ((totalCancelled + totalRefunded) * 100) / totalOrders
-        : 0;
-    
-    const totalShipments = orders.filter(
-      (order) => order.type === "Shipping"
-    ).length;
-    
-    const totalPickups = orders.filter(
-      (order) => order.type === "Pickup"
-    ).length;
-    
-    const shippingRate =
-      totalOrders > 0 ? (totalShipments * 100) / totalOrders : 0;
   
     const revenueFromShipments = orders
       .filter((order) => order.type === "Shipping" && order.status === "Paid")
@@ -52,6 +38,20 @@ const Homepage = () => {
     const revenueFromPickups = orders
       .filter((order) => order.type === "Pickup" && order.status === "Paid")
       .reduce((acc, order) => acc + order.total, 0);
+  
+    const totalRevenue = revenueFromPickups + revenueFromShipments;
+  
+    const totalPaid = orders.filter((order) => order.status === "Paid").length;
+    const totalCancelled = orders.filter((order) => order.status === "Cancelled").length;
+    const totalRefunded = orders.filter((order) => order.status === "Refunded").length;
+  
+    const averagePrice = totalOrders > 0 ? totalRevenue / totalOrders : 0;
+    const rejectRate = totalOrders > 0 ? ((totalCancelled + totalRefunded) * 100) / totalOrders : 0;
+  
+    const totalShipments = orders.filter((order) => order.type === "Shipping").length;
+    const totalPickups = orders.filter((order) => order.type === "Pickup").length;
+    
+    const shippingRate = totalOrders > 0 ? (totalShipments * 100) / totalOrders : 0;
   
     const productCount = orders.reduce((acc, order) => {
       const product = order.product;
@@ -64,13 +64,55 @@ const Homepage = () => {
       { product: "", count: 0 }
     );
   
-    const salesTax = totalRevenue * 0.0725;
+    const salesTaxRate = 0.0725;
+    const salesTax = totalRevenue * salesTaxRate;
   
-    const shippingCosts = totalShipments * 5.99;
+    const shippingCosts = orders
+      .filter((order) => order.type === "Shipping" && order.status === "Paid")
+      .reduce((acc, order) => {
+        let cost = 5.99;
+        if (["Laptop", "Monitor"].includes(order.product)) cost = 15;
+        return acc + cost;
+      }, 0);
   
-    const netProfit = totalPaid - salesTax - (totalShipments > 0 ? shippingCosts : 0);
+    const packagingCosts = orders
+      .filter((order) => order.status === "Paid")
+      .reduce((acc, order) => {
+        let cost = 2.99; // Small items
+        if (["Laptop", "Monitor"].includes(order.product)) cost = 9.99; // Larger items
+        return acc + cost;
+      }, 0);
   
-    const income = totalPaid > 0 ? netProfit / totalPaid : 0;
+    const warehouseExpenses = totalOrders * 3; 
+  
+    const refundProcessingCosts = orders
+      .filter((order) => order.status === "Refunded")
+      .reduce((acc, order) => acc + 10, 0); 
+  
+    const monthlyRevenue = Array(12).fill(0);
+    const monthlyExpenses = Array(12).fill(0);
+    const monthlySalesTax = Array(12).fill(0);
+  
+    orders.forEach((order) => {
+      const orderDate = new Date(order.datePlaced);
+      const monthIndex = orderDate.getMonth();
+  
+      if (order.status === "Paid") {
+        monthlyRevenue[monthIndex] += order.total;
+        monthlySalesTax[monthIndex] += (salesTax / totalOrders);
+        monthlyExpenses[monthIndex] += (shippingCosts + refundProcessingCosts + packagingCosts + warehouseExpenses) / totalOrders;
+      }
+    });
+
+  
+    const monthlyNetProfit = monthlyRevenue.map((revenue, i) => {
+      return revenue - monthlySalesTax[i] - monthlyExpenses[i];
+    });
+  
+    const netProfit = monthlyNetProfit.reduce((acc, profit) => acc + profit, 0);
+    const income = totalRevenue > 0 ? netProfit / 12 : 0;
+    const totalExpenses = monthlyExpenses.reduce((acc, expense) => acc + expense, 0);
+    const totalNetProfit = monthlyNetProfit.reduce((acc, profit) => acc + profit, 0);
   
     return {
       totalOrders,
@@ -89,9 +131,16 @@ const Homepage = () => {
       salesTax,
       shippingCosts,
       netProfit,
+      monthlyRevenue, 
+      monthlyExpenses, 
+      monthlyNetProfit, 
       income,
+      totalExpenses,
+      totalNetProfit,
     };
   }, [orders]);
+  
+  
 
   const RenderActiveComponent = () => {
     switch (activeButton) {

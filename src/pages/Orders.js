@@ -9,7 +9,7 @@ const Orders = ({ orders, cachedMetrics }) => {
         <div className="orders-overview">
           <p>Orders</p>
         </div>
-        <OrderList />
+        <OrderList orders={orders}/>
       </div>
       <OrderSidebar orders={orders} cachedMetrics={cachedMetrics} />
     </div>

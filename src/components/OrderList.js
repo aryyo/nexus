@@ -1,7 +1,7 @@
 import "../styles/OrderList.css";
-import OrderData from "../data/OrderData";
 
 const formatName = (name) => {
+  if(!name) {return 'Unknown'}
   if (name.length > 18) {
     const clippedName = name.slice(0, 15);
     return `${clippedName}...`;
@@ -11,6 +11,7 @@ const formatName = (name) => {
 };
 
 const formatDate = (date) => {
+  if(!date) {return 'Unknown'}
   const month = date.slice(5, 7);
   const day = date.slice(8, 10);
   switch (month) {
@@ -42,15 +43,17 @@ const formatDate = (date) => {
 };
 
 const formatTotal = (total) => {
+  if(!total) {return 'Unknown'}
   return `$${total}`;
 };
 
 const formatOrderId = (id) => {
-  return `#${id}`;
+  if(!id) {return 'Unknown'}
+  return `#${id.slice(0,8)}`;
 };
 
 const columns = [
-  { label: "Order", key: "id", formatter: formatOrderId },
+  { label: "Order", key: "_id", formatter: formatOrderId },
   { label: "Customer", key: "customerName", formatter: formatName },
   { label: "Type", key: "type" },
   { label: "Status", key: "status" },
@@ -59,7 +62,7 @@ const columns = [
   { label: "Date", key: "datePlaced", formatter: formatDate },
 ];
 
-const OrderList = () => {
+const OrderList = ({orders}) => {
   return (
     <div className="orders-table-wrapper">
       <div className="orders-table">
@@ -68,9 +71,9 @@ const OrderList = () => {
             return <p key={column.key}>{column.label}</p>;
           })}
         </div>
-        {OrderData.map((order) => {
+        {orders.map((order) => {
           return (
-            <div className="table-row" key={order.id}>
+            <div className="table-row" key={order._id}>
               {columns.map((column) => {
                 const value = order[column.key];
                 const formatter = column.formatter;

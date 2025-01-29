@@ -1,49 +1,46 @@
 import React from "react";
 import { Line } from "react-chartjs-2";
-import { Chart as ChartJS, CategoryScale, LinearScale, PointElement, LineElement, Title, Tooltip, Legend } from "chart.js";
+import {
+  Chart as ChartJS,
+  CategoryScale,
+  LinearScale,
+  PointElement,
+  LineElement,
+  Title,
+  Tooltip,
+  Legend,
+} from "chart.js";
 import { useMemo } from "react";
-import '../styles/Charts.css'
+import "../styles/Charts.css";
 
 ChartJS.register(CategoryScale, LinearScale, PointElement, LineElement, Title, Tooltip, Legend);
 
-const Charts = ({ orders, cachedMetrics }) => {
-  const { labels, revenueData, expensesData, netProfitData } = useMemo(() => {
-    const currentDate = new Date();
-    const lastSixMonths = Array.from({ length: 6 }, (_, i) => {
-      const date = new Date(currentDate);
-      date.setMonth(date.getMonth() - i);
-      return date;
-    });
-
-    const monthlyRevenue = new Array(6).fill(0);
-    const monthlyExpenses = new Array(6).fill(0);
-    const monthlySalesTax = new Array(6).fill(0);
-    const monthlyNetProfit = new Array(6).fill(0);
-
-    orders.forEach(order => {
-      const orderDate = new Date(order.datePlaced);
-      if (orderDate >= lastSixMonths[5]) { 
-        const monthIndex = lastSixMonths.findIndex(date => date.getMonth() === orderDate.getMonth() && date.getFullYear() === orderDate.getFullYear());
-        
-        if (order.status === "Paid") {
-          monthlyRevenue[monthIndex] += cachedMetrics.revenueFromShipments + cachedMetrics.revenueFromPickups;
-          monthlySalesTax[monthIndex] += cachedMetrics.salesTax;
-          monthlyExpenses[monthIndex] += cachedMetrics.shippingCosts;
-        }
-      }
-    });
-
-    for (let i = 0; i < 6; i++) {
-      monthlyNetProfit[i] = monthlyRevenue[i] - monthlySalesTax[i] - monthlyExpenses[i];
+const Charts = ({ cachedMetrics }) => {
+  const {
+    labels,
+    revenueData,
+    expensesData,
+    netProfitData,
+  } = useMemo(() => {
+    if (!cachedMetrics) {
+      return { labels: [], revenueData: [], expensesData: [], netProfitData: [] };
     }
 
+    const {
+      monthlyRevenue,
+      monthlyExpenses,
+      monthlyNetProfit,
+    } = cachedMetrics;
+
     return {
-      labels: lastSixMonths.map(date => date.toLocaleString("default", { month: "short", year: "numeric" })),
+      labels: [
+        "Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"
+      ],
       revenueData: monthlyRevenue,
       expensesData: monthlyExpenses,
       netProfitData: monthlyNetProfit,
     };
-  }, [orders, cachedMetrics]);  
+  }, [cachedMetrics]);
 
   const chartData = {
     labels,
@@ -52,29 +49,52 @@ const Charts = ({ orders, cachedMetrics }) => {
         label: "Revenue",
         data: revenueData,
         fill: false,
-        borderColor: "#25da8c", 
-        tension: .1,
+        borderColor: "#25da8c",
+        backgroundColor: "#25da8c",
+        tension: 0.4,
       },
       {
         label: "Expenses",
         data: expensesData,
         fill: false,
-        borderColor: "#ffcc4c", 
-        tension: .1,
+        borderColor: "#ffcc4c",
+        backgroundColor: "#ffcc4c",
+        tension: 0.4,
       },
       {
         label: "Net Profit",
         data: netProfitData,
         fill: false,
-        borderColor: "#1d6aec", 
-        tension: .1,
+        borderColor: "#1d6aec",
+        backgroundColor: "#1d6aec",
+        tension: 0.4,
       },
     ],
   };
 
   const chartOptions = {
-    responsive: true,  
-    maintainAspectRatio: false, 
+    responsive: true,
+    maintainAspectRatio: false,
+    plugins: {
+      legend: {
+        position: "top",
+      },
+    },
+    scales: {
+      x: {
+        title: {
+          display: true,
+          text: "Month",
+        },
+      },
+      y: {
+        title: {
+          display: true,
+          text: "Amount ($)",
+        },
+        beginAtZero: true,
+      },
+    },
   };
 
   return (
