@@ -6,6 +6,7 @@ router.get("/", async (req, res) => {
   try {
     const orders = await Order.find()
     res.status(200).json(orders);
+    console.log('orders called')
   } catch (err) {
     res.status(500).send(err.message);
     console.error(err.message)

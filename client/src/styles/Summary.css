@@ -39,9 +39,12 @@
 }
 
 .summary-chart {
-  background-color: var(--secondary-accent);
-  height: 100%;
-  flex: 4 1;
+  height: 90%;
+  width: 40%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
 }
 
 .summary-chart-stats {
@@ -75,3 +78,16 @@
   font-size: .8rem;
   color: #999999;
 }
+
+.summary-chart-stat {
+  margin-top: -30%; /* Moves the number slightly up into the white space */
+  font-size: 2rem;
+  color: var(--text); /* Matches your theme */
+}
+
+.summary-chart-head {
+  color: #999999;
+  font-size: .8rem;
+}
+
+
