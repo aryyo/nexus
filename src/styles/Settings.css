@@ -1,0 +1,133 @@
+.settings-container {
+  background-color: var(--background);
+  color: var(--text);
+  width: 100%;
+}
+
+.settings-content {
+  display: flex;
+  flex-direction: column;
+  padding: 2rem;
+}
+
+.settings-title {
+  background-color: var(--background);
+  height: 3rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  border-bottom: 2px solid var(--border);
+}
+
+.settings-title p {
+  margin: 0;
+  padding-left: 2rem;
+  font-size: 18px;
+  font-weight: 600;
+}
+
+.interface-theme,
+.transparent-sidebar,
+.tables-view {
+  display: flex;
+  flex-direction: row;
+  margin: 0;
+  justify-content: space-between;
+  max-width: 1000px;
+  border-bottom: 1px solid var(--border);
+  padding-block: 1rem;
+}
+
+.interface-header {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.tables-view {
+  padding-block: 1rem;
+}
+
+.interface-theme h3,
+.transparent-sidebar h3,
+.tables-view h3 {
+  margin: 0;
+  font-weight: 500;
+  font-size: 16px;
+  font-family: "Roboto", serif;
+}
+
+.interface-theme p,
+.transparent-sidebar p,
+.tables-view p {
+  margin: 0;
+  font-weight: 400;
+  font-size: 14px;
+  font-family: "Roboto", serif;
+  color: rgb(143, 143, 143);
+}
+
+.interface-cards {
+  display: flex;
+  flex-direction: row;
+  gap: 1rem;
+}
+
+.interface-card {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  border-radius: 12px;
+  gap: 1rem;
+  overflow: hidden;
+}
+
+.interface-card:hover {
+  cursor: pointer;
+}
+
+.interface-card img {
+  height: 12rem;
+  width: 16rem;
+}
+
+.toggle-label {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.9rem;
+}
+
+.toggle-input {
+  display: none;
+}
+
+.toggle-slider {
+  position: relative;
+  width: 36px;
+  height: 20px;
+  background-color: #ccc;
+  border-radius: 36px;
+  transition: background-color 0.3s;
+}
+
+.toggle-slider:before {
+  content: "";
+  position: absolute;
+  top: 2px;
+  left: 2px;
+  width: 16px;
+  height: 16px;
+  background-color: white;
+  border-radius: 50%;
+  transition: transform 0.3s;
+}
+
+.toggle-input:checked + .toggle-slider {
+  background-color: var(--primary);
+}
+
+.toggle-input:checked + .toggle-slider:before {
+  transform: translateX(16px);
+}
