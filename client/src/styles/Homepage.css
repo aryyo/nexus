@@ -13,7 +13,7 @@ body {
 .homepage {
   display: flex;
   flex-direction: row;
-  height: 93vh;
+  min-height: 100vh;
 }
 
 

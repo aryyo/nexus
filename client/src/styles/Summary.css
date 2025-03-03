@@ -90,4 +90,16 @@
   font-size: .8rem;
 }
 
+@media screen and (max-width: 1480px) {
+  .summary-chart-stat {
+    margin-top: -30%; /* Moves the number slightly up into the white space */
+    font-size: 1.5rem;
+    color: var(--text); /* Matches your theme */
+  }
+  
+  .summary-chart-head {
+    color: #999999;
+    font-size: .8rem;
+  }
+}
 
