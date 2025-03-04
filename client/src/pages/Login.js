@@ -3,9 +3,38 @@ import "../styles/Login.css";
 
 const Login = () => {
   const [showPassword, setShowPassword] = useState(false);
+  const [isSignIn, setIsSignIn] = useState(false);
+  const [formData, setFormData] = useState({
+    email: "",
+    password: "",
+  });
 
   const togglePasswordVisibility = () => {
     setShowPassword(!showPassword);
+  };
+
+  const handleInputChange = (e) => {
+    const { id, value } = e.target;
+    setFormData(prev => ({
+      ...prev,
+      [id]: value
+    }));
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    // Here you would typically make an API call to your backend
+    console.log(`Attempting to ${isSignIn ? 'sign in' : 'sign up'} with:`, formData);
+  };
+
+  const toggleMode = (e) => {
+    e.preventDefault();
+    setIsSignIn(!isSignIn);
+    // Reset form data when switching modes
+    setFormData({
+      email: "",
+      password: "",
+    });
   };
 
   return (
@@ -16,16 +45,19 @@ const Login = () => {
             <img src="../icons/linux.png" alt="Linux logo" className="login-logo-image" />
           </div>
           <h1>Start your journey</h1>
-          <h2>Sign Up to InsideBox</h2>
+          <h2>{isSignIn ? "Sign In to InsideBox" : "Sign Up to InsideBox"}</h2>
         </div>
 
-        <form className="login-form">
+        <form className="login-form" onSubmit={handleSubmit}>
           <div className="form-group">
             <label htmlFor="email">E-mail</label>
             <input 
               type="email" 
               id="email" 
               placeholder="example@gmail.com"
+              value={formData.email}
+              onChange={handleInputChange}
+              required
             />
           </div>
 
@@ -36,6 +68,9 @@ const Login = () => {
                 type={showPassword ? "text" : "password"}
                 id="password"
                 placeholder="••••••••" 
+                value={formData.password}
+                onChange={handleInputChange}
+                required
               />
               <button 
                 type="button" 
@@ -58,10 +93,12 @@ const Login = () => {
             </div>
           </div>
 
-          <button type="submit" className="sign-up-button">Sign Up</button>
+          <button type="submit" className="sign-up-button">
+            {isSignIn ? "Sign In" : "Sign Up"}
+          </button>
 
           <div className="divider">
-            <span>or sign up with</span>
+            <span>or {isSignIn ? "sign in" : "sign up"} with</span>
           </div>
 
           <div className="social-login">
@@ -74,7 +111,12 @@ const Login = () => {
         </form>
 
         <div className="login-footer">
-          <p>Have an account? <a href="/signin">Sign in</a></p>
+          <p>
+            {isSignIn ? "Don't have an account? " : "Have an account? "}
+            <a href="#" onClick={toggleMode}>
+              {isSignIn ? "Sign up" : "Sign in"}
+            </a>
+          </p>
         </div>
       </div>
     </div>
