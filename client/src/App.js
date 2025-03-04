@@ -1,10 +1,15 @@
 import './styles/App.css'
+import { useState } from 'react';
 import Homepage from './pages/Homepage'
+import Login from "./pages/Login";
+
 
 function App() {
+  let [isLoggedIn, setIsLoggedIn] = useState(false);
+
   return (
     <div className="App">
-      <Homepage/>
+      {isLoggedIn ? <Homepage/> : <Login/>}
     </div>
   );
 }

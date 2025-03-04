@@ -9,7 +9,7 @@ import Billing from "./Billing";
 import Account from "./Account";
 import Report from "./Report";
 import Settings from "./Settings";
-import OrderData from "../data/OrderData";
+// import OrderData from "../data/OrderData";
 import "../styles/Homepage.css";
 
 const Homepage = () => {
