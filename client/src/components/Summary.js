@@ -2,6 +2,8 @@ import "../styles/Summary.css";
 import { Doughnut } from "react-chartjs-2";
 import { Chart as ChartJS, ArcElement, Tooltip, Legend } from "chart.js";
 
+ChartJS.register(ArcElement, Tooltip, Legend);
+
 const doughnutData = {
   labels: ["Shipments", "Pickups", "Returns"],
   datasets: [
@@ -39,40 +41,40 @@ const doughnutOptions = {
 
 const Summary = () => {
   return (
-    <div className="summary">
-      <div className="summary-header">
+    <div className="summary-widget">
+      <div className="summary-widget-header">
         <h2>Summary</h2>
         <div style={{display: 'flex', alignItems: 'center', gap: '0.2rem'}}>
           <p className="percent">5%</p>
           <p className="date">Last Year</p>
         </div>
       </div>
-      <div className="summary-data">
-        <div className="summary-chart">
+      <div className="summary-widget-data">
+        <div className="summary-widget-chart">
           <Doughnut data={doughnutData} options={doughnutOptions} />
-          <div className="summary-chart-stat">17</div>
-          <div className="summary-chart-head">Total Jobs</div>
+          <div className="summary-widget-chart-stat">17</div>
+          <div className="summary-widget-chart-head">Total Jobs</div>
         </div>
-        <div className="summary-stats">
-          <div className="summary-chart-line">
-            <div className="rate-bar-color" style={{backgroundColor:'var(--primary-accent)'}}></div>
-            <div className="summary-chart-line-stat">
+        <div className="summary-widget-stats">
+          <div className="summary-widget-stat-line">
+            <div className="summary-widget-dot" style={{backgroundColor:'var(--primary-accent)'}}></div>
+            <div className="summary-widget-stat-details">
               <p>Active Job</p>
-              <p style={{color:'var(--text'}}>52</p>
+              <p>52</p>
             </div>
           </div>
-          <div className="summary-chart-line">
-            <div className="rate-bar-color" style={{backgroundColor:'#47d5c9'}}></div>
-            <div className="summary-chart-line-stat">
+          <div className="summary-widget-stat-line">
+            <div className="summary-widget-dot" style={{backgroundColor:'#47d5c9'}}></div>
+            <div className="summary-widget-stat-details">
               <p>Unactive</p>
-              <p style={{color:'var(--text'}}>36</p>
+              <p>36</p>
             </div>
           </div>
-          <div className="summary-chart-line">
-            <div className="rate-bar-color" style={{backgroundColor:'#fc9c52'}}></div>
-            <div className="summary-chart-line-stat">
+          <div className="summary-widget-stat-line">
+            <div className="summary-widget-dot" style={{backgroundColor:'#fc9c52'}}></div>
+            <div className="summary-widget-stat-details">
               <p>Closed</p>
-              <p style={{color:'var(--text'}}>14</p>
+              <p>14</p>
             </div>
           </div>
         </div>
