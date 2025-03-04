@@ -3,14 +3,14 @@
   flex-direction: column;
   flex: 1 1;
   background-color: var(--background);
-  padding-block: 1rem;
+  padding-block: 0.8rem;
   padding-inline: 1rem;
   border-radius: 12px;
-  gap: 1rem;
+  gap: 0.8rem;
   border: 2px solid var(--border);
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
-  min-height: 300px;
-  max-height: 400px;
+  min-height: 280px;
+  max-height: 350px;
 }
 
 .summary-widget-header {
@@ -115,7 +115,7 @@
 
 @media screen and (max-width: 1480px) {
   .summary-widget {
-    min-height: 250px;
+    min-height: 230px;
   }
 
   .summary-widget-chart-stat {
@@ -125,26 +125,40 @@
 
 @media screen and (max-width: 1024px) {
   .summary-widget {
-    min-height: 180px;
-    max-height: 250px;
+    min-height: 160px;
+    max-height: 220px;
+    padding-block: 0.7rem;
+    gap: 0.6rem;
   }
 
+  .summary-widget-header h2 {
+    font-size: 18px;
+  }
 
+  .summary-widget-data {
+    height: calc(100% - 28px);
+  }
 
   .summary-widget-chart {
-    width: 40%;
+    width: 35%;
   }
 
   .summary-widget-chart-stat {
-    font-size: 1.2rem;
+    font-size: 1.1rem;
+    top: 52%;
   }
 
   .summary-widget-chart-head {
     font-size: 0.7rem;
+    top: 68%;
+  }
+
+  .summary-widget-stats {
+    gap: 0.4rem;
   }
 
   .summary-widget-stat-line {
-    height: 20px;
+    height: 18px;
   }
 
   .summary-widget-stat-details p {
