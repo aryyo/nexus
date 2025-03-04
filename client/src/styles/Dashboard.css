@@ -1,190 +1,141 @@
 .content {
-  background-color: var(--background);
+  background-color: #fff;
   width: 100%;
   height: auto;
   display: flex;
   flex-direction: column;
-  gap: 1rem;
+  gap: 1.25rem;
+  padding: 1.25rem;
 }
 
 .overview {
-  background-color: var(--background);
   width: 100%;
-  min-height: 3rem;
+  min-height: 2.5rem;
   display: flex;
   flex-direction: column;
   justify-content: center;
-  border-bottom: 2px solid var(--border);
+  border-bottom: 1px solid #e5e7eb;
+  padding-bottom: 0.75rem;
 }
 
 .overview p {
   margin: 0;
-  padding-left: 2rem;
-  font-size: 18px;
+  font-size: 1.5rem;
   font-weight: 600;
-  color: var(--text);
+  color: #111827;
 }
 
 .header {
   display: flex;
   flex-direction: row;
-  padding-inline: 2rem;
-  padding-top: 1rem;
   justify-content: flex-end;
+  align-items: center;
   gap: 1rem;
-  max-height: 30px;
 }
 
 .calendar,
 .export,
 .add {
-  background-color: var(--background);
-  font-family: "Roboto", serif;
-  font-size: 14px;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.75rem 1rem;
+  font-size: 0.875rem;
   font-weight: 500;
-  padding-block: 0.3rem;
-  padding-inline: 0.5rem;
-  border-radius: 8px;
-  border: 2px solid var(--border);
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
-  color: var(--text);
+  border-radius: 0.5rem;
+  transition: all 0.2s ease;
+  cursor: pointer;
 }
 
 .calendar {
   margin-right: auto;
+  background-color: #f3f4f6;
+  border: none;
+  color: #4b5563;
+}
+
+.calendar:hover {
+  background-color: #e5e7eb;
+}
+
+.export {
+  background: none;
+  border: 1px solid #e5e7eb;
+  color: #4b5563;
+}
+
+.export:hover {
+  background-color: #f3f4f6;
 }
 
 .add {
+  background-color: #926cfd;
+  border: none;
   color: white;
-  background-color: #1ab369;
-  border: 2px solid #1ab369;
 }
 
 .add:hover {
-  cursor: pointer;
-  background-color: #1ecd78;
-  border: 2px solid #1ecd78;
-}
-
-.calendar:hover,
-.export:hover {
-  cursor: pointer;
-  background-color: var(--background-odd);
+  background-color: #7c5ce7;
 }
 
 .data {
-  padding-inline: 2rem;
   display: flex;
-  flex-direction: row;
-  gap: 1rem;
-  max-height: 70%;
+  gap: 1.25rem;
 }
 
 .data-graph {
-  display: flex;
-  flex-direction: column;
-  flex: 3 3;
-  gap: 1rem;
-  overflow: hidden;
+  flex: 3;
+  background-color: #fff;
+  border: 1px solid #e5e7eb;
+  border-radius: 0.5rem;
+  padding: 1.25rem;
 }
 
 .data-cards {
+  flex: 2;
   display: flex;
   flex-direction: column;
-  flex: 2 2;
-  justify-content: center;
-  gap: 1rem;
+  gap: 1.25rem;
 }
 
-@media screen and (max-width: 1480px) {
-  .data-graph {
-    display: flex;
-    flex-direction: column;
-    flex: 4 3;
-    gap: 1rem;
-    overflow: hidden;
-  }
-}
-
-@media screen and (max-width: 1200px) {
+@media (max-width: 1200px) {
   .data {
-    padding-inline: 2rem;
-    display: flex;
     flex-direction: column;
-    gap: 1rem;
-    max-height: fit-content;
-    padding-bottom: 1rem;
+    height: auto;
   }
 
   .data-cards {
-    display: flex;
     flex-direction: row;
-    flex: 1 1;
-    justify-content: center;
-    gap: 1rem;
+  }
+
+  .data-cards > * {
+    flex: 1;
   }
 }
 
-@media screen and (max-width: 950px) {
-/* WIP */
-}
+@media (max-width: 768px) {
+  .content {
+    padding: 1rem;
+    gap: 1rem;
+  }
 
-/* Tablet and smaller desktop screens */
-@media screen and (max-width: 1024px) {
+  .overview p {
+    font-size: 1.25rem;
+  }
 
   .header {
-    padding-inline: 1rem;
     flex-wrap: wrap;
-    max-height: none;
-    gap: 0.5rem;
   }
 
   .calendar,
   .export,
   .add {
-    font-size: 12px;
-    padding: 0.2rem 0.4rem;
-  }
-
-  .data {
-    padding-inline: 1rem;
-    flex-direction: column;
-    max-height: none;
-  }
-
-  .data-graph {
-    flex: none;
-    min-height: 300px;
-  }
-
-  .data-cards {
-    flex-direction: row;
-    flex: none;
-    overflow-x: auto;
-  }
-
-  .data-cards > * {
-    flex: 1;
-    min-width: 200px;
-    max-width: calc(50% - 0.25rem);
-  }
-}
-
-/* Mobile devices */
-@media screen and (max-width: 768px) {
-
-  .overview p {
-    padding-left: 1rem;
-    font-size: 16px;
-  }
-
-  .header {
-    padding-inline: 0.5rem;
+    padding: 0.5rem 0.75rem;
+    font-size: 0.875rem;
   }
 
   .calendar {
     width: 100%;
-    margin-right: 0;
   }
 
   .export,
@@ -192,20 +143,7 @@
     flex: 1;
   }
 
-  .data {
-    padding-inline: 0.5rem;
-  }
-
-  .data-graph {
-    min-height: 250px;
-  }
-
   .data-cards {
     flex-direction: column;
-  }
-
-  .data-cards > * {
-    min-width: 90%;
-    max-width: 100%;
   }
 }

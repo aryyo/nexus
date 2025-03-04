@@ -1,79 +1,88 @@
+import React from 'react';
 import "../styles/Summary.css";
 import { Doughnut } from "react-chartjs-2";
 import { Chart as ChartJS, ArcElement, Tooltip, Legend } from "chart.js";
 
 ChartJS.register(ArcElement, Tooltip, Legend);
 
-const doughnutData = {
-  labels: ["Shipments", "Pickups", "Returns"],
-  datasets: [
-    {
-      label: "Order Fulfillment",
-      data: [2, 12, 3], 
-      backgroundColor: ["#47d5c9", "#fc9c52", "#926cfd"],  
-      hoverBackgroundColor: ["#47d5c9", "#fc9c52", "#926cfd"],  
-      borderColor: ["#47d5c9", "#fc9c52", "#926cfd"],  
-    },
-  ],
-};
-
-const doughnutOptions = {
-  responsive: true,
-  maintainAspectRatio: false,
-  plugins: {
-    legend: {
-      display: false,
-    },
-    tooltip: {
-      backgroundColor: "#141824",
-      titleColor: "#ffffff",
-      bodyColor: "#ffffff",
-      borderColor: "#141824",
-      borderWidth: 1,
-    },
-  },
-  // Make it a half-doughnut
-  cutout: "75%",  
-  rotation: -90,  
-  circumference: 180,  
-};
-
-
 const Summary = () => {
+  const doughnutData = {
+    labels: ["Active", "Unactive", "Closed"],
+    datasets: [
+      {
+        label: "Jobs",
+        data: [52, 36, 14],
+        backgroundColor: ["#926cfd", "#10b981", "#fbbf24"],
+        hoverBackgroundColor: ["#7c5ce7", "#0d9669", "#f59e0b"],
+        borderWidth: 0,
+        cutout: "75%",
+      },
+    ],
+  };
+
+  const options = {
+    responsive: true,
+    maintainAspectRatio: false,
+    plugins: {
+      legend: {
+        display: false,
+      },
+      tooltip: {
+        backgroundColor: "#fff",
+        titleColor: "#111827",
+        bodyColor: "#4b5563",
+        bodyFont: {
+          size: 12,
+        },
+        titleFont: {
+          size: 13,
+          weight: "600",
+        },
+        padding: 12,
+        boxPadding: 4,
+        usePointStyle: true,
+        borderColor: "#e5e7eb",
+        borderWidth: 1,
+      },
+    },
+  };
+
   return (
     <div className="summary-widget">
       <div className="summary-widget-header">
         <h2>Summary</h2>
-        <div className="rate-row-two">
-          <p className="percent">5%</p>
-          <p className="date">Last Year</p>
+        <div className="summary-info">
+          <p className="percent">+5%</p>
+          <p className="date">vs last year</p>
         </div>
       </div>
       <div className="summary-widget-data">
         <div className="summary-widget-chart">
-          <Doughnut data={doughnutData} options={doughnutOptions} />
-          <div className="summary-widget-chart-stat">17</div>
-          <div className="summary-widget-chart-head">Total Jobs</div>
+          <Doughnut data={doughnutData} options={options} />
+          <div className="summary-widget-chart-center">
+            <p className="summary-widget-chart-stat">102</p>
+            <p className="summary-widget-chart-head">Total Jobs</p>
+          </div>
         </div>
         <div className="summary-widget-stats">
           <div className="summary-widget-stat-line">
-            <div className="summary-widget-dot" style={{backgroundColor:'var(--primary-accent)'}}></div>
+            <div className="summary-widget-dot" style={{ backgroundColor: "#926cfd" }}></div>
             <div className="summary-widget-stat-details">
-              <p>Active Job</p>
+              <p>Active Jobs</p>
               <p>52</p>
             </div>
           </div>
           <div className="summary-widget-stat-line">
-            <div className="summary-widget-dot" style={{backgroundColor:'#47d5c9'}}></div>
+            <div className="summary-widget-dot" style={{ backgroundColor: "#10b981" }}></div>
             <div className="summary-widget-stat-details">
-              <p>Unactive</p>
+              <p>Unactive Jobs</p>
               <p>36</p>
             </div>
           </div>
           <div className="summary-widget-stat-line">
-            <div className="summary-widget-dot" style={{backgroundColor:'#fc9c52'}}></div>
+            <div className="summary-widget-dot" style={{ backgroundColor: "#fbbf24" }}></div>
             <div className="summary-widget-stat-details">
-              <p>Closed</p>
+              <p>Closed Jobs</p>
               <p>14</p>
             </div>
           </div>

@@ -198,13 +198,8 @@ const Homepage = () => {
 
   return (
     <div>
-      <Navbar />
+      <Navbar onToggleSidebar={toggleSidebar} />
       <div className="homepage">
-        <button className="menu-toggle" onClick={toggleSidebar}>
-          <span></span>
-          <span></span>
-          <span></span>
-        </button>
         <Sidebar
           active={activeButton}
           setActive={setActiveButton}

@@ -1,50 +1,60 @@
+import React from 'react';
 import "../styles/Card.css";
+import { Icons } from './Icons';
 
 const Cards = ({ cachedMetrics }) => {
   return (
     <div className="cards">
       <div className="card">
         <div className="card-row-one">
-          <img src="./icons/employee.png" alt=""></img>
+          {Icons.employee}
           <p>Total Income</p>
         </div>
         <div className="card-row-two">
           <p className="count">${cachedMetrics.income.toFixed(2)}</p>
-          <p className="percent">5%</p>
-          <p className="date">Last Year</p>
+          <div className="metrics">
+            <p className="percent">+5%</p>
+            <p className="date">vs last year</p>
+          </div>
         </div>
       </div>
       <div className="card">
         <div className="card-row-one">
-          <img src="./icons/employee.png" alt=""></img>
+          {Icons.project}
           <p>Total Sales</p>
         </div>
         <div className="card-row-two">
           <p className="count">{cachedMetrics.totalOrders}</p>
-          <p className="percent">5%</p>
-          <p className="date">Last Year</p>
+          <div className="metrics">
+            <p className="percent">+5%</p>
+            <p className="date">vs last year</p>
+          </div>
         </div>
       </div>
       <div className="card">
         <div className="card-row-one">
-          <img src="./icons/employee.png" alt=""></img>
+          {Icons.invoice}
           <p>Total Expenses</p>
         </div>
         <div className="card-row-two">
           <p className="count">${cachedMetrics.totalExpenses.toFixed(2)}</p>
-          <p className="percent">5%</p>
-          <p className="date">Last Year</p>
+          <div className="metrics">
+            <p className="percent">+5%</p>
+            <p className="date">vs last year</p>
+          </div>
         </div>
       </div>
       <div className="card">
         <div className="card-row-one">
-          <img src="./icons/employee.png" alt=""></img>
+          {Icons.paid}
           <p>Net Profit</p>
         </div>
         <div className="card-row-two">
           <p className="count">${cachedMetrics.totalNetProfit.toFixed(2)}</p>
-          <p className="percent">5%</p>
-          <p className="date">Last Year</p>
+          <div className="metrics">
+            <p className="percent">+5%</p>
+            <p className="date">vs last year</p>
+          </div>
         </div>
       </div>
     </div>

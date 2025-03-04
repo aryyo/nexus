@@ -1,118 +1,120 @@
+import React from 'react';
 import "../styles/Sidebar.css";
+import { Icons } from './Icons';
 
 const Sidebar = ({ active, setActive, previous, setPrevious, isOpen, onClose }) => {
-  const handleClick = (id) => {
-    setActive((currentActive) => {
-      if (currentActive !== "log-out") {
-        setPrevious(currentActive);
-      }
-      if (window.innerWidth <= 1024) {
-        onClose(); // Close sidebar on mobile after clicking a menu item
-      }
-      return currentActive === id ? currentActive : id;
-    });
+  const menuItems = {
+    main: [
+      {
+        id: "dashboard",
+        label: "Dashboard",
+        icon: Icons.compass,
+        activeIcon: Icons.compassG,
+      },
+      {
+        id: "orders",
+        label: "Orders",
+        icon: Icons.project,
+        activeIcon: Icons.projectG,
+      },
+      {
+        id: "products",
+        label: "Products",
+        icon: Icons.product,
+        activeIcon: Icons.productG,
+      },
+      {
+        id: "billing",
+        label: "Billing",
+        icon: Icons.invoice,
+        activeIcon: Icons.invoiceG,
+      },
+    ],
+    secondary: [
+      {
+        id: "my-account",
+        label: "My Account",
+        icon: Icons.user,
+        activeIcon: Icons.userG,
+      },
+      {
+        id: "get-help",
+        label: "Get Help",
+        icon: Icons.help,
+        activeIcon: Icons.helpG,
+      },
+      {
+        id: "report",
+        label: "Report",
+        icon: Icons.report,
+        activeIcon: Icons.reportG,
+      },
+    ],
+    bottom: [
+      {
+        id: "settings",
+        label: "Settings",
+        icon: Icons.settings,
+        activeIcon: Icons.settingsG,
+      },
+      {
+        id: "log-out",
+        label: "Log Out",
+        icon: Icons.logout,
+        activeIcon: Icons.logoutG,
+      },
+    ],
   };
 
-  const sections = [
-    {
-      title: "GENERAL",
-      buttons: [
-        {
-          id: "dashboard",
-          label: "Dashboard",
-          icon: "./icons/compass.png",
-          activeIcon: "./icons/compass-g.png",
-        },
-        {
-          id: "orders",
-          label: "Orders",
-          icon: "./icons/project.png",
-          activeIcon: "./icons/project-g.png",
-        },
-        {
-          id: "products",
-          label: "Products",
-          icon: "./icons/product.png",
-          activeIcon: "./icons/product-g.png",
-        },
-        {
-          id: "billing",
-          label: "Billing",
-          icon: "./icons/invoice.png",
-          activeIcon: "./icons/invoice-g.png",
-        },
-      ],
-    },
-    {
-      title: "ACCOUNT",
-      buttons: [
-        {
-          id: "my-account",
-          label: "My Account",
-          icon: "./icons/user.png",
-          activeIcon: "./icons/user-g.png",
-        },
-        {
-          id: "get-help",
-          label: "Get Help",
-          icon: "./icons/help.png",
-          activeIcon: "./icons/help-g.png",
-        },
-        {
-          id: "report",
-          label: "Report",
-          icon: "./icons/report.png",
-          activeIcon: "./icons/report-g.png",
-        },
-      ],
-    },
-    {
-      title: "OTHERS",
-      buttons: [
-        {
-          id: "settings",
-          label: "Settings",
-          icon: "./icons/settings.png",
-          activeIcon: "./icons/settings-g.png",
-        },
-        {
-          id: "log-out",
-          label: "Log Out",
-          icon: "./icons/log.png",
-          activeIcon: "./icons/log-g.png",
-        },
-      ],
-    },
-  ];
+  const handleClick = (buttonId) => {
+    setPrevious(active);
+    setActive(buttonId);
+    if (window.innerWidth <= 1024) {
+      onClose(); // Close sidebar on mobile after clicking a menu item
+    }
+  };
 
   return (
-    <div className={`sidebar ${isOpen ? 'active' : ''}`}>
-      {sections.map((section) => (
-        <div key={section.title} className={section.title.toLowerCase()}>
-          <p>{section.title}</p>
-          {section.buttons.map((button) => (
-            <button
-              key={button.id}
-              onClick={() => handleClick(button.id)}
-              className={`${
-                button.label === "Log Out"
-                  ? active === button.id
-                    ? "logoutActiveButton"
-                    : "logoutDormantButton"
-                  : active === button.id
-                  ? "activeButton"
-                  : "dormantButton"
-              }`}
-            >
-              <img
-                src={active === button.id ? button.activeIcon : button.icon}
-                alt=""
-              />
-              {button.label}
-            </button>
-          ))}
-        </div>
-      ))}
+    <div className={`sidebar ${isOpen ? "open" : ""}`}>
+      <div className="menu-section">
+        {menuItems.main.map((button) => (
+          <button
+            key={button.id}
+            onClick={() => handleClick(button.id)}
+            className={`menu-button ${active === button.id ? "active" : ""}`}
+          >
+            {active === button.id ? button.activeIcon : button.icon}
+            <span>{button.label}</span>
+          </button>
+        ))}
+      </div>
+
+      <div className="menu-section">
+        {menuItems.secondary.map((button) => (
+          <button
+            key={button.id}
+            onClick={() => handleClick(button.id)}
+            className={`menu-button ${active === button.id ? "active" : ""}`}
+          >
+            {active === button.id ? button.activeIcon : button.icon}
+            <span>{button.label}</span>
+          </button>
+        ))}
+      </div>
+
+      <div className="menu-section bottom">
+        {menuItems.bottom.map((button) => (
+          <button
+            key={button.id}
+            onClick={() => handleClick(button.id)}
+            className={`menu-button ${active === button.id ? "active" : ""}`}
+          >
+            {active === button.id ? button.activeIcon : button.icon}
+            <span>{button.label}</span>
+          </button>
+        ))}
+      </div>
+
       {active === "log-out" && (
         <div className="logout-modal">
           <p>Are you sure you want to log out?</p>

@@ -1,32 +1,31 @@
-import "../styles/Navbar.css";
+import React from 'react';
+import '../styles/Navbar.css';
+import { Icons } from './Icons';
 
-const Navbar = () => {
+const Navbar = ({ onToggleSidebar }) => {
   return (
-    <div className="nav">
-      <nav className="navbar">
-        <div className="logo">
-          <img src="./icons/linux.png" alt="" className="logo-image"></img>
-          <p>Nexus</p>
-          <div className="search">
-            <img src="./icons/search.png" alt="" className="search-image"></img>
-            <input placeholder="Quick Search"></input>
-            <div className="command-f">
-              <img src="./icons/command.png" alt=""></img>F
-            </div>
-          </div>
+    <div className="navbar">
+      <div className="nav-left">
+        <button className="nav-button menu-toggle" onClick={onToggleSidebar}>
+          {Icons.menu}
+        </button>
+        {Icons.linux}
+        <div className="search-box">
+          {Icons.search}
+          <input type="text" placeholder="Search..." />
         </div>
-
-        <div className="buttons">
-          <button className="mail">
-            <img src="./icons/mail.png" alt="Mail"></img>
-          </button>
-          <button className="notification">
-            <img src="./icons/bell.png" alt="Notification"></img>
-          </button>
-          <button className="plans">Account Plans</button>
-          <button className="support">Support</button>
+      </div>
+      <div className="nav-right">
+        <button className="nav-button">
+          {Icons.mail}
+        </button>
+        <button className="nav-button">
+          {Icons.bell}
+        </button>
+        <div className="user-profile">
+          {Icons.user}
         </div>
-      </nav>
+      </div>
     </div>
   );
 };

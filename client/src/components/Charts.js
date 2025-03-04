@@ -1,11 +1,10 @@
 import React from "react";
-import { Line } from "react-chartjs-2";
+import { Bar } from "react-chartjs-2";
 import {
   Chart as ChartJS,
   CategoryScale,
   LinearScale,
-  PointElement,
-  LineElement,
+  BarElement,
   Title,
   Tooltip,
   Legend,
@@ -13,61 +12,50 @@ import {
 import { useMemo } from "react";
 import "../styles/Charts.css";
 
-ChartJS.register(CategoryScale, LinearScale, PointElement, LineElement, Title, Tooltip, Legend);
+ChartJS.register(CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend);
 
 const Charts = ({ cachedMetrics }) => {
   const {
     labels,
-    revenueData,
-    expensesData,
-    netProfitData,
+    projectData,
+    productData,
   } = useMemo(() => {
-    if (!cachedMetrics) {
-      return { labels: [], revenueData: [], expensesData: [], netProfitData: [] };
-    }
-
-    const {
-      monthlyRevenue,
-      monthlyExpenses,
-      monthlyNetProfit,
-    } = cachedMetrics;
-
+    // Simulated data to match the screenshot
     return {
-      labels: [
-        "Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"
-      ],
-      revenueData: monthlyRevenue,
-      expensesData: monthlyExpenses,
-      netProfitData: monthlyNetProfit,
+      labels: ["Jan", "Feb", "Mar", "Apr", "May", "Jun"],
+      projectData: [25, 45, 30, 50, 25, 35],
+      productData: [20, 40, 25, 45, 20, 25],
     };
-  }, [cachedMetrics]);
+  }, []);
 
   const chartData = {
     labels,
     datasets: [
       {
-        label: "Revenue",
-        data: revenueData,
-        fill: false,
-        borderColor: "#25da8c",
-        backgroundColor: "#25da8c",
-        tension: 0.4,
+        label: "Project",
+        data: projectData,
+        backgroundColor: "#10b981",
+        borderRadius: {
+          topLeft: 4,
+          topRight: 4,
+          bottomLeft: 0,
+          bottomRight: 0,
+        },
+        barPercentage: 0.6,
+        categoryPercentage: 0.7,
       },
       {
-        label: "Expenses",
-        data: expensesData,
-        fill: false,
-        borderColor: "#ffcc4c",
-        backgroundColor: "#ffcc4c",
-        tension: 0.4,
-      },
-      {
-        label: "Net Profit",
-        data: netProfitData,
-        fill: false,
-        borderColor: "#1d6aec",
-        backgroundColor: "#1d6aec",
-        tension: 0.4,
+        label: "Product",
+        data: productData,
+        backgroundColor: "#fbbf24",
+        borderRadius: {
+          topLeft: 4,
+          topRight: 4,
+          bottomLeft: 0,
+          bottomRight: 0,
+        },
+        barPercentage: 0.6,
+        categoryPercentage: 0.7,
       },
     ],
   };
@@ -75,35 +63,99 @@ const Charts = ({ cachedMetrics }) => {
   const chartOptions = {
     responsive: true,
     maintainAspectRatio: false,
+    interaction: {
+      mode: 'index',
+      intersect: false,
+    },
     plugins: {
       legend: {
-        position: "top",
+        display: false,
+      },
+      tooltip: {
+        backgroundColor: "#111827",
+        titleColor: "#fff",
+        bodyColor: "#fff",
+        bodyFont: {
+          size: 12,
+        },
+        titleFont: {
+          size: 13,
+          weight: "600",
+        },
+        padding: 12,
+        boxPadding: 4,
+        usePointStyle: true,
+        callbacks: {
+          title: () => "Performance Team",
+          label: function(context) {
+            let label = context.dataset.label || '';
+            if (label) {
+              label += ': ';
+            }
+            label += context.parsed.y + 'K';
+            return label;
+          }
+        }
       },
     },
     scales: {
       x: {
-        title: {
-          display: true,
-          text: "Month",
+        stacked: true,
+        grid: {
+          display: false,
+        },
+        ticks: {
+          color: "#6b7280",
+          font: {
+            size: 12,
+          },
+        },
+        border: {
+          display: false,
         },
       },
       y: {
-        title: {
-          display: true,
-          text: "Amount ($)",
+        stacked: true,
+        grid: {
+          color: "#f3f4f6",
+          drawBorder: false,
+        },
+        ticks: {
+          color: "#6b7280",
+          font: {
+            size: 12,
+          },
+          callback: function(value) {
+            return value + '%';
+          },
+          max: 100,
+          stepSize: 25,
+        },
+        border: {
+          display: false,
         },
         beginAtZero: true,
       },
     },
+    layout: {
+      padding: {
+        top: 20
+      }
+    }
   };
 
   return (
     <div className="charts">
       <div className="charts-header">
-        <h2>Trends</h2>
+        <h2>Performance Team</h2>
+        <select className="time-select">
+          <option>Last 6 month</option>
+          <option>Last year</option>
+          <option>Last 3 months</option>
+        </select>
       </div>
       <div className="charts-graph">
-        <Line data={chartData} options={chartOptions} />
+        <Bar data={chartData} options={chartOptions} />
       </div>
     </div>
   );
