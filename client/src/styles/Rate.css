@@ -109,7 +109,17 @@
 .rate-line-two,
 .rate-line-three {
   height: 100%;
-  transition: width 0.5s ease-in-out;
+  width: 0%;
+  animation: growBar 1s ease-out forwards;
+}
+
+@keyframes growBar {
+  from {
+    width: 0%;
+  }
+  to {
+    width: var(--target-width);
+  }
 }
 
 .rate-line-one {

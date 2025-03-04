@@ -22,7 +22,7 @@ const Rate = () => {
               <span>87%</span>
             </div>
             <div className="rate-bar-progress">
-              <div className="rate-line-one" style={{ width: "87%" }}></div>
+              <div className="rate-line-one" style={{ '--target-width': '87%' }}></div>
             </div>
           </div>
           <div className="rate-bar">
@@ -31,7 +31,7 @@ const Rate = () => {
               <span>34%</span>
             </div>
             <div className="rate-bar-progress">
-              <div className="rate-line-two" style={{ width: "34%" }}></div>
+              <div className="rate-line-two" style={{ '--target-width': '34%' }}></div>
             </div>
           </div>
           <div className="rate-bar">
@@ -40,7 +40,7 @@ const Rate = () => {
               <span>29%</span>
             </div>
             <div className="rate-bar-progress">
-              <div className="rate-line-three" style={{ width: "29%" }}></div>
+              <div className="rate-line-three" style={{ '--target-width': '29%' }}></div>
             </div>
           </div>
         </div>
