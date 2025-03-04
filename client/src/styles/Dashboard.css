@@ -161,7 +161,6 @@
     flex-direction: row;
     flex: none;
     overflow-x: auto;
-    padding-bottom: 1rem;
   }
 
   .data-cards > * {

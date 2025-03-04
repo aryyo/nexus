@@ -5,12 +5,14 @@ const Rate = () => {
     <div className="rate">
       <div className="rate-header">
         <h2>Insights</h2>
+        <div className="rate-row-two">
+          <p className="percent">5%</p>
+          <p className="date">Last Year</p>
+        </div>
       </div>
       <div className="rate-section">
         <div className="rate-row-two">
           <p className="count">85%</p>
-          <p className="percent">5%</p>
-          <p className="date">Last Year</p>
         </div>
         <div className="rate-bar">
           <div className="rate-line-one" style={{ flex: 87 }}></div>
