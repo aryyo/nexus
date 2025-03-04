@@ -42,8 +42,10 @@ const Summary = () => {
     <div className="summary">
       <div className="summary-header">
         <h2>Summary</h2>
-        <p className="percent">5%</p>
-        <p className="date">Last Year</p>
+        <div style={{display: 'flex', alignItems: 'center', gap: '0.2rem'}}>
+          <p className="percent">5%</p>
+          <p className="date">Last Year</p>
+        </div>
       </div>
       <div className="summary-data">
         <div className="summary-chart">

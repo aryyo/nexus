@@ -1,15 +1,16 @@
 import "../styles/Sidebar.css";
 
-const Sidebar = ({ active, setActive, previous, setPrevious }) => {
+const Sidebar = ({ active, setActive, previous, setPrevious, isOpen, onClose }) => {
   const handleClick = (id) => {
     setActive((currentActive) => {
       if (currentActive !== "log-out") {
         setPrevious(currentActive);
       }
+      if (window.innerWidth <= 1024) {
+        onClose(); // Close sidebar on mobile after clicking a menu item
+      }
       return currentActive === id ? currentActive : id;
     });
-    //an arrow function without braces implicitly returns a value(expression)
-    //prev here serves as a local variable so updating it be default doesn't do anything, you must return the value
   };
 
   const sections = [
@@ -85,7 +86,7 @@ const Sidebar = ({ active, setActive, previous, setPrevious }) => {
   ];
 
   return (
-    <div className="sidebar">
+    <div className={`sidebar ${isOpen ? 'active' : ''}`}>
       {sections.map((section) => (
         <div key={section.title} className={section.title.toLowerCase()}>
           <p>{section.title}</p>
@@ -116,7 +117,7 @@ const Sidebar = ({ active, setActive, previous, setPrevious }) => {
         <div className="logout-modal">
           <p>Are you sure you want to log out?</p>
           <div className="logout-options">
-            <button className="logout-cancel">Cancel</button>
+            <button className="logout-cancel" onClick={() => handleClick(previous)}>Cancel</button>
             <button className="logout-confirm">Log Out</button>
           </div>
         </div>

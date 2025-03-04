@@ -5,8 +5,13 @@
   gap: 1rem;
   background-color: var(--background);
   width: 15%;
+  min-width: 200px;
   padding: 1rem;
   border-right: 2px solid var(--border);
+  height: 100vh;
+  position: sticky;
+  top: 0;
+  transition: transform 0.3s ease-in-out;
 }
 
 .general,
@@ -165,9 +170,90 @@
   border: 2px solid #e65252;
 }
 
-@media screen and (max-width: 1200px) {
+/* Tablet and smaller desktop screens */
+@media screen and (max-width: 1024px) {
   .sidebar {
-    width: 15%;
-    min-height: 100%;
+    position: fixed;
+    left: 0;
+    top: 0;
+    width: 250px;
+    min-width: unset;
+    height: 100vh;
+    z-index: 999;
+    transform: translateX(-100%);
+    border-right: 2px solid var(--border);
+    padding: 1rem;
+    padding-top: 4rem; /* Space for the toggle button */
+  }
+
+  .sidebar.active {
+    transform: translateX(0);
+  }
+
+  .general,
+  .account,
+  .others {
+    width: 100%;
+    border-bottom: 2px solid var(--border);
+    padding-bottom: 1rem;
+  }
+
+  .others {
+    border-bottom: none;
+  }
+
+  .activeButton,
+  .dormantButton,
+  .logoutActiveButton,
+  .logoutDormantButton {
+    padding: 0.3rem;
+    font-size: 12px;
+  }
+}
+
+/* Mobile devices */
+@media screen and (max-width: 768px) {
+  .sidebar {
+    width: 85%;
+  }
+
+  .activeButton,
+  .dormantButton,
+  .logoutActiveButton,
+  .logoutDormantButton {
+    padding: 0.4rem;
+    font-size: 14px;
+  }
+
+  .general img,
+  .account img,
+  .others img {
+    width: 20px;
+  }
+
+  .logout-modal {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    margin: 0;
+    border-radius: 12px 12px 0 0;
+    z-index: 1000;
+  }
+
+  /* Add backdrop when sidebar is open */
+  .sidebar-backdrop {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: 998;
+  }
+
+  .sidebar-backdrop.active {
+    display: block;
   }
 }

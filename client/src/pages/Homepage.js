@@ -16,6 +16,7 @@ const Homepage = () => {
   const [activeButton, setActiveButton] = useState("dashboard");
   const [previousButton, setPreviousButton] = useState("dashboard");
   const [orders, setOrders] = useState([]);
+  const [isSidebarOpen, setIsSidebarOpen] = useState(false);
 
   useEffect(() => {
     fetch("http://localhost:3000/orders")
@@ -142,6 +143,10 @@ const Homepage = () => {
   
   
 
+  const toggleSidebar = () => {
+    setIsSidebarOpen(!isSidebarOpen);
+  };
+
   const RenderActiveComponent = () => {
     switch (activeButton) {
       case "dashboard":
@@ -195,12 +200,25 @@ const Homepage = () => {
     <div>
       <Navbar />
       <div className="homepage">
+        <button className="menu-toggle" onClick={toggleSidebar}>
+          <span></span>
+          <span></span>
+          <span></span>
+        </button>
         <Sidebar
           active={activeButton}
           setActive={setActiveButton}
           previous={previousButton}
           setPrevious={setPreviousButton}
+          isOpen={isSidebarOpen}
+          onClose={() => setIsSidebarOpen(false)}
         />
+        {isSidebarOpen && (
+          <div 
+            className={`sidebar-backdrop ${isSidebarOpen ? 'active' : ''}`}
+            onClick={() => setIsSidebarOpen(false)}
+          />
+        )}
         {RenderActiveComponent()}
       </div>
     </div>

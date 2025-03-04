@@ -66,20 +66,35 @@
   color: #999999;
 }
 
-@media screen and (max-width: 1050px) {
+@media screen and (max-width: 1024px) {
   .cards {
-    display: flex;
-    flex-direction: row;
+    padding-inline: 1rem;
     flex-wrap: wrap;
-    padding-inline: 2rem;
-    align-items: center;
-    justify-content: space-between;
+    gap: 0.5rem;
   }
 
   .card {
-    flex-direction: column;
-    flex: none;
-    width: 46%;
+    flex: 1 1 calc(50% - 0.25rem);
+    min-width: calc(50% - 0.25rem);
+    height: 5rem;
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .cards {
+    padding-inline: 0.5rem;
   }
 
+  .card {
+    flex: 1 1 100%;
+    height: 4.5rem;
+  }
+
+  .card-row-one {
+    font-size: 12px;
+  }
+
+  .count {
+    font-size: 18px;
+  }
 }
