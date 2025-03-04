@@ -44,7 +44,7 @@ const Summary = () => {
     <div className="summary-widget">
       <div className="summary-widget-header">
         <h2>Summary</h2>
-        <div style={{display: 'flex', alignItems: 'center', gap: '0.2rem'}}>
+        <div className="rate-row-two">
           <p className="percent">5%</p>
           <p className="date">Last Year</p>
         </div>

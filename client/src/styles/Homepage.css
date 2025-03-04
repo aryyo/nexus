@@ -50,9 +50,6 @@ body {
 
 /* Tablet and smaller desktop screens */
 @media screen and (max-width: 1024px) {
-  body {
-    font-size: 14px;
-  }
 
   .menu-toggle {
     display: flex;
