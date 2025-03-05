@@ -1,6 +1,6 @@
 .orders-table-wrapper {
-  background-color: #fff;
-  border: 1px solid #e5e7eb;
+  background-color: var(--card-bg);
+  border: 1px solid var(--card-border);
   border-radius: 0.75rem;
   overflow: hidden;
 }
@@ -14,15 +14,15 @@
   grid-template-columns: repeat(7, 1fr);
   gap: 1rem;
   padding: 1rem 1.5rem;
-  background-color: #fff;
-  border-bottom: 1px solid #e5e7eb;
+  background-color: var(--card-bg);
+  border-bottom: 1px solid var(--border);
 }
 
 .table-header p {
   margin: 0;
   font-size: 0.875rem;
   font-weight: 500;
-  color: #6b7280;
+  color: var(--input-text);
 }
 
 .table-row {
@@ -34,11 +34,11 @@
 }
 
 .table-row:hover {
-  background-color: #f9fafb;
+  background-color: var(--background-alt);
 }
 
 .table-row:not(:last-child) {
-  border-bottom: 1px solid #e5e7eb;
+  border-bottom: 1px solid var(--border);
 }
 
 .table-column {
@@ -46,7 +46,7 @@
   align-items: center;
   gap: 0.5rem;
   font-size: 0.875rem;
-  color: #4b5563;
+  color: var(--input-text);
 }
 
 .table-column p {
@@ -59,17 +59,17 @@
 }
 
 .paid {
-  color: #10b981;
+  color: var(--success);
   font-weight: 500;
 }
 
 .cancelled {
-  color: #f59e0b;
+  color: var(--warning);
   font-weight: 500;
 }
 
 .refunded {
-  color: #926cfd;
+  color: var(--primary);
   font-weight: 500;
 }
 

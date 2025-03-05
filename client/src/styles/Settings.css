@@ -138,6 +138,8 @@
   flex-direction: column;
   gap: 1.25rem;
   padding: 1.25rem;
+  background-color: var(--background);
+  color: var(--text);
 }
 
 .overview {
@@ -146,7 +148,7 @@
   display: flex;
   flex-direction: column;
   justify-content: center;
-  border-bottom: 1px solid #e5e7eb;
+  border-bottom: 1px solid var(--border);
   padding-bottom: 0.75rem;
 }
 
@@ -154,7 +156,7 @@
   margin: 0;
   font-size: 1.5rem;
   font-weight: 600;
-  color: #111827;
+  color: var(--text);
 }
 
 .settings-content {
@@ -164,17 +166,16 @@
 }
 
 .settings-card {
-  background-color: #fff;
-  border: 1px solid #e5e7eb;
+  background-color: var(--card-bg);
+  border: 1px solid var(--card-border);
   border-radius: 0.75rem;
   padding: 1.5rem;
   transition: all 0.2s ease;
 }
 
 .settings-card:hover {
-  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1),
-    0 2px 4px -1px rgba(0, 0, 0, 0.06);
-  border-color: #d1d5db;
+  box-shadow: 0 4px 6px -1px var(--card-hover);
+  border-color: var(--border);
 }
 
 .card-header {
@@ -185,7 +186,7 @@
   margin: 0;
   font-size: 1.25rem;
   font-weight: 600;
-  color: #111827;
+  color: var(--text);
 }
 
 .settings-options {
@@ -199,13 +200,13 @@
   justify-content: space-between;
   align-items: center;
   padding: 1rem;
-  background-color: #f9fafb;
+  background-color: var(--background-alt);
   border-radius: 0.75rem;
   transition: all 0.2s ease;
 }
 
 .settings-item:hover {
-  background-color: #f3f4f6;
+  background-color: var(--input-bg);
 }
 
 .settings-info {
@@ -216,14 +217,14 @@
   margin: 0;
   font-size: 1rem;
   font-weight: 500;
-  color: #111827;
+  color: var(--text);
   margin-bottom: 0.25rem;
 }
 
 .settings-info p {
   margin: 0;
   font-size: 0.875rem;
-  color: #6b7280;
+  color: var(--text-alt);
 }
 
 /* Theme Selector */
@@ -237,10 +238,10 @@
   align-items: center;
   gap: 0.5rem;
   padding: 0.5rem 1rem;
-  border: 1px solid #e5e7eb;
+  border: 1px solid var(--border);
   border-radius: 0.5rem;
   background: none;
-  color: #4b5563;
+  color: var(--text);
   font-size: 0.875rem;
   font-weight: 500;
   cursor: pointer;
@@ -248,19 +249,19 @@
 }
 
 .theme-button:hover {
-  background-color: #f3f4f6;
-  border-color: #d1d5db;
+  background-color: var(--input-bg);
+  border-color: var(--border);
 }
 
 .theme-button.active {
-  background-color: #926cfd;
-  border-color: #926cfd;
+  background-color: var(--primary);
+  border-color: var(--primary);
   color: white;
 }
 
 .theme-button.active:hover {
-  background-color: #7c5ce7;
-  border-color: #7c5ce7;
+  background-color: var(--primary-hover);
+  border-color: var(--primary-hover);
 }
 
 /* Toggle Switch */
@@ -286,10 +287,10 @@
   left: 0;
   right: 0;
   bottom: 0;
-  background-color: #d1d5db;
+  background-color: var(--input-bg);
   border-radius: 2rem;
   transition: all 0.3s ease;
-  border: 2px solid #d1d5db;
+  border: 2px solid var(--input-border);
 }
 
 .settings-toggle-slider:before {
@@ -299,29 +300,30 @@
   width: 1.25rem;
   left: 0.125rem;
   bottom: 0.125rem;
-  background-color: white;
+  background-color: var(--text);
   border-radius: 50%;
   transition: all 0.3s ease;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+  box-shadow: 0 2px 4px var(--card-hover);
 }
 
 .settings-toggle input:checked + .settings-toggle-slider {
-  background-color: #926cfd;
-  border-color: #926cfd;
+  background-color: var(--primary);
+  border-color: var(--primary);
 }
 
 .settings-toggle input:checked + .settings-toggle-slider:before {
   transform: translateX(1.25rem);
+  background-color: white;
 }
 
 .settings-toggle:hover .settings-toggle-slider {
-  background-color: #9ca3af;
-  border-color: #9ca3af;
+  background-color: var(--input-border);
+  border-color: var(--input-border);
 }
 
 .settings-toggle:hover input:checked + .settings-toggle-slider {
-  background-color: #7c5ce7;
-  border-color: #7c5ce7;
+  background-color: var(--primary-hover);
+  border-color: var(--primary-hover);
 }
 
 @media (max-width: 768px) {

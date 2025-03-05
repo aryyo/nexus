@@ -1,7 +1,20 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import "../styles/Settings.css";
 
 const Settings = () => {
+  const [theme, setTheme] = useState('light');
+
+  useEffect(() => {
+    // Get initial theme from HTML attribute
+    const currentTheme = document.documentElement.getAttribute('data-theme') || 'light';
+    setTheme(currentTheme);
+  }, []);
+
+  const handleThemeChange = (selectedTheme) => {
+    document.documentElement.setAttribute('data-theme', selectedTheme);
+    setTheme(selectedTheme);
+  };
+
   return (
     <div className="settings-page">
       <div className="overview">
@@ -21,7 +34,10 @@ const Settings = () => {
                 <p>Choose between light and dark theme for the interface</p>
               </div>
               <div className="theme-selector">
-                <button className="theme-button active">
+                <button 
+                  className={`theme-button ${theme === 'light' ? 'active' : ''}`}
+                  onClick={() => handleThemeChange('light')}
+                >
                   <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                     <circle cx="12" cy="12" r="5"/>
                     <line x1="12" y1="1" x2="12" y2="3"/>
@@ -35,7 +51,10 @@ const Settings = () => {
                   </svg>
                   Light
                 </button>
-                <button className="theme-button">
+                <button 
+                  className={`theme-button ${theme === 'dark' ? 'active' : ''}`}
+                  onClick={() => handleThemeChange('dark')}
+                >
                   <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                     <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>
                   </svg>

@@ -2,40 +2,123 @@
   width: 100%;
   height: auto;
   display: flex;
-  flex-direction: row;
-  gap: 1.25rem;
-  padding: 1.25rem;
-}
-
-.orders-main {
-  flex: 3;
-  display: flex;
   flex-direction: column;
   gap: 1.25rem;
+  padding: 1.25rem;
+  background-color: var(--background);
 }
 
-.orders-overview {
+.overview {
   width: 100%;
   min-height: 2.5rem;
   display: flex;
   flex-direction: column;
   justify-content: center;
-  border-bottom: 1px solid #e5e7eb;
+  border-bottom: 1px solid var(--border);
   padding-bottom: 0.75rem;
 }
 
-.orders-overview p {
+.overview p {
   margin: 0;
   font-size: 1.5rem;
   font-weight: 600;
-  color: #111827;
+  color: var(--text);
+}
+
+.header {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+  align-items: center;
+  gap: 1rem;
+}
+
+.calendar {
+  margin-right: auto;
+  background-color: var(--input-bg);
+  border: none;
+  color: var(--input-text);
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.75rem 1rem;
+  font-size: 0.875rem;
+  font-weight: 500;
+  border-radius: 0.5rem;
+  transition: all 0.2s ease;
+  cursor: pointer;
+}
+
+.calendar:hover {
+  background-color: var(--background-alt);
+}
+
+.export {
+  background: none;
+  border: 1px solid var(--border);
+  color: var(--input-text);
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.75rem 1rem;
+  font-size: 0.875rem;
+  font-weight: 500;
+  border-radius: 0.5rem;
+  transition: all 0.2s ease;
+  cursor: pointer;
+}
+
+.export:hover {
+  background-color: var(--input-bg);
+}
+
+.add {
+  background-color: var(--primary);
+  border: none;
+  color: var(--background);
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.75rem 1rem;
+  font-size: 0.875rem;
+  font-weight: 500;
+  border-radius: 0.5rem;
+  transition: all 0.2s ease;
+  cursor: pointer;
+}
+
+.add:hover {
+  background-color: var(--primary-hover);
+}
+
+.orders-container {
+  display: flex;
+  gap: 1.25rem;
+}
+
+.orders-main {
+  flex: 2;
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
 }
 
 @media (max-width: 1200px) {
-  .orders-content {
+  .orders-container {
     flex-direction: column;
-    padding: 1.25rem;
-    gap: 1.25rem;
+  }
+
+  .header {
+    flex-wrap: wrap;
+  }
+
+  .calendar {
+    width: 100%;
+  }
+
+  .export,
+  .add {
+    flex: 1;
   }
 }
 
@@ -45,7 +128,18 @@
     gap: 1rem;
   }
 
-  .orders-overview p {
+  .overview p {
     font-size: 1.25rem;
+  }
+
+  .header {
+    gap: 0.75rem;
+  }
+
+  .calendar,
+  .export,
+  .add {
+    padding: 0.5rem 0.75rem;
+    font-size: 0.875rem;
   }
 }

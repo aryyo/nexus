@@ -9,8 +9,8 @@
 .orders-summary,
 .orders-status,
 .orders-top-seller {
-  background-color: #fff;
-  border: 1px solid #e5e7eb;
+  background-color: var(--card-bg);
+  border: 1px solid var(--card-border);
   border-radius: 0.75rem;
   padding: 1.5rem;
   display: flex;
@@ -23,8 +23,8 @@
 .orders-summary:hover,
 .orders-status:hover,
 .orders-top-seller:hover {
-  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
-  border-color: #d1d5db;
+  box-shadow: 0 4px 6px -1px var(--card-hover), 0 2px 4px -1px var(--card-hover);
+  border-color: var(--border);
 }
 
 .orders-sidebar-header {
@@ -37,7 +37,7 @@
   margin: 0;
   font-size: 1.25rem;
   font-weight: 600;
-  color: #111827;
+  color: var(--text);
 }
 
 .receipt-percentage {
@@ -50,13 +50,13 @@
   margin: 0;
   font-size: 0.875rem;
   font-weight: 600;
-  color: #10b981;
+  color: var(--success);
 }
 
 .receipt-percentage .date {
   margin: 0;
   font-size: 0.75rem;
-  color: #6b7280;
+  color: var(--text-alt);
 }
 
 .revenue-chart {
@@ -78,14 +78,14 @@
   margin: 0;
   font-size: 1.75rem;
   font-weight: 600;
-  color: #111827;
+  color: var(--text);
   line-height: 1;
 }
 
 .total-label {
   margin: 0.25rem 0 0;
   font-size: 0.875rem;
-  color: #6b7280;
+  color: var(--text-alt);
 }
 
 .revenue-details {
@@ -129,7 +129,7 @@
   margin: 0;
   font-size: 1rem;
   font-weight: 600;
-  color: #111827;
+  color: var(--text);
   line-height: 1;
   white-space: nowrap;
 }
@@ -137,7 +137,7 @@
 .revenue-item-label {
   display: flex;
   gap: 0.375rem;
-  color: #6b7280;
+  color: var(--text-alt);
   font-size: 0.75rem;
   align-items: center;
 }
@@ -152,7 +152,7 @@
 
 .bar {
   height: 0.5rem;
-  background-color: #f3f4f6;
+  background-color: var(--input-bg);
   border-radius: 0.25rem;
   overflow: hidden;
   display: flex;
@@ -166,15 +166,15 @@
 }
 
 .line-one {
-  background-color: #10b981;
+  background-color: var(--success);
 }
 
 .line-two {
-  background-color: #f59e0b;
+  background-color: var(--warning);
 }
 
 .line-three {
-  background-color: #926cfd;
+  background-color: var(--primary);
 }
 
 .bar-data {
@@ -190,7 +190,7 @@
   justify-content: space-between;
   align-items: center;
   font-size: 0.875rem;
-  color: #4b5563;
+  color: var(--input-text);
 }
 
 .icon-data {
@@ -221,13 +221,13 @@
   margin: 0;
   font-size: 1.125rem;
   font-weight: 600;
-  color: #111827;
+  color: var(--text);
 }
 
 .summary-title {
   margin: 0;
   font-size: 0.875rem;
-  color: #6b7280;
+  color: var(--text-alt);
 }
 
 .product-sold {
@@ -240,7 +240,7 @@
   width: 3rem;
   height: 3rem;
   padding: 0.75rem;
-  background-color: #f3f4f6;
+  background-color: var(--input-bg);
   border-radius: 0.75rem;
 }
 
@@ -254,14 +254,14 @@
   margin: 0;
   font-size: 0.875rem;
   font-weight: 500;
-  color: #111827;
+  color: var(--text);
 }
 
 .product-sold-details p:last-child {
   margin: 0;
   font-size: 1.125rem;
   font-weight: 600;
-  color: #10b981;
+  color: var(--success);
 }
 
 @media (max-width: 1400px) {
@@ -339,7 +339,7 @@
   margin: 0;
   font-size: 0.875rem;
   font-weight: 600;
-  color: #10b981;
+  color: var(--success);
 }
 
 .status-percentage .date,
@@ -347,7 +347,7 @@
 .seller-percentage .date {
   margin: 0;
   font-size: 0.75rem;
-  color: #6b7280;
+  color: var(--text-alt);
 }
 
 .status-content {
@@ -358,7 +358,7 @@
 
 .bar {
   height: 0.5rem;
-  background-color: #f3f4f6;
+  background-color: var(--input-bg);
   border-radius: 0.25rem;
   overflow: hidden;
   display: flex;
@@ -372,15 +372,15 @@
 }
 
 .line-one {
-  background-color: #10b981;
+  background-color: var(--success);
 }
 
 .line-two {
-  background-color: #f59e0b;
+  background-color: var(--warning);
 }
 
 .line-three {
-  background-color: #926cfd;
+  background-color: var(--primary);
 }
 
 .bar-data {
@@ -404,7 +404,7 @@
 .status-info p {
   margin: 0;
   font-size: 0.875rem;
-  color: #4b5563;
+  color: var(--input-text);
 }
 
 .status-dot {
@@ -418,7 +418,7 @@
   margin: 0;
   font-size: 0.875rem;
   font-weight: 500;
-  color: #111827;
+  color: var(--text);
 }
 
 .summary-stats {
@@ -437,14 +437,14 @@
   margin: 0;
   font-size: 1.125rem;
   font-weight: 600;
-  color: #111827;
+  color: var(--text);
   line-height: 1;
 }
 
 .summary-title {
   margin: 0;
   font-size: 0.875rem;
-  color: #6b7280;
+  color: var(--text-alt);
 }
 
 .product-sold {
@@ -459,8 +459,8 @@
   justify-content: center;
   width: 3rem;
   height: 3rem;
-  background-color: #f5f3ff;
-  color: #926cfd;
+  background-color: var(--background-alt);
+  color: var(--primary);
   border-radius: 0.75rem;
   padding: 0.75rem;
   flex-shrink: 0;
@@ -482,7 +482,7 @@
   margin: 0;
   font-size: 0.875rem;
   font-weight: 500;
-  color: #111827;
+  color: var(--text);
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -492,7 +492,7 @@
   margin: 0;
   font-size: 1.125rem;
   font-weight: 600;
-  color: #10b981;
+  color: var(--success);
 }
 
 @media (max-width: 1200px) {

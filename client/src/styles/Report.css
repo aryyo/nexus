@@ -13,7 +13,7 @@
   display: flex;
   flex-direction: column;
   justify-content: center;
-  border-bottom: 1px solid #e5e7eb;
+  border-bottom: 1px solid var(--border);
   padding-bottom: 0.75rem;
 }
 
@@ -21,7 +21,7 @@
   margin: 0;
   font-size: 1.5rem;
   font-weight: 600;
-  color: #111827;
+  color: var(--text);
 }
 
 .report-content {
@@ -32,17 +32,16 @@
 
 /* Report Card */
 .report-card {
-  background-color: #fff;
-  border: 1px solid #e5e7eb;
+  background-color: var(--card-bg);
+  border: 1px solid var(--card-border);
   border-radius: 0.75rem;
   padding: 1.5rem;
   transition: all 0.2s ease;
 }
 
 .report-card:hover {
-  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1),
-    0 2px 4px -1px rgba(0, 0, 0, 0.06);
-  border-color: #d1d5db;
+  box-shadow: 0 4px 6px -1px var(--card-hover), 0 2px 4px -1px var(--card-hover);
+  border-color: var(--border);
 }
 
 .card-header {
@@ -56,7 +55,7 @@
   margin: 0;
   font-size: 1.25rem;
   font-weight: 600;
-  color: #111827;
+  color: var(--text);
 }
 
 /* Buttons */
@@ -76,32 +75,33 @@
 }
 
 .primary-button {
-  background-color: #926cfd;
-  color: white;
+  background-color: var(--primary);
+  color: var(--background);
+  margin-top: auto;
 }
 
 .primary-button:hover {
-  background-color: #7c5ce7;
+  background-color: var(--primary-hover);
 }
 
 .secondary-button {
   background: none;
-  border: 1px solid #e5e7eb;
-  color: #4b5563;
+  border: 1px solid var(--border);
+  color: var(--input-text);
 }
 
 .secondary-button:hover {
-  background-color: #f3f4f6;
+  background-color: var(--input-bg);
 }
 
 .action-button {
   background: none;
-  border: 1px solid #e5e7eb;
-  color: #4b5563;
+  border: 1px solid var(--border);
+  color: var(--input-text);
 }
 
 .action-button:hover {
-  background-color: #f3f4f6;
+  background-color: var(--input-bg);
 }
 
 /* Analytics Options */
@@ -116,27 +116,27 @@
   justify-content: space-between;
   align-items: center;
   padding: 1rem;
-  background-color: #f9fafb;
+  background-color: var(--background-alt);
   border-radius: 0.75rem;
   transition: all 0.2s ease;
 }
 
 .option-item:hover {
-  background-color: #f3f4f6;
+  background-color: var(--input-bg);
 }
 
 .option-info h4 {
   margin: 0;
   font-size: 1rem;
   font-weight: 500;
-  color: #111827;
+  color: var(--text);
   margin-bottom: 0.25rem;
 }
 
 .option-info p {
   margin: 0;
   font-size: 0.875rem;
-  color: #6b7280;
+  color: var(--input-text);
 }
 
 /* Toggle Switch */
@@ -162,10 +162,10 @@
   left: 0;
   right: 0;
   bottom: 0;
-  background-color: #d1d5db;
+  background-color: var(--input-border);
   border-radius: 2rem;
   transition: all 0.3s ease;
-  border: 2px solid #d1d5db;
+  border: 2px solid var(--input-border);
 }
 
 .report-card .report-toggle-slider:before {
@@ -175,16 +175,16 @@
   width: 1.25rem;
   left: 0.125rem;
   bottom: 0.125rem;
-  background-color: white;
+  background-color: var(--background);
   border-radius: 50%;
   transition: all 0.3s ease;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+  box-shadow: 0 2px 4px var(--card-hover);
 }
 
 /* Checked state */
 .report-card .toggle input:checked + .report-toggle-slider {
-  background-color: #926cfd;
-  border-color: #926cfd;
+  background-color: var(--primary);
+  border-color: var(--primary);
 }
 
 .report-card .toggle input:checked + .report-toggle-slider:before {
@@ -193,13 +193,13 @@
 
 /* Hover effects */
 .report-card .toggle:hover .report-toggle-slider {
-  background-color: #9ca3af;
-  border-color: #9ca3af;
+  background-color: var(--input-border);
+  border-color: var(--input-border);
 }
 
 .report-card .toggle:hover input:checked + .report-toggle-slider {
-  background-color: #7c5ce7;
-  border-color: #7c5ce7;
+  background-color: var(--primary-hover);
+  border-color: var(--primary-hover);
 }
 
 /* Reports List */
@@ -214,13 +214,13 @@
   justify-content: space-between;
   align-items: center;
   padding: 1rem;
-  border: 1px solid #e5e7eb;
+  border: 1px solid var(--border);
   border-radius: 0.75rem;
   transition: all 0.2s ease;
 }
 
 .report-item:hover {
-  border-color: #d1d5db;
+  border-color: var(--card-border);
 }
 
 .report-info {
@@ -235,23 +235,23 @@
   justify-content: center;
   width: 2.5rem;
   height: 2.5rem;
-  background-color: #f3f4f6;
+  background-color: var(--input-bg);
   border-radius: 0.5rem;
-  color: #926cfd;
+  color: var(--primary);
 }
 
 .report-details h4 {
   margin: 0;
   font-size: 0.875rem;
   font-weight: 500;
-  color: #111827;
+  color: var(--text);
   margin-bottom: 0.25rem;
 }
 
 .report-details p {
   margin: 0;
   font-size: 0.75rem;
-  color: #6b7280;
+  color: var(--input-text);
 }
 
 .report-actions {

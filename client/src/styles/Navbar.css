@@ -1,6 +1,6 @@
 .navbar {
-  background-color: #fff;
-  border-bottom: 1px solid #e5e7eb;
+  background-color: var(--card-bg);
+  border-bottom: 1px solid var(--border);
   padding: 1rem 1.5rem;
   display: flex;
   justify-content: space-between;
@@ -19,7 +19,7 @@
 .nav-left svg {
   width: 32px;
   height: 32px;
-  color: #926cfd;
+  color: var(--primary);
 }
 
 .nav-right {
@@ -37,14 +37,14 @@
   border: none;
   background: none;
   border-radius: 0.5rem;
-  color: #4b5563;
+  color: var(--input-text);
   cursor: pointer;
   transition: all 0.2s ease;
 }
 
 .nav-button:hover {
-  background-color: #f3f4f6;
-  color: #111827;
+  background-color: var(--input-bg);
+  color: var(--text);
 }
 
 .nav-button svg {
@@ -57,7 +57,7 @@
 }
 
 .menu-toggle:hover {
-  color: #926cfd;
+  color: var(--primary);
 }
 
 .search-box {
@@ -65,7 +65,7 @@
   align-items: center;
   gap: 0.75rem;
   padding: 0.5rem 1rem;
-  background-color: #f3f4f6;
+  background-color: var(--input-bg);
   border-radius: 0.5rem;
   min-width: 240px;
 }
@@ -73,20 +73,20 @@
 .search-box svg {
   width: 20px;
   height: 20px;
-  color: #9ca3af;
+  color: var(--input-placeholder);
 }
 
 .search-box input {
   border: none;
   background: none;
   outline: none;
-  color: #4b5563;
+  color: var(--input-text);
   font-size: 0.875rem;
   width: 100%;
 }
 
 .search-box input::placeholder {
-  color: #9ca3af;
+  color: var(--input-placeholder);
 }
 
 .user-profile {
@@ -96,14 +96,14 @@
   width: 2.5rem;
   height: 2.5rem;
   border-radius: 0.5rem;
-  background-color: #f3f4f6;
-  color: #4b5563;
+  background-color: var(--input-bg);
+  color: var(--input-text);
   cursor: pointer;
   transition: all 0.2s ease;
 }
 
 .user-profile:hover {
-  background-color: #e5e7eb;
+  background-color: var(--background-alt);
 }
 
 .user-profile svg {

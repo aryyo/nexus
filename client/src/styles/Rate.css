@@ -1,6 +1,6 @@
 .rate {
-  background-color: #fff;
-  border: 1px solid #e5e7eb;
+  background-color: var(--card-bg);
+  border: 1px solid var(--card-border);
   border-radius: 0.75rem;
   padding: 1.5rem;
   display: flex;
@@ -10,8 +10,8 @@
 }
 
 .rate:hover {
-  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
-  border-color: #d1d5db;
+  box-shadow: 0 4px 6px -1px var(--card-hover), 0 2px 4px -1px var(--card-hover);
+  border-color: var(--border);
 }
 
 .rate-header {
@@ -24,7 +24,7 @@
   margin: 0;
   font-size: 1.25rem;
   font-weight: 600;
-  color: #111827;
+  color: var(--text);
 }
 
 .rate-section {
@@ -42,7 +42,7 @@
 .rate-row-two .percent {
   font-size: 0.875rem;
   font-weight: 600;
-  color: #10b981;
+  color: var(--success);
   margin: 0;
   display: flex;
   align-items: center;
@@ -50,21 +50,21 @@
 
 .rate-row-two .date {
   font-size: 0.75rem;
-  color: #6b7280;
+  color: var(--text-alt);
   margin: 0;
 }
 
 .rate-row-two .count {
   font-size: 2.25rem;
   font-weight: 600;
-  color: #111827;
+  color: var(--text);
   margin: 0;
   line-height: 1;
 }
 
 .rate-row-two .label {
   font-size: 0.875rem;
-  color: #6b7280;
+  color: var(--text-alt);
   margin: 0;
   align-self: flex-end;
   margin-bottom: 0.25rem;
@@ -90,17 +90,17 @@
 
 .rate-bar-info span {
   font-size: 0.875rem;
-  color: #4b5563;
+  color: var(--input-text);
 }
 
 .rate-bar-info span:last-child {
   font-weight: 500;
-  color: #111827;
+  color: var(--text);
 }
 
 .rate-bar-progress {
   height: 0.5rem;
-  background-color: #f3f4f6;
+  background-color: var(--input-bg);
   border-radius: 0.25rem;
   overflow: hidden;
 }
@@ -123,15 +123,15 @@
 }
 
 .rate-line-one {
-  background-color: #926cfd;
+  background-color: var(--primary);
 }
 
 .rate-line-two {
-  background-color: #10b981;
+  background-color: var(--success);
 }
 
 .rate-line-three {
-  background-color: #fbbf24;
+  background-color: var(--warning);
 }
 
 .rate-bar-legend {
@@ -154,7 +154,7 @@
 
 .rate-bar-color-name {
   font-size: 0.75rem;
-  color: #6b7280;
+  color: var(--input-text);
   margin: 0;
 }
 
