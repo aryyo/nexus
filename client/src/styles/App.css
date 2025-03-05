@@ -3,6 +3,12 @@
   width: 100vw;
 }
 
+html, body {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+}
+
 :root[data-theme="light"] {
   --text: #0b0324;
   --text-alt: #9ca3af;
