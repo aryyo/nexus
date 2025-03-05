@@ -1,7 +1,6 @@
 .sidebar {
   width: 250px;
-  min-height: calc(100vh - 73px);
-  height: 100%;
+  height: calc(100vh - 73px);
   background-color: var(--card-bg);
   border-right: 1px solid var(--border);
   padding: 1.25rem;
@@ -9,6 +8,7 @@
   flex-direction: column;
   position: sticky;
   top: 73px;
+  box-sizing: border-box;
 }
 
 .menu-section {

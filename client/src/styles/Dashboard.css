@@ -1,11 +1,12 @@
 .content {
-  background-color: var(--background);
   width: 100%;
   height: auto;
   display: flex;
   flex-direction: column;
   gap: 1.25rem;
   padding: 1.25rem;
+  background-color: var(--background);
+  overflow-y: auto;
 }
 
 .overview {

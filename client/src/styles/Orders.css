@@ -6,6 +6,7 @@
   gap: 1.25rem;
   padding: 1.25rem;
   background-color: var(--background);
+  overflow-y: auto;
 }
 
 .overview {

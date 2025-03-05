@@ -197,7 +197,7 @@ const Homepage = () => {
   };
 
   return (
-    <div>
+    <div className="homepage-container">
       <Navbar onToggleSidebar={toggleSidebar} />
       <div className="homepage">
         <Sidebar
