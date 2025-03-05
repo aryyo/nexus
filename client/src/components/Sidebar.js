@@ -81,7 +81,7 @@ const Sidebar = ({ active, setActive, previous, setPrevious, isOpen, onClose }) 
           <button
             key={button.id}
             onClick={() => handleClick(button.id)}
-            className={`menu-button ${active === button.id ? "active" : ""}`}
+            className={`sidebar-menu-button ${active === button.id ? "active" : ""}`}
           >
             {active === button.id ? button.activeIcon : button.icon}
             <span>{button.label}</span>
@@ -94,7 +94,7 @@ const Sidebar = ({ active, setActive, previous, setPrevious, isOpen, onClose }) 
           <button
             key={button.id}
             onClick={() => handleClick(button.id)}
-            className={`menu-button ${active === button.id ? "active" : ""}`}
+            className={`sidebar-menu-button ${active === button.id ? "active" : ""}`}
           >
             {active === button.id ? button.activeIcon : button.icon}
             <span>{button.label}</span>
@@ -107,7 +107,7 @@ const Sidebar = ({ active, setActive, previous, setPrevious, isOpen, onClose }) 
           <button
             key={button.id}
             onClick={() => handleClick(button.id)}
-            className={`menu-button ${active === button.id ? "active" : ""}`}
+            className={`sidebar-menu-button ${active === button.id ? "active" : ""}`}
           >
             {active === button.id ? button.activeIcon : button.icon}
             <span>{button.label}</span>
