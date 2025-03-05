@@ -3,17 +3,38 @@
   justify-content: center;
   align-items: center;
   min-height: 100vh;
-  background: linear-gradient(135deg, var(--primary) 0%, var(--primary-accent) 100%);
+  background: linear-gradient(135deg, 
+    var(--primary) 0%,
+    var(--primary) 50%,
+    #ff8657 100%
+  );
   padding: 1rem;
+  position: relative;
+  overflow: hidden;
+}
+
+.login-container::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: radial-gradient(circle at center, transparent 0%, rgba(0, 0, 0, 0.2) 100%);
+  pointer-events: none;
 }
 
 .login-box {
-  background-color: var(--background);
+  background-color: var(--card-bg);
   border-radius: 16px;
   padding: 2rem;
   width: 100%;
   max-width: 400px;
-  box-shadow: 0 4px 24px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 8px 32px var(--card-hover);
+  backdrop-filter: blur(8px);
+  border: 1px solid var(--card-border);
+  position: relative;
+  z-index: 1;
 }
 
 .login-header {
@@ -118,7 +139,8 @@
 }
 
 .sign-up-button {
-  background-color: var(--primary);
+  background: linear-gradient(to right, var(--primary), var(--secondary));
+  background-size: 200% auto;
   color: white;
   border: none;
   border-radius: 8px;
@@ -126,11 +148,21 @@
   font-size: 0.875rem;
   font-weight: 500;
   cursor: pointer;
-  transition: background-color 0.2s;
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  position: relative;
+  overflow: hidden;
+  box-shadow: 0 2px 8px var(--primary-shadow);
 }
 
 .sign-up-button:hover {
-  background-color: var(--primary-accent);
+  background-position: right center;
+  box-shadow: 0 6px 16px var(--primary-shadow);
+}
+
+.sign-up-button:active {
+  transform: translateY(0);
+  box-shadow: 0 2px 8px var(--primary-shadow);
+  transition-duration: 0.1s;
 }
 
 .divider {
@@ -165,9 +197,9 @@
   justify-content: center;
   width: 40px;
   height: 40px;
-  border: 2px solid var(--border);
+  border: 2px solid var(--card-border);
   border-radius: 8px;
-  background-color: var(--background);
+  background-color: var(--card-bg);
   color: var(--text);
   cursor: pointer;
   transition: all 0.2s;
@@ -175,8 +207,10 @@
 }
 
 .social-button:hover {
-  background-color: var(--background-odd);
-  border-color: var(--text);
+  background-color: var(--input-bg);
+  border-color: var(--primary);
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px var(--card-hover);
 }
 
 .google-icon {
