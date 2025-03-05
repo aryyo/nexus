@@ -7,7 +7,6 @@
   padding: 1.25rem;
   display: flex;
   flex-direction: column;
-  gap: 1.25rem;
   position: sticky;
   top: 73px;
 }
@@ -120,7 +119,6 @@
     top: 73px;
     height: calc(100vh - 73px);
     overflow-y: auto;
-    gap: 1.25rem;
   }
 
   .sidebar.open {
@@ -137,7 +135,6 @@
     top: 57px;
     height: calc(100vh - 57px);
     padding: 1rem;
-    gap: 1rem;
   }
 
   .menu-button {
