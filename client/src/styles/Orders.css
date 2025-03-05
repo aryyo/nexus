@@ -1,31 +1,51 @@
 .orders-content {
-  background-color: var(--background);
   width: 100%;
   height: auto;
   display: flex;
   flex-direction: row;
+  gap: 1.25rem;
+  padding: 1.25rem;
 }
 
 .orders-main {
-  flex: 3 1;
-  background-color: var(--background);
-  overflow-y: scroll;
+  flex: 3;
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
 }
 
 .orders-overview {
-  background-color: var(--background);
-  height: 3rem;
+  width: 100%;
+  min-height: 2.5rem;
   display: flex;
   flex-direction: column;
   justify-content: center;
-  border-bottom: 2px solid var(--border);
-  flex-shrink: 0;
+  border-bottom: 1px solid #e5e7eb;
+  padding-bottom: 0.75rem;
 }
 
 .orders-overview p {
   margin: 0;
-  padding-left: 2rem;
-  font-size: 18px;
+  font-size: 1.5rem;
   font-weight: 600;
-  color: var(--text);
+  color: #111827;
+}
+
+@media (max-width: 1200px) {
+  .orders-content {
+    flex-direction: column;
+    padding: 1.25rem;
+    gap: 1.25rem;
+  }
+}
+
+@media (max-width: 768px) {
+  .orders-content {
+    padding: 1rem;
+    gap: 1rem;
+  }
+
+  .orders-overview p {
+    font-size: 1.25rem;
+  }
 }
