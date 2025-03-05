@@ -7,7 +7,6 @@
 .settings-content {
   display: flex;
   flex-direction: column;
-  padding: 2rem;
 }
 
 .settings-title {
@@ -130,4 +129,241 @@
 
 .toggle-input:checked + .toggle-slider:before {
   transform: translateX(16px);
+}
+
+.settings-page {
+  width: 100%;
+  height: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+  padding: 1.25rem;
+}
+
+.overview {
+  width: 100%;
+  min-height: 2.5rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  border-bottom: 1px solid #e5e7eb;
+  padding-bottom: 0.75rem;
+}
+
+.overview p {
+  margin: 0;
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: #111827;
+}
+
+.settings-content {
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+}
+
+.settings-card {
+  background-color: #fff;
+  border: 1px solid #e5e7eb;
+  border-radius: 0.75rem;
+  padding: 1.5rem;
+  transition: all 0.2s ease;
+}
+
+.settings-card:hover {
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1),
+    0 2px 4px -1px rgba(0, 0, 0, 0.06);
+  border-color: #d1d5db;
+}
+
+.card-header {
+  margin-bottom: 1.5rem;
+}
+
+.card-header h3 {
+  margin: 0;
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: #111827;
+}
+
+.settings-options {
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+}
+
+.settings-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem;
+  background-color: #f9fafb;
+  border-radius: 0.75rem;
+  transition: all 0.2s ease;
+}
+
+.settings-item:hover {
+  background-color: #f3f4f6;
+}
+
+.settings-info {
+  flex: 1;
+}
+
+.settings-info h4 {
+  margin: 0;
+  font-size: 1rem;
+  font-weight: 500;
+  color: #111827;
+  margin-bottom: 0.25rem;
+}
+
+.settings-info p {
+  margin: 0;
+  font-size: 0.875rem;
+  color: #6b7280;
+}
+
+/* Theme Selector */
+.theme-selector {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.theme-button {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.5rem 1rem;
+  border: 1px solid #e5e7eb;
+  border-radius: 0.5rem;
+  background: none;
+  color: #4b5563;
+  font-size: 0.875rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.theme-button:hover {
+  background-color: #f3f4f6;
+  border-color: #d1d5db;
+}
+
+.theme-button.active {
+  background-color: #926cfd;
+  border-color: #926cfd;
+  color: white;
+}
+
+.theme-button.active:hover {
+  background-color: #7c5ce7;
+  border-color: #7c5ce7;
+}
+
+/* Toggle Switch */
+.settings-toggle {
+  position: relative;
+  display: inline-block;
+  width: 3rem;
+  height: 1.75rem;
+  flex-shrink: 0;
+}
+
+.settings-toggle input {
+  opacity: 0;
+  width: 0;
+  height: 0;
+  margin: 0;
+}
+
+.settings-toggle-slider {
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: #d1d5db;
+  border-radius: 2rem;
+  transition: all 0.3s ease;
+  border: 2px solid #d1d5db;
+}
+
+.settings-toggle-slider:before {
+  position: absolute;
+  content: "";
+  height: 1.25rem;
+  width: 1.25rem;
+  left: 0.125rem;
+  bottom: 0.125rem;
+  background-color: white;
+  border-radius: 50%;
+  transition: all 0.3s ease;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+.settings-toggle input:checked + .settings-toggle-slider {
+  background-color: #926cfd;
+  border-color: #926cfd;
+}
+
+.settings-toggle input:checked + .settings-toggle-slider:before {
+  transform: translateX(1.25rem);
+}
+
+.settings-toggle:hover .settings-toggle-slider {
+  background-color: #9ca3af;
+  border-color: #9ca3af;
+}
+
+.settings-toggle:hover input:checked + .settings-toggle-slider {
+  background-color: #7c5ce7;
+  border-color: #7c5ce7;
+}
+
+@media (max-width: 768px) {
+  .settings-page {
+    padding: 1rem;
+    gap: 1rem;
+  }
+
+  .overview p {
+    font-size: 1.25rem;
+  }
+
+  .settings-content {
+    gap: 1rem;
+  }
+
+  .settings-item {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 1rem;
+  }
+
+  .settings-info {
+    width: 100%;
+  }
+
+  .theme-selector {
+    width: 100%;
+  }
+
+  .theme-button {
+    flex: 1;
+    justify-content: center;
+  }
+
+  .settings-toggle {
+    align-self: flex-end;
+  }
+}
+
+@media (max-width: 480px) {
+  .theme-selector {
+    flex-direction: column;
+  }
 }

@@ -1,72 +1,132 @@
+import React from 'react';
 import "../styles/Settings.css";
 
 const Settings = () => {
-
-  const changeTheme = () => {
-    const html = document.querySelector("html");
-    const currTheme = html.getAttribute("data-theme");
-    if (currTheme === "dark") {
-      html.setAttribute("data-theme", "light");
-    } else {
-      html.setAttribute("data-theme", "dark");
-    }
-  };
-
   return (
-    <div className="settings-container">
-      <div className="settings-title">
+    <div className="settings-page">
+      <div className="overview">
         <p>Settings</p>
       </div>
+      
       <div className="settings-content">
-        <div className="interface-theme">
-          <div className="interface-header">
-            <h3>Interface theme</h3>
-            <p>Select or customize your UI theme.</p>
+        <div className="settings-card">
+          <div className="card-header">
+            <h3>Interface Preferences</h3>
           </div>
-          <div className="interface-cards">
-            <div className="interface-card">
-              <img src="/theme.jpg" alt="" />
+          
+          <div className="settings-options">
+            <div className="settings-item">
+              <div className="settings-info">
+                <h4>Theme Mode</h4>
+                <p>Choose between light and dark theme for the interface</p>
+              </div>
+              <div className="theme-selector">
+                <button className="theme-button active">
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                    <circle cx="12" cy="12" r="5"/>
+                    <line x1="12" y1="1" x2="12" y2="3"/>
+                    <line x1="12" y1="21" x2="12" y2="23"/>
+                    <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/>
+                    <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/>
+                    <line x1="1" y1="12" x2="3" y2="12"/>
+                    <line x1="21" y1="12" x2="23" y2="12"/>
+                    <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/>
+                    <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/>
+                  </svg>
+                  Light
+                </button>
+                <button className="theme-button">
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                    <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>
+                  </svg>
+                  Dark
+                </button>
+              </div>
             </div>
-            <div className="interface-card">
-              <img src="/theme-dark.jpg" alt="" />
+
+            <div className="settings-item">
+              <div className="settings-info">
+                <h4>Sidebar Transparency</h4>
+                <p>Enable transparent effect for the sidebar background</p>
+              </div>
+              <label className="settings-toggle">
+                <input type="checkbox" />
+                <span className="settings-toggle-slider"></span>
+              </label>
             </div>
-          </div>
-        </div>
-        <div className="transparent-sidebar">
-          <div className="interface-header">
-            <h3>Transparent sidebar</h3>
-            <p>Make the sidebar transparent.</p>
-          </div>
-          <label className="toggle-label">
-            <input type="checkbox" name="some-setting" className="toggle-input" />
-            <span className="toggle-slider"></span>
-          </label>
-        </div>
-        <div className="transparent-sidebar">
-          <div className="interface-header">
-            <h3>Dark Mode</h3>
-            <p>Toggle Dark Mode.</p>
-          </div>
-          <label className="toggle-label">
-            <input type="checkbox" name="some-setting" className="toggle-input" onChange={changeTheme}/>
-            <span className="toggle-slider"></span>
-          </label>
-        </div>
-        <div className="tables-view">
-          <div className="interface-header">
-            <h3>Tables view</h3>
-            <p>How are tables displayed in the app.</p>
-          </div>
-          <div className="interface-cards">
-            <div className="interface-card">
-              <img src="/theme.jpg" alt="" />
-            </div>
-            <div className="interface-card">
-              <img src="/theme-dark.jpg" alt="" />
+
+            <div className="settings-item">
+              <div className="settings-info">
+                <h4>Compact View</h4>
+                <p>Reduce padding and margins for a more compact layout</p>
+              </div>
+              <label className="settings-toggle">
+                <input type="checkbox" />
+                <span className="settings-toggle-slider"></span>
+              </label>
             </div>
           </div>
         </div>
 
+        <div className="settings-card">
+          <div className="card-header">
+            <h3>Notifications</h3>
+          </div>
+          
+          <div className="settings-options">
+            <div className="settings-item">
+              <div className="settings-info">
+                <h4>Email Notifications</h4>
+                <p>Receive email updates about your account activity</p>
+              </div>
+              <label className="settings-toggle">
+                <input type="checkbox"/>
+                <span className="settings-toggle-slider"></span>
+              </label>
+            </div>
+
+            <div className="settings-item">
+              <div className="settings-info">
+                <h4>Push Notifications</h4>
+                <p>Get push notifications for important updates</p>
+              </div>
+              <label className="settings-toggle">
+                <input type="checkbox" />
+                <span className="settings-toggle-slider"></span>
+              </label>
+            </div>
+          </div>
+        </div>
+
+        <div className="settings-card">
+          <div className="card-header">
+            <h3>Privacy</h3>
+          </div>
+          
+          <div className="settings-options">
+            <div className="settings-item">
+              <div className="settings-info">
+                <h4>Activity Status</h4>
+                <p>Show when you're active in the application</p>
+              </div>
+              <label className="settings-toggle">
+                <input type="checkbox"/>
+                <span className="settings-toggle-slider"></span>
+              </label>
+            </div>
+
+            <div className="settings-item">
+              <div className="settings-info">
+                <h4>Data Collection</h4>
+                <p>Allow collection of usage data to improve our service</p>
+              </div>
+              <label className="settings-toggle">
+                <input type="checkbox" />
+                <span className="settings-toggle-slider"></span>
+              </label>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   );
