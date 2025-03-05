@@ -94,7 +94,7 @@
 
 /* Contact Form */
 .contact-form {
-  background-color: var(--background);
+  background-color: var(--card-bg);
   border-radius: 8px;
 }
 
@@ -120,6 +120,11 @@
   border-radius: 8px;
   background-color: var(--background);
   color: var(--text);
+}
+
+.contact-form textarea {
+  width: 100%;
+  box-sizing: border-box;
 }
 
 .contact-form input::placeholder,
@@ -156,6 +161,7 @@
   flex-direction: column;
   gap: 1.25rem;
   padding: 1.25rem;
+  background-color: var(--background);
 }
 
 .overview {
@@ -164,7 +170,7 @@
   display: flex;
   flex-direction: column;
   justify-content: center;
-  border-bottom: 1px solid #e5e7eb;
+  border-bottom: 1px solid var(--border);
   padding-bottom: 0.75rem;
 }
 
@@ -172,7 +178,7 @@
   margin: 0;
   font-size: 1.5rem;
   font-weight: 600;
-  color: #111827;
+  color: var(--text);
 }
 
 .help-content {
@@ -189,8 +195,8 @@
 }
 
 .support-card {
-  background-color: #fff;
-  border: 1px solid #e5e7eb;
+  background-color: var(--card-bg);
+  border: 1px solid var(--card-border);
   border-radius: 0.75rem;
   padding: 1.5rem;
   display: flex;
@@ -200,9 +206,8 @@
 }
 
 .support-card:hover {
-  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1),
-    0 2px 4px -1px rgba(0, 0, 0, 0.06);
-  border-color: #d1d5db;
+  box-shadow: 0 4px 6px -1px var(--card-hover), 0 2px 4px -1px var(--card-hover);
+  border-color: var(--border);
 }
 
 .card-icon {
@@ -211,22 +216,22 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  background-color: #f5f3ff;
+  background-color: var(--background-alt);
   border-radius: 0.75rem;
-  color: #926cfd;
+  color: var(--primary);
 }
 
 .support-card h3 {
   margin: 0;
   font-size: 1.125rem;
   font-weight: 600;
-  color: #111827;
+  color: var(--text);
 }
 
 .support-card p {
   margin: 0;
   font-size: 0.875rem;
-  color: #6b7280;
+  color: var(--text-alt);
   line-height: 1.25;
 }
 
@@ -237,16 +242,16 @@
   padding: 0.5rem 1rem;
   font-size: 0.875rem;
   font-weight: 500;
-  background-color: #926cfd;
+  background-color: var(--primary);
   border: none;
   border-radius: 0.5rem;
-  color: white;
+  color: var(--background);
   cursor: pointer;
   transition: all 0.2s ease;
 }
 
 .primary-button:hover {
-  background-color: #7c5ce7;
+  background-color: var(--primary-hover);
 }
 
 /* FAQ Section */
@@ -258,7 +263,7 @@
   margin: 0;
   font-size: 1.25rem;
   font-weight: 600;
-  color: #111827;
+  color: var(--text);
 }
 
 .faq-grid {
@@ -268,46 +273,44 @@
 }
 
 .faq-card {
-  background-color: #fff;
-  border: 1px solid #e5e7eb;
+  background-color: var(--card-bg);
+  border: 1px solid var(--card-border);
   border-radius: 0.75rem;
   padding: 1.5rem;
   transition: all 0.2s ease;
 }
 
 .faq-card:hover {
-  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1),
-    0 2px 4px -1px rgba(0, 0, 0, 0.06);
-  border-color: #d1d5db;
+  box-shadow: 0 4px 6px -1px var(--card-hover), 0 2px 4px -1px var(--card-hover);
+  border-color: var(--border);
 }
 
 .faq-card h4 {
   margin: 0 0 0.75rem 0;
   font-size: 1rem;
   font-weight: 600;
-  color: #111827;
+  color: var(--text);
 }
 
 .faq-card p {
   margin: 0;
   font-size: 0.875rem;
-  color: #6b7280;
+  color: var(--text-alt);
   line-height: 1.5;
 }
 
 /* Contact Form */
 .contact-card {
-  background-color: #fff;
-  border: 1px solid #e5e7eb;
+  background-color: var(--card-bg);
+  border: 1px solid var(--card-border);
   border-radius: 0.75rem;
   padding: 1.5rem;
   transition: all 0.2s ease;
 }
 
 .contact-card:hover {
-  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1),
-    0 2px 4px -1px rgba(0, 0, 0, 0.06);
-  border-color: #d1d5db;
+  box-shadow: 0 4px 6px -1px var(--card-hover), 0 2px 4px -1px var(--card-hover);
+  border-color: var(--border);
 }
 
 .contact-form {
@@ -326,29 +329,30 @@
 .form-group label {
   font-size: 0.875rem;
   font-weight: 500;
-  color: #374151;
+  color: var(--text);
 }
 
 .form-group input,
 .form-group textarea {
   padding: 0.625rem;
   font-size: 0.875rem;
-  border: 1px solid #e5e7eb;
+  border: 1px solid var(--border);
   border-radius: 0.5rem;
-  color: #111827;
+  background-color: var(--input-bg);
+  color: var(--input-text);
   transition: all 0.2s ease;
 }
 
 .form-group input:focus,
 .form-group textarea:focus {
   outline: none;
-  border-color: #926cfd;
-  box-shadow: 0 0 0 3px rgba(146, 108, 253, 0.1);
+  border-color: var(--primary);
+  box-shadow: 0 0 0 3px var(--primary-shadow);
 }
 
 .form-group input::placeholder,
 .form-group textarea::placeholder {
-  color: #9ca3af;
+  color: var(--input-placeholder);
 }
 
 .form-actions {
