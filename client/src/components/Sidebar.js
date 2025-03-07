@@ -1,129 +1,66 @@
-import React from 'react';
+import React from "react";
+import { useNavigate } from "react-router-dom";
 import "../styles/Sidebar.css";
 import { Icons } from './Icons';
+import { menuItems } from "../data/menuItems";
 
-const Sidebar = ({ active, setActive, previous, setPrevious, isOpen, onClose }) => {
-  const menuItems = {
-    main: [
-      {
-        id: "dashboard",
-        label: "Dashboard",
-        icon: Icons.compass,
-        activeIcon: Icons.compassG,
-      },
-      {
-        id: "orders",
-        label: "Orders",
-        icon: Icons.project,
-        activeIcon: Icons.projectG,
-      },
-      {
-        id: "products",
-        label: "Products",
-        icon: Icons.product,
-        activeIcon: Icons.productG,
-      },
-      {
-        id: "billing",
-        label: "Billing",
-        icon: Icons.invoice,
-        activeIcon: Icons.invoiceG,
-      },
-    ],
-    secondary: [
-      {
-        id: "my-account",
-        label: "My Account",
-        icon: Icons.user,
-        activeIcon: Icons.userG,
-      },
-      {
-        id: "get-help",
-        label: "Get Help",
-        icon: Icons.help,
-        activeIcon: Icons.helpG,
-      },
-      {
-        id: "report",
-        label: "Report",
-        icon: Icons.report,
-        activeIcon: Icons.reportG,
-      },
-    ],
-    bottom: [
-      {
-        id: "settings",
-        label: "Settings",
-        icon: Icons.settings,
-        activeIcon: Icons.settingsG,
-      },
-      {
-        id: "log-out",
-        label: "Log Out",
-        icon: Icons.logout,
-        activeIcon: Icons.logoutG,
-      },
-    ],
-  };
+const Sidebar = ({ active, isOpen, onClose }) => {
+  const navigate = useNavigate();
 
-  const handleClick = (buttonId) => {
-    setPrevious(active);
-    setActive(buttonId);
-    if (window.innerWidth <= 1024) {
-      onClose(); // Close sidebar on mobile after clicking a menu item
+  const handleClick = (id) => {
+    if (id === "log-out") {
+      // Handle logout logic here
+      return;
+    }
+    
+    navigate(`/${id}`);
+    if (window.innerWidth <= 768) {
+      onClose();
     }
   };
 
   return (
     <div className={`sidebar ${isOpen ? "open" : ""}`}>
-      <div className="menu-section">
-        {menuItems.main.map((button) => (
-          <button
-            key={button.id}
-            onClick={() => handleClick(button.id)}
-            className={`sidebar-menu-button ${active === button.id ? "active" : ""}`}
-          >
-            {active === button.id ? button.activeIcon : button.icon}
-            <span>{button.label}</span>
-          </button>
-        ))}
-      </div>
-
-      <div className="menu-section">
-        {menuItems.secondary.map((button) => (
-          <button
-            key={button.id}
-            onClick={() => handleClick(button.id)}
-            className={`sidebar-menu-button ${active === button.id ? "active" : ""}`}
-          >
-            {active === button.id ? button.activeIcon : button.icon}
-            <span>{button.label}</span>
-          </button>
-        ))}
-      </div>
-
-      <div className="menu-section bottom">
-        {menuItems.bottom.map((button) => (
-          <button
-            key={button.id}
-            onClick={() => handleClick(button.id)}
-            className={`sidebar-menu-button ${active === button.id ? "active" : ""}`}
-          >
-            {active === button.id ? button.activeIcon : button.icon}
-            <span>{button.label}</span>
-          </button>
-        ))}
-      </div>
-
-      {active === "log-out" && (
-        <div className="logout-modal">
-          <p>Are you sure you want to log out?</p>
-          <div className="logout-options">
-            <button className="logout-cancel" onClick={() => handleClick(previous)}>Cancel</button>
-            <button className="logout-confirm">Log Out</button>
-          </div>
+      <div className="sidebar-menu">
+        <div className="main-menu">
+          {menuItems.main.map((item) => (
+            <button
+              key={item.id}
+              className={`sidebar-menu-button ${active === item.id ? "active" : ""}`}
+              onClick={() => handleClick(item.id)}
+            >
+              {active === item.id ? item.activeIcon : item.icon}
+              <span>{item.label}</span>
+            </button>
+          ))}
         </div>
-      )}
+
+        <div className="secondary-menu">
+          {menuItems.secondary.map((item) => (
+            <button
+              key={item.id}
+              className={`sidebar-menu-button ${active === item.id ? "active" : ""}`}
+              onClick={() => handleClick(item.id)}
+            >
+              {active === item.id ? item.activeIcon : item.icon}
+              <span>{item.label}</span>
+            </button>
+          ))}
+        </div>
+
+        <div className="bottom-menu">
+          {menuItems.bottom.map((item) => (
+            <button
+              key={item.id}
+              className={`sidebar-menu-button ${active === item.id ? "active" : ""}`}
+              onClick={() => handleClick(item.id)}
+            >
+              {active === item.id ? item.activeIcon : item.icon}
+              <span>{item.label}</span>
+            </button>
+          ))}
+        </div>
+      </div>
     </div>
   );
 };

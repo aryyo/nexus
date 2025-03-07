@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { Routes, Route, Navigate, useLocation } from "react-router-dom";
 import Navbar from "../components/Navbar";
 import Sidebar from "../components/Sidebar";
 import Dashboard from "./Dashboard";
@@ -13,81 +14,28 @@ import { useOrderMetrics } from "../hooks/useOrderMetrics";
 import "../styles/Homepage.css";
 
 const Homepage = () => {
-  const [activeButton, setActiveButton] = useState("dashboard");
-  const [previousButton, setPreviousButton] = useState("dashboard");
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const { orders, cachedMetrics, loading, error } = useOrderMetrics();
+  const location = useLocation();
 
   const toggleSidebar = () => {
     setIsSidebarOpen(!isSidebarOpen);
   };
 
-  const RenderActiveComponent = () => {
-    if (loading) {
-      return <div>Loading...</div>;
-    }
+  if (loading) {
+    return <div>Loading...</div>;
+  }
 
-    if (error) {
-      return <div>Error: {error}</div>;
-    }
-
-    switch (activeButton) {
-      case "dashboard":
-        return <Dashboard orders={orders} cachedMetrics={cachedMetrics} />;
-      case "orders":
-        return <Orders orders={orders} cachedMetrics={cachedMetrics} />;
-      case "help":
-        return <Help />;
-      case "products":
-        return <Product />;
-      case "billing":
-        return <Billing />;
-      case "get-help":
-        return <Help />;
-      case "my-account":
-        return <Account />;
-      case "report":
-        return <Report />;
-      case "settings":
-        return <Settings />;
-      default:
-        return <Dashboard orders={orders} cachedMetrics={cachedMetrics} />;
-
-      case "log-out":
-        switch (previousButton) {
-          case "dashboard":
-            return <Dashboard orders={orders} cachedMetrics={cachedMetrics} />;
-          case "orders":
-            return <Orders orders={orders} cachedMetrics={cachedMetrics} />;
-          case "help":
-            return <Help />;
-          case "products":
-            return <Product />;
-          case "billing":
-            return <Billing />;
-          case "get-help":
-            return <Help />;
-          case "my-account":
-            return <Account />;
-          case "report":
-            return <Report />;
-          case "settings":
-            return <Settings />;
-          default:
-            return <Dashboard orders={orders} cachedMetrics={cachedMetrics} />;
-        }
-    }
-  };
+  if (error) {
+    return <div>Error: {error}</div>;
+  }
 
   return (
     <div className="homepage-container">
       <Navbar onToggleSidebar={toggleSidebar} />
       <div className="homepage">
         <Sidebar
-          active={activeButton}
-          setActive={setActiveButton}
-          previous={previousButton}
-          setPrevious={setPreviousButton}
+          active={location.pathname.substring(1) || 'dashboard'}
           isOpen={isSidebarOpen}
           onClose={() => setIsSidebarOpen(false)}
         />
@@ -97,7 +45,18 @@ const Homepage = () => {
             onClick={() => setIsSidebarOpen(false)}
           />
         )}
-        {RenderActiveComponent()}
+        <Routes>
+          <Route path="/" element={<Navigate to="/dashboard" replace />} />
+          <Route path="/dashboard" element={<Dashboard orders={orders} cachedMetrics={cachedMetrics} />} />
+          <Route path="/orders" element={<Orders orders={orders} cachedMetrics={cachedMetrics} />} />
+          <Route path="/products" element={<Product />} />
+          <Route path="/help" element={<Help />} />
+          <Route path="/billing" element={<Billing />} />
+          <Route path="/account" element={<Account />} />
+          <Route path="/report" element={<Report />} />
+          <Route path="/settings" element={<Settings />} />
+          <Route path="*" element={<Navigate to="/dashboard" replace />} />
+        </Routes>
       </div>
     </div>
   );
