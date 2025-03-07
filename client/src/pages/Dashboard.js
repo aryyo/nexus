@@ -7,6 +7,10 @@ import { Icons } from "../components/Icons";
 import "../styles/Dashboard.css";
 
 const Dashboard = ({ orders, cachedMetrics }) => {
+  if (!orders || !cachedMetrics) {
+    return null;
+  }
+
   return (
     <div className="content">
       <div className="overview">
