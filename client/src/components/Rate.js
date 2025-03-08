@@ -1,6 +1,6 @@
 import { useMemo } from "react";
 import "../styles/Rate.css";
-import "../styles/EmptyState.css";
+import EmptyState from './EmptyState';
 
 const Rate = ({ cachedMetrics }) => {
   const {
@@ -53,14 +53,25 @@ const Rate = ({ cachedMetrics }) => {
         <div className="rate-header">
           <h2>Insights</h2>
         </div>
-        <div className="empty-state">
-          <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
-            <path d="M21.21 15.89A10 10 0 1 1 8 2.83"/>
-            <path d="M22 12A10 10 0 0 0 12 2v10z"/>
-          </svg>
-          <p>No insights available</p>
-          <span>Complete some orders to see business insights</span>
-        </div>
+        <EmptyState
+          title="No insights available"
+          message="Complete some orders to see business insights"
+          icon={
+            <svg 
+              viewBox="0 0 24 24" 
+              fill="none" 
+              stroke="currentColor" 
+              strokeWidth="1.5" 
+              strokeLinecap="round" 
+              strokeLinejoin="round"
+              className="empty-state-icon"
+            >
+              <path d="M21.21 15.89A10 10 0 1 1 8 2.83"/>
+              <path d="M22 12A10 10 0 0 0 12 2v10z"/>
+            </svg>
+          }
+          className="rate-empty-state"
+        />
       </div>
     );
   }

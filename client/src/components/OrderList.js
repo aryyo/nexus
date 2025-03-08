@@ -1,4 +1,6 @@
 import "../styles/OrderList.css";
+import React from 'react';
+import EmptyState from './EmptyState';
 
 const formatName = (name) => {
   if(!name) {return 'Unknown'}
@@ -39,6 +41,8 @@ const formatDate = (date) => {
       return `Nov ${day}`;
     case "12":
       return `Dec ${day}`;
+    default:
+      return 'Unknown';
   }
 };
 
@@ -62,7 +66,30 @@ const columns = [
   { label: "Date", key: "datePlaced", formatter: formatDate },
 ];
 
-const OrderList = ({orders}) => {
+const OrderList = ({ orders }) => {
+  if (!orders || orders.length === 0) {
+    return (
+      <EmptyState
+        title="No orders found"
+        message="There are no orders to display at this time. New orders will appear here."
+        icon={
+          <svg 
+            viewBox="0 0 24 24" 
+            fill="none" 
+            stroke="currentColor" 
+            strokeWidth="1.5" 
+            strokeLinecap="round" 
+            strokeLinejoin="round"
+            className="empty-state-icon"
+          >
+            <path d="M21 8v13H3V8M1 3h22v5H1zM10 12h4"/>
+          </svg>
+        }
+        className="orders-empty-state"
+      />
+    );
+  }
+
   return (
     <div className="orders-table-wrapper">
       <div className="orders-table">

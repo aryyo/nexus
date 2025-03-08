@@ -1,6 +1,6 @@
 import React, { useMemo } from 'react';
 import "../styles/Summary.css";
-import "../styles/EmptyState.css";
+import EmptyState from './EmptyState';
 import { Doughnut } from "react-chartjs-2";
 import { Chart as ChartJS, ArcElement, Tooltip, Legend } from "chart.js";
 
@@ -113,15 +113,26 @@ const Summary = ({ cachedMetrics }) => {
         <div className="summary-widget-header">
           <h2>Summary</h2>
         </div>
-        <div className="empty-state">
-          <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
-            <circle cx="12" cy="12" r="10"/>
-            <path d="M12 16v-4"/>
-            <path d="M12 8h.01"/>
-          </svg>
-          <p>No order data available</p>
-          <span>Your order summary will appear here</span>
-        </div>
+        <EmptyState
+          title="No order data available"
+          message="Your order summary will appear here"
+          icon={
+            <svg 
+              viewBox="0 0 24 24" 
+              fill="none" 
+              stroke="currentColor" 
+              strokeWidth="1.5" 
+              strokeLinecap="round" 
+              strokeLinejoin="round"
+              className="empty-state-icon"
+            >
+              <circle cx="12" cy="12" r="10"/>
+              <path d="M12 16v-4"/>
+              <path d="M12 8h.01"/>
+            </svg>
+          }
+          className="summary-empty-state"
+        />
       </div>
     );
   }
