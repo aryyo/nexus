@@ -13,7 +13,7 @@ import Settings from "./Settings";
 import { useOrderMetrics } from "../hooks/useOrderMetrics";
 import "../styles/Homepage.css";
 
-const Homepage = () => {
+const Homepage = ({ setIsLoggedIn }) => {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const { orders, cachedMetrics, loading, error } = useOrderMetrics();
   const location = useLocation();
@@ -38,6 +38,7 @@ const Homepage = () => {
           active={location.pathname.substring(1) || 'dashboard'}
           isOpen={isSidebarOpen}
           onClose={() => setIsSidebarOpen(false)}
+          setIsLoggedIn={setIsLoggedIn}
         />
         {isSidebarOpen && (
           <div 

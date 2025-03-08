@@ -1,15 +1,24 @@
-import React from "react";
+import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import "../styles/Sidebar.css";
-import { Icons } from './Icons';
 import { menuItems } from "../data/menuItems";
 
-const Sidebar = ({ active, isOpen, onClose }) => {
+const Sidebar = ({ active, isOpen, onClose, setIsLoggedIn }) => {
   const navigate = useNavigate();
+  const [showLogoutModal, setShowLogoutModal] = useState(false);
+
+  const handleLogout = () => {
+    // Clear token from localStorage
+    localStorage.removeItem('token');
+    // Update app's auth state
+    setIsLoggedIn(false);
+    // Navigate to login page
+    navigate('/login');
+  };
 
   const handleClick = (id) => {
     if (id === "log-out") {
-      // Handle logout logic here
+      setShowLogoutModal(true);
       return;
     }
     
@@ -61,6 +70,27 @@ const Sidebar = ({ active, isOpen, onClose }) => {
           ))}
         </div>
       </div>
+
+      {/* Logout Confirmation Modal */}
+      {showLogoutModal && (
+        <div className="logout-modal">
+          <p>Are you sure you want to log out?</p>
+          <div className="logout-options">
+            <button 
+              className="logout-cancel"
+              onClick={() => setShowLogoutModal(false)}
+            >
+              Cancel
+            </button>
+            <button 
+              className="logout-confirm"
+              onClick={handleLogout}
+            >
+              Log Out
+            </button>
+          </div>
+        </div>
+      )}
     </div>
   );
 };

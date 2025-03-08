@@ -1,24 +1,84 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 import "../styles/Summary.css";
+import "../styles/EmptyState.css";
 import { Doughnut } from "react-chartjs-2";
 import { Chart as ChartJS, ArcElement, Tooltip, Legend } from "chart.js";
 
 ChartJS.register(ArcElement, Tooltip, Legend);
 
-const Summary = () => {
-  const doughnutData = {
-    labels: ["Active", "Unactive", "Closed"],
-    datasets: [
-      {
-        label: "Jobs",
-        data: [52, 36, 14],
-        backgroundColor: ["#926cfd", "#10b981", "#fbbf24"],
-        hoverBackgroundColor: ["#7c5ce7", "#0d9669", "#f59e0b"],
-        borderWidth: 0,
-        cutout: "75%",
+const Summary = ({ cachedMetrics }) => {
+  const { chartData, totalOrders, yearOverYearChange, orderStats, hasData } = useMemo(() => {
+    if (!cachedMetrics || !cachedMetrics.totalOrders) {
+      return {
+        chartData: {
+          labels: [],
+          datasets: [{
+            data: [],
+            backgroundColor: [],
+            hoverBackgroundColor: [],
+            borderWidth: 0,
+            cutout: "75%"
+          }]
+        },
+        totalOrders: 0,
+        yearOverYearChange: 0,
+        orderStats: [],
+        hasData: false
+      };
+    }
+
+    const paid = cachedMetrics.totalPaid;
+    const cancelled = cachedMetrics.totalCancelled;
+    const refunded = cachedMetrics.totalRefunded;
+    const total = paid + cancelled + refunded;
+
+    // Check if there's any data
+    if (total === 0) {
+      return {
+        chartData: {
+          labels: [],
+          datasets: [{
+            data: [],
+            backgroundColor: [],
+            hoverBackgroundColor: [],
+            borderWidth: 0,
+            cutout: "75%"
+          }]
+        },
+        totalOrders: 0,
+        yearOverYearChange: 0,
+        orderStats: [],
+        hasData: false
+      };
+    }
+
+    // Calculate year over year change (simplified)
+    const currentYear = cachedMetrics.monthlyRevenue.slice(-12).reduce((a, b) => a + b, 0);
+    const previousYear = cachedMetrics.monthlyRevenue.slice(-24, -12).reduce((a, b) => a + b, 0);
+    const yearOverYearChange = previousYear ? ((currentYear - previousYear) / previousYear) * 100 : 0;
+
+    return {
+      chartData: {
+        labels: ["Paid", "Cancelled", "Refunded"],
+        datasets: [{
+          label: "Orders",
+          data: [paid, cancelled, refunded],
+          backgroundColor: ["#926cfd", "#10b981", "#fbbf24"],
+          hoverBackgroundColor: ["#7c5ce7", "#0d9669", "#f59e0b"],
+          borderWidth: 0,
+          cutout: "75%"
+        }]
       },
-    ],
-  };
+      totalOrders: total,
+      yearOverYearChange: Math.round(yearOverYearChange),
+      orderStats: [
+        { label: "Paid Orders", value: paid, color: "#926cfd" },
+        { label: "Cancelled Orders", value: cancelled, color: "#10b981" },
+        { label: "Refunded Orders", value: refunded, color: "#fbbf24" }
+      ],
+      hasData: true
+    };
+  }, [cachedMetrics]);
 
   const options = {
     responsive: true,
@@ -47,45 +107,52 @@ const Summary = () => {
     },
   };
 
+  if (!hasData) {
+    return (
+      <div className="summary-widget">
+        <div className="summary-widget-header">
+          <h2>Summary</h2>
+        </div>
+        <div className="empty-state">
+          <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+            <circle cx="12" cy="12" r="10"/>
+            <path d="M12 16v-4"/>
+            <path d="M12 8h.01"/>
+          </svg>
+          <p>No order data available</p>
+          <span>Your order summary will appear here</span>
+        </div>
+      </div>
+    );
+  }
+
   return (
     <div className="summary-widget">
       <div className="summary-widget-header">
         <h2>Summary</h2>
         <div className="summary-info">
-          <p className="percent">+5%</p>
+          <p className="percent">{yearOverYearChange >= 0 ? '+' : ''}{yearOverYearChange}%</p>
           <p className="date">vs last year</p>
         </div>
       </div>
       <div className="summary-widget-data">
         <div className="summary-widget-chart">
-          <Doughnut data={doughnutData} options={options} />
+          <Doughnut data={chartData} options={options} />
           <div className="summary-widget-chart-center">
-            <p className="summary-widget-chart-stat">102</p>
-            <p className="summary-widget-chart-head">Total Jobs</p>
+            <p className="summary-widget-chart-stat">{totalOrders}</p>
+            <p className="summary-widget-chart-head">Total Orders</p>
           </div>
         </div>
         <div className="summary-widget-stats">
-          <div className="summary-widget-stat-line">
-            <div className="summary-widget-dot" style={{ backgroundColor: "#926cfd" }}></div>
-            <div className="summary-widget-stat-details">
-              <p>Active Jobs</p>
-              <p>52</p>
+          {orderStats.map((stat, index) => (
+            <div key={index} className="summary-widget-stat-line">
+              <div className="summary-widget-dot" style={{ backgroundColor: stat.color }}></div>
+              <div className="summary-widget-stat-details">
+                <p>{stat.label}</p>
+                <p>{stat.value}</p>
+              </div>
             </div>
-          </div>
-          <div className="summary-widget-stat-line">
-            <div className="summary-widget-dot" style={{ backgroundColor: "#10b981" }}></div>
-            <div className="summary-widget-stat-details">
-              <p>Unactive Jobs</p>
-              <p>36</p>
-            </div>
-          </div>
-          <div className="summary-widget-stat-line">
-            <div className="summary-widget-dot" style={{ backgroundColor: "#fbbf24" }}></div>
-            <div className="summary-widget-stat-details">
-              <p>Closed Jobs</p>
-              <p>14</p>
-            </div>
-          </div>
+          ))}
         </div>
       </div>
     </div>

@@ -8,13 +8,29 @@ export const useOrderMetrics = () => {
   useEffect(() => {
     const fetchOrders = async () => {
       try {
-        const response = await fetch("http://localhost:3000/orders");
+        // Get the token from localStorage
+        const token = localStorage.getItem('token');
+        if (!token) {
+          throw new Error('No authentication token found');
+        }
+
+        const response = await fetch("http://localhost:3000/orders", {
+          headers: {
+            'Authorization': `Bearer ${token}`,
+            'Content-Type': 'application/json'
+          }
+        });
+
+        if (!response.ok) {
+          throw new Error('Failed to fetch orders');
+        }
+
         const data = await response.json();
         setOrders(data);
         setError(null);
       } catch (err) {
         console.error(err);
-        setError('Failed to fetch orders');
+        setError(err.message || 'Failed to fetch orders');
       } finally {
         setLoading(false);
       }

@@ -2,7 +2,7 @@
   background-color: var(--card-bg);
   border: 1px solid var(--card-border);
   border-radius: 0.75rem;
-  padding: 1.5rem;
+  padding: 1.25rem;
   display: flex;
   flex-direction: column;
   gap: 1.5rem;
@@ -160,7 +160,6 @@
 
 @media (max-width: 1024px) {
   .rate {
-    padding: 1.25rem;
     gap: 1.25rem;
   }
 
@@ -171,7 +170,6 @@
 
 @media (max-width: 768px) {
   .rate {
-    padding: 1rem;
     gap: 1rem;
   }
 

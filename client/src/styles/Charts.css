@@ -4,6 +4,7 @@
   flex-direction: column;
   gap: 1rem;
   height: 100%;
+  box-sizing: border-box;
 }
 
 .charts-header {
@@ -11,12 +12,11 @@
   justify-content: space-between;
   align-items: center;
   flex-shrink: 0;
-  margin-bottom: 0.5rem;
 }
 
 .charts-header h2 {
   margin: 0;
-  font-size: 1.125rem;
+  font-size: 1.25rem;
   font-weight: 600;
   color: var(--text);
 }
@@ -43,7 +43,6 @@
 }
 
 .time-select {
-  padding: 0.5rem;
   font-size: 0.875rem;
   color: var(--input-text);
   background-color: var(--card-bg);
@@ -74,14 +73,12 @@
 @media (max-width: 1200px) {
   .charts {
     height: 350px;
-    padding: 1.25rem;
   }
 }
 
 @media (max-width: 768px) {
   .charts {
     height: 300px;
-    padding: 1rem;
   }
 
   .charts-header h2 {

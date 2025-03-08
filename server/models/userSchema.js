@@ -42,7 +42,8 @@ const userSchema = new mongoose.Schema({
     reports: [reportSchema],
     paymentHistory: [paymentHistorySchema],
 }, {
-    timestamps: true, 
+    timestamps: true,
+    collection: "Users"
 });
 
 module.exports = mongoose.model('User', userSchema);

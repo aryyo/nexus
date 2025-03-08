@@ -11,29 +11,44 @@ import {
 } from "chart.js";
 import { useMemo } from "react";
 import "../styles/Charts.css";
+import "../styles/EmptyState.css";
 
 ChartJS.register(CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend);
 
 const Charts = ({ cachedMetrics }) => {
-  const {
-    labels,
-    projectData,
-    productData,
-  } = useMemo(() => {
-    // Simulated data to match the screenshot
+  const { labels, revenueData, expenseData, hasData } = useMemo(() => {
+    if (!cachedMetrics || !cachedMetrics.monthlyRevenue || !cachedMetrics.monthlyExpenses) {
+      return {
+        labels: [],
+        revenueData: [],
+        expenseData: [],
+        hasData: false
+      };
+    }
+
+    const months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+    const currentMonth = new Date().getMonth();
+    const last6Months = months.slice(Math.max(0, currentMonth - 5), currentMonth + 1);
+    const revenueData = cachedMetrics.monthlyRevenue.slice(Math.max(0, currentMonth - 5), currentMonth + 1);
+    const expenseData = cachedMetrics.monthlyExpenses.slice(Math.max(0, currentMonth - 5), currentMonth + 1);
+
+    // Check if there's any non-zero data
+    const hasData = revenueData.some(val => val > 0) || expenseData.some(val => val > 0);
+
     return {
-      labels: ["Jan", "Feb", "Mar", "Apr", "May", "Jun"],
-      projectData: [25, 45, 30, 50, 25, 35],
-      productData: [20, 40, 25, 45, 20, 25],
+      labels: last6Months,
+      revenueData,
+      expenseData,
+      hasData
     };
-  }, []);
+  }, [cachedMetrics]);
 
   const chartData = {
     labels,
     datasets: [
       {
-        label: "Project",
-        data: projectData,
+        label: "Revenue",
+        data: revenueData,
         backgroundColor: "#10b981",
         borderRadius: {
           topLeft: 4,
@@ -45,8 +60,8 @@ const Charts = ({ cachedMetrics }) => {
         categoryPercentage: 0.7,
       },
       {
-        label: "Product",
-        data: productData,
+        label: "Expenses",
+        data: expenseData,
         backgroundColor: "#fbbf24",
         borderRadius: {
           topLeft: 4,
@@ -86,13 +101,13 @@ const Charts = ({ cachedMetrics }) => {
         boxPadding: 4,
         usePointStyle: true,
         callbacks: {
-          title: () => "Performance Team",
+          title: () => "Financial Performance",
           label: function(context) {
             let label = context.dataset.label || '';
             if (label) {
-              label += ': ';
+              label += ': $';
             }
-            label += context.parsed.y + 'K';
+            label += context.parsed.y.toFixed(2);
             return label;
           }
         }
@@ -100,7 +115,7 @@ const Charts = ({ cachedMetrics }) => {
     },
     scales: {
       x: {
-        stacked: true,
+        stacked: false,
         grid: {
           display: false,
         },
@@ -115,7 +130,7 @@ const Charts = ({ cachedMetrics }) => {
         },
       },
       y: {
-        stacked: true,
+        stacked: false,
         grid: {
           color: "#f3f4f6",
           drawBorder: false,
@@ -126,15 +141,13 @@ const Charts = ({ cachedMetrics }) => {
             size: 12,
           },
           callback: function(value) {
-            return value + '%';
+            return '$' + value.toFixed(0);
           },
-          max: 100,
-          stepSize: 25,
+          beginAtZero: true
         },
         border: {
           display: false,
-        },
-        beginAtZero: true,
+        }
       },
     },
     layout: {
@@ -146,16 +159,25 @@ const Charts = ({ cachedMetrics }) => {
 
   return (
     <div className="charts">
-      <div className="charts-header">
-        <h2>Performance Team</h2>
-        <select className="time-select">
-          <option>Last 6 month</option>
-          <option>Last year</option>
-          <option>Last 3 months</option>
-        </select>
-      </div>
       <div className="charts-graph">
-        <Bar data={chartData} options={chartOptions} />
+        {!hasData ? (
+          <div className="chart-empty-state">
+            <svg width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+              <line x1="12" y1="2" x2="12" y2="6"/>
+              <line x1="12" y1="18" x2="12" y2="22"/>
+              <line x1="4.93" y1="4.93" x2="7.76" y2="7.76"/>
+              <line x1="16.24" y1="16.24" x2="19.07" y2="19.07"/>
+              <line x1="2" y1="12" x2="6" y2="12"/>
+              <line x1="18" y1="12" x2="22" y2="12"/>
+              <line x1="4.93" y1="19.07" x2="7.76" y2="16.24"/>
+              <line x1="16.24" y1="7.76" x2="19.07" y2="4.93"/>
+            </svg>
+            <p>No financial data available yet</p>
+            <span>Start making sales to see your performance metrics</span>
+          </div>
+        ) : (
+          <Bar data={chartData} options={chartOptions} />
+        )}
       </div>
     </div>
   );

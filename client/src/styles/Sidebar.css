@@ -73,6 +73,7 @@
 
 .sidebar-menu-button span {
   font-weight: 500;
+  transition: none;
 }
 
 .logout-modal {

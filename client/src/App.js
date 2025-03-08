@@ -1,11 +1,14 @@
 import './styles/App.css'
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import Homepage from './pages/Homepage'
-import Login from "./pages/Login";
+import Login from "./pages/Auth";
 
 function App() {
-  let [isLoggedIn, setIsLoggedIn] = useState(true);
+  const [isLoggedIn, setIsLoggedIn] = useState(() => {
+    // Check if there's a token in localStorage on initial load
+    return !!localStorage.getItem('token');
+  });
 
   return (
     <div className="App">
@@ -13,11 +16,17 @@ function App() {
         <Routes>
           <Route 
             path="/login" 
-            element={isLoggedIn ? <Navigate to="/" replace /> : <Login />} 
+            element={isLoggedIn ? 
+              <Navigate to="/" replace /> : 
+              <Login setIsLoggedIn={setIsLoggedIn} />
+            } 
           />
           <Route 
             path="/*" 
-            element={isLoggedIn ? <Homepage /> : <Navigate to="/login" replace />} 
+            element={isLoggedIn ? 
+              <Homepage setIsLoggedIn={setIsLoggedIn} /> : 
+              <Navigate to="/login" replace />
+            } 
           />
         </Routes>
       </BrowserRouter>

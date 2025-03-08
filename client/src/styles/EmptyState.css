@@ -1,0 +1,130 @@
+.empty-state,
+.chart-empty-state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 200px;
+  padding: 2.5rem;
+  text-align: center;
+  color: var(--input-text);
+  background-color: var(--card-bg);
+  border-radius: 0.75rem;
+  border: 1px dashed var(--border);
+  transition: all 0.2s ease;
+  box-sizing: border-box;
+}
+
+.chart-empty-state {
+  height: 100%;
+}
+
+.empty-state:hover,
+.chart-empty-state:hover {
+  border-color: var(--primary);
+  background-color: transparent;
+}
+
+.charts-graph .empty-state:hover,
+.charts-graph .chart-empty-state:hover {
+  background-color: transparent;
+}
+
+.empty-state svg,
+.chart-empty-state svg {
+  margin-bottom: 1.25rem;
+  color: var(--primary);
+  opacity: 0.7;
+  transition: all 0.2s ease;
+  animation: pulse 2s infinite;
+}
+
+.empty-state:hover svg,
+.chart-empty-state:hover svg {
+  opacity: 1;
+  transform: scale(1.05);
+}
+
+.empty-state p,
+.chart-empty-state p {
+  margin: 0;
+  font-size: 1.125rem;
+  font-weight: 600;
+  color: var(--text);
+  letter-spacing: -0.025em;
+}
+
+.empty-state span,
+.chart-empty-state span {
+  margin-top: 0.625rem;
+  font-size: 0.875rem;
+  color: var(--input-text);
+  opacity: 0.8;
+  max-width: 280px;
+  line-height: 1.5;
+}
+
+/* Pulse animation for the icon */
+@keyframes pulse {
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.05);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .empty-state,
+  .chart-empty-state {
+    padding: 2rem;
+    min-height: 180px;
+  }
+
+  .empty-state svg,
+  .chart-empty-state svg {
+    width: 40px;
+    height: 40px;
+    margin-bottom: 1rem;
+  }
+
+  .empty-state p,
+  .chart-empty-state p {
+    font-size: 1rem;
+  }
+
+  .empty-state span,
+  .chart-empty-state span {
+    font-size: 0.813rem;
+  }
+}
+
+/* Dark mode enhancements */
+@media (prefers-color-scheme: dark) {
+  .empty-state,
+  .chart-empty-state {
+    background-color: rgba(var(--card-bg-rgb), 0.6);
+    backdrop-filter: blur(8px);
+  }
+
+  .empty-state:hover,
+  .chart-empty-state:hover {
+    background-color: rgba(var(--card-bg-rgb), 0.8);
+  }
+
+  /* Charts empty state in dark mode */
+  .charts-graph .empty-state,
+  .charts-graph .chart-empty-state {
+    background-color: transparent;
+    backdrop-filter: none;
+  }
+
+  .charts-graph .empty-state:hover,
+  .charts-graph .chart-empty-state:hover {
+    background-color: transparent;
+  }
+} 
