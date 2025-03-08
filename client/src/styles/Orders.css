@@ -1,13 +1,27 @@
+.orders {
+  display: flex;
+  gap: 1.25rem;
+  height: calc(100% - 4rem);
+}
+
 .orders-content {
-  width: 100%;
+  flex: 1;
+  min-width: 0;
   height: 100%;
+}
+
+/* When no orders, center the empty state */
+.content:has(.orders-content:only-child) {
   display: flex;
   flex-direction: column;
-  gap: 1.25rem;
-  padding: 1.25rem;
-  background-color: var(--background);
-  overflow-y: auto;
-  box-sizing: border-box;
+}
+
+.content:has(.orders-content:only-child) .orders-content {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  flex: 1;
 }
 
 .overview {
@@ -143,5 +157,12 @@
   .add {
     padding: 0.5rem 0.75rem;
     font-size: 0.875rem;
+  }
+}
+
+@media (max-width: 1024px) {
+  .orders {
+    flex-direction: column;
+    height: auto;
   }
 }
