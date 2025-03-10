@@ -1,6 +1,6 @@
 import { useState } from "react";
 import "../styles/Login.css";
-import { useNavigate } from 'react-router-dom';
+import { useNavigate } from "react-router-dom";
 
 const Auth = ({ setIsLoggedIn }) => {
   const navigate = useNavigate();
@@ -45,7 +45,7 @@ const Auth = ({ setIsLoggedIn }) => {
       [id]: value,
     }));
     // Clear error when user starts typing
-    setErrors(prev => ({
+    setErrors((prev) => ({
       ...prev,
       [id]: "",
     }));
@@ -66,7 +66,7 @@ const Auth = ({ setIsLoggedIn }) => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     setSubmitError("");
-    
+
     if (!validateForm()) {
       return;
     }
@@ -98,11 +98,10 @@ const Auth = ({ setIsLoggedIn }) => {
         throw new Error("No token received from server");
       }
 
-      localStorage.setItem('token', data.token);
-      
+      localStorage.setItem("token", data.token);
+
       setIsLoggedIn(true);
-      navigate('/');
-      
+      navigate("/");
     } catch (error) {
       console.error("Error:", error.message);
       setSubmitError(error.message);
@@ -140,9 +139,7 @@ const Auth = ({ setIsLoggedIn }) => {
 
         <form className="login-form" onSubmit={handleSubmit}>
           {submitError && (
-            <div className="error-message submit-error">
-              {submitError}
-            </div>
+            <div className="error-message submit-error">{submitError}</div>
           )}
           <div className="form-group">
             <label htmlFor="email">E-mail</label>
@@ -154,7 +151,9 @@ const Auth = ({ setIsLoggedIn }) => {
               onChange={handleInputChange}
               className={errors.email ? "error" : ""}
             />
-            {errors.email && <span className="error-message">{errors.email}</span>}
+            {errors.email && (
+              <span className="error-message">{errors.email}</span>
+            )}
           </div>
 
           <div className="form-group">
@@ -223,7 +222,9 @@ const Auth = ({ setIsLoggedIn }) => {
                 )}
               </button>
             </div>
-            {errors.password && <span className="error-message">{errors.password}</span>}
+            {errors.password && (
+              <span className="error-message">{errors.password}</span>
+            )}
           </div>
 
           <button type="submit" className="sign-up-button">

@@ -3,7 +3,6 @@ import Charts from "../components/Charts";
 import Rate from "../components/Rate";
 import Summary from "../components/Summary";
 import Cards from "../components/Card";
-import { Icons } from "../components/Icons";
 import "../styles/Dashboard.css";
 
 const Dashboard = ({ orders, cachedMetrics }) => {

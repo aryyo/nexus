@@ -11,23 +11,34 @@ import Account from "./Account";
 import Report from "./Report";
 import Settings from "./Settings";
 import { useOrderMetrics } from "../hooks/useOrderMetrics";
+import { useProducts } from "../hooks/useProducts";
 import "../styles/Homepage.css";
 
 const Homepage = ({ setIsLoggedIn }) => {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
-  const { orders, cachedMetrics, loading, error } = useOrderMetrics();
+  const {
+    orders,
+    cachedMetrics,
+    loading: ordersLoading,
+    error: ordersError,
+  } = useOrderMetrics();
+  const {
+    products,
+    loading: productsLoading,
+    error: productsError,
+  } = useProducts();
   const location = useLocation();
 
   const toggleSidebar = () => {
     setIsSidebarOpen(!isSidebarOpen);
   };
 
-  if (loading) {
+  if (ordersLoading || productsLoading) {
     return <div>Loading...</div>;
   }
 
-  if (error) {
-    return <div>Error: {error}</div>;
+  if (ordersError || productsError) {
+    return <div>Error: {ordersError || productsError}</div>;
   }
 
   return (
@@ -35,22 +46,30 @@ const Homepage = ({ setIsLoggedIn }) => {
       <Navbar onToggleSidebar={toggleSidebar} />
       <div className="homepage">
         <Sidebar
-          active={location.pathname.substring(1) || 'dashboard'}
+          active={location.pathname.substring(1) || "dashboard"}
           isOpen={isSidebarOpen}
           onClose={() => setIsSidebarOpen(false)}
           setIsLoggedIn={setIsLoggedIn}
         />
         {isSidebarOpen && (
-          <div 
-            className={`sidebar-backdrop ${isSidebarOpen ? 'active' : ''}`}
+          <div
+            className={`sidebar-backdrop ${isSidebarOpen ? "active" : ""}`}
             onClick={() => setIsSidebarOpen(false)}
           />
         )}
         <Routes>
           <Route path="/" element={<Navigate to="/dashboard" replace />} />
-          <Route path="/dashboard" element={<Dashboard orders={orders} cachedMetrics={cachedMetrics} />} />
-          <Route path="/orders" element={<Orders orders={orders} cachedMetrics={cachedMetrics} />} />
-          <Route path="/products" element={<Product />} />
+          <Route
+            path="/dashboard"
+            element={
+              <Dashboard orders={orders} cachedMetrics={cachedMetrics} />
+            }
+          />
+          <Route
+            path="/orders"
+            element={<Orders orders={orders} cachedMetrics={cachedMetrics} />}
+          />
+          <Route path="/products" element={<Product products={products} />} />
           <Route path="/help" element={<Help />} />
           <Route path="/billing" element={<Billing />} />
           <Route path="/account" element={<Account />} />

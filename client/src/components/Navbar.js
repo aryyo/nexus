@@ -1,6 +1,6 @@
-import React from 'react';
-import '../styles/Navbar.css';
-import { Icons } from './Icons';
+import React from "react";
+import "../styles/Navbar.css";
+import { Icons } from "./Icons";
 
 const Navbar = ({ onToggleSidebar }) => {
   return (
@@ -16,15 +16,9 @@ const Navbar = ({ onToggleSidebar }) => {
         </div>
       </div>
       <div className="nav-right">
-        <button className="nav-button">
-          {Icons.mail}
-        </button>
-        <button className="nav-button">
-          {Icons.bell}
-        </button>
-        <div className="user-profile">
-          {Icons.user}
-        </div>
+        <button className="nav-button">{Icons.mail}</button>
+        <button className="nav-button">{Icons.bell}</button>
+        <div className="user-profile">{Icons.user}</div>
       </div>
     </div>
   );

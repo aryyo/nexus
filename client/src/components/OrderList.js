@@ -1,9 +1,11 @@
 import "../styles/OrderList.css";
-import React from 'react';
-import EmptyState from './EmptyState';
+import React from "react";
+import EmptyState from "./EmptyState";
 
 const formatName = (name) => {
-  if(!name) {return 'Unknown'}
+  if (!name) {
+    return "Unknown";
+  }
   if (name.length > 18) {
     const clippedName = name.slice(0, 15);
     return `${clippedName}...`;
@@ -13,7 +15,9 @@ const formatName = (name) => {
 };
 
 const formatDate = (date) => {
-  if(!date) {return 'Unknown'}
+  if (!date) {
+    return "Unknown";
+  }
   const month = date.slice(5, 7);
   const day = date.slice(8, 10);
   switch (month) {
@@ -42,18 +46,22 @@ const formatDate = (date) => {
     case "12":
       return `Dec ${day}`;
     default:
-      return 'Unknown';
+      return "Unknown";
   }
 };
 
 const formatTotal = (total) => {
-  if(!total) {return 'Unknown'}
+  if (!total) {
+    return "Unknown";
+  }
   return `$${total}`;
 };
 
 const formatOrderId = (id) => {
-  if(!id) {return 'Unknown'}
-  return `#${id.slice(0,8)}`;
+  if (!id) {
+    return "Unknown";
+  }
+  return `#${id.slice(0, 8)}`;
 };
 
 const columns = [
@@ -73,16 +81,16 @@ const OrderList = ({ orders }) => {
         title="No orders found"
         message="There are no orders to display at this time. New orders will appear here."
         icon={
-          <svg 
-            viewBox="0 0 24 24" 
-            fill="none" 
-            stroke="currentColor" 
-            strokeWidth="1.5" 
-            strokeLinecap="round" 
+          <svg
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            strokeWidth="1.5"
+            strokeLinecap="round"
             strokeLinejoin="round"
             className="empty-state-icon"
           >
-            <path d="M21 8v13H3V8M1 3h22v5H1zM10 12h4"/>
+            <path d="M21 8v13H3V8M1 3h22v5H1zM10 12h4" />
           </svg>
         }
         className="orders-empty-state"

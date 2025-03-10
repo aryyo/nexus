@@ -1,17 +1,18 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect } from "react";
 import "../styles/Settings.css";
 
 const Settings = () => {
-  const [theme, setTheme] = useState('light');
+  const [theme, setTheme] = useState("light");
 
   useEffect(() => {
     // Get initial theme from HTML attribute
-    const currentTheme = document.documentElement.getAttribute('data-theme') || 'light';
+    const currentTheme =
+      document.documentElement.getAttribute("data-theme") || "light";
     setTheme(currentTheme);
   }, []);
 
   const handleThemeChange = (selectedTheme) => {
-    document.documentElement.setAttribute('data-theme', selectedTheme);
+    document.documentElement.setAttribute("data-theme", selectedTheme);
     setTheme(selectedTheme);
   };
 
@@ -20,13 +21,13 @@ const Settings = () => {
       <div className="overview">
         <p>Settings</p>
       </div>
-      
+
       <div className="settings-content">
         <div className="settings-card">
           <div className="card-header">
             <h3>Interface Preferences</h3>
           </div>
-          
+
           <div className="settings-options">
             <div className="settings-item">
               <div className="settings-info">
@@ -34,29 +35,49 @@ const Settings = () => {
                 <p>Choose between light and dark theme for the interface</p>
               </div>
               <div className="theme-selector">
-                <button 
-                  className={`theme-button ${theme === 'light' ? 'active' : ''}`}
-                  onClick={() => handleThemeChange('light')}
+                <button
+                  className={`theme-button ${
+                    theme === "light" ? "active" : ""
+                  }`}
+                  onClick={() => handleThemeChange("light")}
                 >
-                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                    <circle cx="12" cy="12" r="5"/>
-                    <line x1="12" y1="1" x2="12" y2="3"/>
-                    <line x1="12" y1="21" x2="12" y2="23"/>
-                    <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/>
-                    <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/>
-                    <line x1="1" y1="12" x2="3" y2="12"/>
-                    <line x1="21" y1="12" x2="23" y2="12"/>
-                    <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/>
-                    <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/>
+                  <svg
+                    width="20"
+                    height="20"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    strokeWidth="2"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                  >
+                    <circle cx="12" cy="12" r="5" />
+                    <line x1="12" y1="1" x2="12" y2="3" />
+                    <line x1="12" y1="21" x2="12" y2="23" />
+                    <line x1="4.22" y1="4.22" x2="5.64" y2="5.64" />
+                    <line x1="18.36" y1="18.36" x2="19.78" y2="19.78" />
+                    <line x1="1" y1="12" x2="3" y2="12" />
+                    <line x1="21" y1="12" x2="23" y2="12" />
+                    <line x1="4.22" y1="19.78" x2="5.64" y2="18.36" />
+                    <line x1="18.36" y1="5.64" x2="19.78" y2="4.22" />
                   </svg>
                   Light
                 </button>
-                <button 
-                  className={`theme-button ${theme === 'dark' ? 'active' : ''}`}
-                  onClick={() => handleThemeChange('dark')}
+                <button
+                  className={`theme-button ${theme === "dark" ? "active" : ""}`}
+                  onClick={() => handleThemeChange("dark")}
                 >
-                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                    <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>
+                  <svg
+                    width="20"
+                    height="20"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    strokeWidth="2"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                  >
+                    <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z" />
                   </svg>
                   Dark
                 </button>
@@ -91,7 +112,7 @@ const Settings = () => {
           <div className="card-header">
             <h3>Notifications</h3>
           </div>
-          
+
           <div className="settings-options">
             <div className="settings-item">
               <div className="settings-info">
@@ -99,7 +120,7 @@ const Settings = () => {
                 <p>Receive email updates about your account activity</p>
               </div>
               <label className="settings-toggle">
-                <input type="checkbox"/>
+                <input type="checkbox" />
                 <span className="settings-toggle-slider"></span>
               </label>
             </div>
@@ -121,7 +142,7 @@ const Settings = () => {
           <div className="card-header">
             <h3>Privacy</h3>
           </div>
-          
+
           <div className="settings-options">
             <div className="settings-item">
               <div className="settings-info">
@@ -129,7 +150,7 @@ const Settings = () => {
                 <p>Show when you're active in the application</p>
               </div>
               <label className="settings-toggle">
-                <input type="checkbox"/>
+                <input type="checkbox" />
                 <span className="settings-toggle-slider"></span>
               </label>
             </div>

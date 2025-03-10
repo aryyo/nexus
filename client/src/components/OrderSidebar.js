@@ -1,8 +1,8 @@
-import React from 'react';
+import React from "react";
 import "../styles/OrderSidebar.css";
 import { Doughnut } from "react-chartjs-2";
 import { Chart as ChartJS, ArcElement, Tooltip, Legend } from "chart.js";
-import EmptyState from './EmptyState';
+import EmptyState from "./EmptyState";
 
 ChartJS.register(ArcElement, Tooltip, Legend);
 
@@ -56,20 +56,26 @@ const OrderSidebar = ({ orders, cachedMetrics }) => {
         borderColor: "#e5e7eb",
         borderWidth: 1,
         callbacks: {
-          label: function(context) {
-            const label = context.label || '';
+          label: function (context) {
+            const label = context.label || "";
             const value = context.raw || 0;
             const total = context.dataset.data.reduce((a, b) => a + b, 0);
             const percentage = ((value / total) * 100).toFixed(1);
             return `${label}: ${percentage}%`;
-          }
-        }
+          },
+        },
       },
     },
   };
 
-  const hasReceiptData = cachedMetrics && (cachedMetrics.totalShipments > 0 || cachedMetrics.totalPickups > 0);
-  const hasOrderStatusData = cachedMetrics && (cachedMetrics.totalPaid > 0 || cachedMetrics.totalCancelled > 0 || cachedMetrics.totalRefunded > 0);
+  const hasReceiptData =
+    cachedMetrics &&
+    (cachedMetrics.totalShipments > 0 || cachedMetrics.totalPickups > 0);
+  const hasOrderStatusData =
+    cachedMetrics &&
+    (cachedMetrics.totalPaid > 0 ||
+      cachedMetrics.totalCancelled > 0 ||
+      cachedMetrics.totalRefunded > 0);
   const hasOverviewData = cachedMetrics && cachedMetrics.totalOrders > 0;
   const hasTopSellerData = cachedMetrics && cachedMetrics.mostOrderedProduct;
 
@@ -90,16 +96,16 @@ const OrderSidebar = ({ orders, cachedMetrics }) => {
             title="No receipt data"
             message="There are no shipments or pickups to display."
             icon={
-              <svg 
-                viewBox="0 0 24 24" 
-                fill="none" 
-                stroke="currentColor" 
-                strokeWidth="1.5" 
-                strokeLinecap="round" 
+              <svg
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="1.5"
+                strokeLinecap="round"
                 strokeLinejoin="round"
                 className="empty-state-icon"
               >
-                <path d="M16 3h5v5M21 3l-7 7M21 14v5a2 2 0 01-2 2H5a2 2 0 01-2-2V5a2 2 0 012-2h5"/>
+                <path d="M16 3h5v5M21 3l-7 7M21 14v5a2 2 0 01-2 2H5a2 2 0 01-2-2V5a2 2 0 012-2h5" />
               </svg>
             }
             className="sidebar-empty-state"
@@ -108,20 +114,37 @@ const OrderSidebar = ({ orders, cachedMetrics }) => {
           <div className="revenue-chart">
             <Doughnut data={doughnutData} options={doughnutOptions} />
             <div className="chart-center">
-              <p className="total-value">{formatRevenue(cachedMetrics.revenueFromShipments + cachedMetrics.revenueFromPickups)}</p>
+              <p className="total-value">
+                {formatRevenue(
+                  cachedMetrics.revenueFromShipments +
+                    cachedMetrics.revenueFromPickups
+                )}
+              </p>
               <p className="total-label">Total Revenue</p>
             </div>
           </div>
         )}
         <div className="revenue-details">
           <div className="revenue-item">
-            <div className="revenue-icon" style={{ backgroundColor: "#f5f3ff", color: "#926cfd" }}>
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+            <div
+              className="revenue-icon"
+              style={{ backgroundColor: "#f5f3ff", color: "#926cfd" }}
+            >
+              <svg
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="2"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+              >
                 <path d="M16 3h5v5M21 3l-7 7M21 14v5a2 2 0 01-2 2H5a2 2 0 01-2-2V5a2 2 0 012-2h5" />
               </svg>
             </div>
             <div className="revenue-info">
-              <p className="revenue-value">{formatRevenue(cachedMetrics.revenueFromShipments)}</p>
+              <p className="revenue-value">
+                {formatRevenue(cachedMetrics.revenueFromShipments)}
+              </p>
               <div className="revenue-item-label">
                 <p>{cachedMetrics.totalShipments}</p>
                 <p>Shipments</p>
@@ -129,13 +152,25 @@ const OrderSidebar = ({ orders, cachedMetrics }) => {
             </div>
           </div>
           <div className="revenue-item">
-            <div className="revenue-icon" style={{ backgroundColor: "#ecfdf5", color: "#10b981" }}>
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+            <div
+              className="revenue-icon"
+              style={{ backgroundColor: "#ecfdf5", color: "#10b981" }}
+            >
+              <svg
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="2"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+              >
                 <path d="M8 3v3a2 2 0 01-2 2H3m18 0h-3a2 2 0 01-2-2V3M3 16h3a2 2 0 012 2v3m8-3h3a2 2 0 012 2v3M3 12h18" />
               </svg>
             </div>
             <div className="revenue-info">
-              <p className="revenue-value">{formatRevenue(cachedMetrics.revenueFromPickups)}</p>
+              <p className="revenue-value">
+                {formatRevenue(cachedMetrics.revenueFromPickups)}
+              </p>
               <div className="revenue-item-label">
                 <p>{cachedMetrics.totalPickups}</p>
                 <p>Pickups</p>
@@ -159,17 +194,17 @@ const OrderSidebar = ({ orders, cachedMetrics }) => {
             title="No status data"
             message="There are no order statuses to display."
             icon={
-              <svg 
-                viewBox="0 0 24 24" 
-                fill="none" 
-                stroke="currentColor" 
-                strokeWidth="1.5" 
-                strokeLinecap="round" 
+              <svg
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="1.5"
+                strokeLinecap="round"
                 strokeLinejoin="round"
                 className="empty-state-icon"
               >
-                <circle cx="12" cy="12" r="10"/>
-                <path d="M12 6v6l4 2"/>
+                <circle cx="12" cy="12" r="10" />
+                <path d="M12 6v6l4 2" />
               </svg>
             }
             className="sidebar-empty-state"
@@ -193,29 +228,50 @@ const OrderSidebar = ({ orders, cachedMetrics }) => {
             <div className="bar-data">
               <div className="status-item">
                 <div className="status-info">
-                  <div className="status-dot" style={{ backgroundColor: "#10b981" }}></div>
+                  <div
+                    className="status-dot"
+                    style={{ backgroundColor: "#10b981" }}
+                  ></div>
                   <p>Paid</p>
                 </div>
                 <p className="status-value">
-                  {((cachedMetrics.totalPaid * 100) / cachedMetrics.totalOrders).toFixed(1)}%
+                  {(
+                    (cachedMetrics.totalPaid * 100) /
+                    cachedMetrics.totalOrders
+                  ).toFixed(1)}
+                  %
                 </p>
               </div>
               <div className="status-item">
                 <div className="status-info">
-                  <div className="status-dot" style={{ backgroundColor: "#f59e0b" }}></div>
+                  <div
+                    className="status-dot"
+                    style={{ backgroundColor: "#f59e0b" }}
+                  ></div>
                   <p>Cancelled</p>
                 </div>
                 <p className="status-value">
-                  {((cachedMetrics.totalCancelled * 100) / cachedMetrics.totalOrders).toFixed(1)}%
+                  {(
+                    (cachedMetrics.totalCancelled * 100) /
+                    cachedMetrics.totalOrders
+                  ).toFixed(1)}
+                  %
                 </p>
               </div>
               <div className="status-item">
                 <div className="status-info">
-                  <div className="status-dot" style={{ backgroundColor: "#926cfd" }}></div>
+                  <div
+                    className="status-dot"
+                    style={{ backgroundColor: "#926cfd" }}
+                  ></div>
                   <p>Refunded</p>
                 </div>
                 <p className="status-value">
-                  {((cachedMetrics.totalRefunded * 100) / cachedMetrics.totalOrders).toFixed(1)}%
+                  {(
+                    (cachedMetrics.totalRefunded * 100) /
+                    cachedMetrics.totalOrders
+                  ).toFixed(1)}
+                  %
                 </p>
               </div>
             </div>
@@ -237,18 +293,18 @@ const OrderSidebar = ({ orders, cachedMetrics }) => {
             title="No overview data"
             message="There is no order overview data to display."
             icon={
-              <svg 
-                viewBox="0 0 24 24" 
-                fill="none" 
-                stroke="currentColor" 
-                strokeWidth="1.5" 
-                strokeLinecap="round" 
+              <svg
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="1.5"
+                strokeLinecap="round"
                 strokeLinejoin="round"
                 className="empty-state-icon"
               >
-                <rect x="3" y="3" width="18" height="18" rx="2"/>
-                <line x1="3" y1="9" x2="21" y2="9"/>
-                <line x1="9" y1="21" x2="9" y2="9"/>
+                <rect x="3" y="3" width="18" height="18" rx="2" />
+                <line x1="3" y1="9" x2="21" y2="9" />
+                <line x1="9" y1="21" x2="9" y2="9" />
               </svg>
             }
             className="sidebar-empty-state"
@@ -256,15 +312,21 @@ const OrderSidebar = ({ orders, cachedMetrics }) => {
         ) : (
           <div className="summary-stats">
             <div className="summary-line">
-              <p className="summary-value">{formatRevenue(cachedMetrics.averagePrice)}</p>
+              <p className="summary-value">
+                {formatRevenue(cachedMetrics.averagePrice)}
+              </p>
               <p className="summary-title">Average Order</p>
             </div>
             <div className="summary-line">
-              <p className="summary-value">{formatRevenue(cachedMetrics.totalRevenue)}</p>
+              <p className="summary-value">
+                {formatRevenue(cachedMetrics.totalRevenue)}
+              </p>
               <p className="summary-title">Total Revenue</p>
             </div>
             <div className="summary-line">
-              <p className="summary-value">{cachedMetrics.totalCancelled + cachedMetrics.totalRefunded}</p>
+              <p className="summary-value">
+                {cachedMetrics.totalCancelled + cachedMetrics.totalRefunded}
+              </p>
               <p className="summary-title">Orders Lost</p>
             </div>
             <div className="summary-line">
@@ -272,11 +334,15 @@ const OrderSidebar = ({ orders, cachedMetrics }) => {
               <p className="summary-title">Total Orders</p>
             </div>
             <div className="summary-line">
-              <p className="summary-value">{cachedMetrics.shippingRate.toFixed(1)}%</p>
+              <p className="summary-value">
+                {cachedMetrics.shippingRate.toFixed(1)}%
+              </p>
               <p className="summary-title">Shipping Rate</p>
             </div>
             <div className="summary-line">
-              <p className="summary-value">{cachedMetrics.rejectRate.toFixed(1)}%</p>
+              <p className="summary-value">
+                {cachedMetrics.rejectRate.toFixed(1)}%
+              </p>
               <p className="summary-title">Reject Rate</p>
             </div>
           </div>
@@ -297,17 +363,17 @@ const OrderSidebar = ({ orders, cachedMetrics }) => {
             title="No top seller data"
             message="There are no top selling products to display."
             icon={
-              <svg 
-                viewBox="0 0 24 24" 
-                fill="none" 
-                stroke="currentColor" 
-                strokeWidth="1.5" 
-                strokeLinecap="round" 
+              <svg
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="1.5"
+                strokeLinecap="round"
                 strokeLinejoin="round"
                 className="empty-state-icon"
               >
-                <path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"/>
-                <line x1="7" y1="7" x2="7.01" y2="7"/>
+                <path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z" />
+                <line x1="7" y1="7" x2="7.01" y2="7" />
               </svg>
             }
             className="sidebar-empty-state"
@@ -315,15 +381,30 @@ const OrderSidebar = ({ orders, cachedMetrics }) => {
         ) : (
           <div className="product-sold">
             <div className="product-icon">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
-                <path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"/>
-                <line x1="7" y1="7" x2="7.01" y2="7"/>
+              <svg
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="1.5"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+              >
+                <path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z" />
+                <line x1="7" y1="7" x2="7.01" y2="7" />
               </svg>
             </div>
             <div className="product-sold-details">
-              <p className="product-name">{cachedMetrics.mostOrderedProduct || "No Product"}</p>
+              <p className="product-name">
+                {cachedMetrics.mostOrderedProduct || "No Product"}
+              </p>
               <p className="product-count">
-                {orders.filter((order) => order.product === cachedMetrics.mostOrderedProduct).length} sales
+                {
+                  orders.filter(
+                    (order) =>
+                      order.product === cachedMetrics.mostOrderedProduct
+                  ).length
+                }{" "}
+                sales
               </p>
             </div>
           </div>

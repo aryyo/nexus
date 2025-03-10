@@ -1,6 +1,6 @@
 import { useMemo } from "react";
 import "../styles/Rate.css";
-import EmptyState from './EmptyState';
+import EmptyState from "./EmptyState";
 
 const Rate = ({ cachedMetrics }) => {
   const {
@@ -9,7 +9,7 @@ const Rate = ({ cachedMetrics }) => {
     salesRate,
     expenseRate,
     profitRate,
-    hasData
+    hasData,
   } = useMemo(() => {
     if (!cachedMetrics || !cachedMetrics.totalOrders) {
       return {
@@ -18,24 +18,34 @@ const Rate = ({ cachedMetrics }) => {
         salesRate: 0,
         expenseRate: 0,
         profitRate: 0,
-        hasData: false
+        hasData: false,
       };
     }
 
     // Calculate success rate (paid orders vs total orders)
-    const successRate = (cachedMetrics.totalPaid / cachedMetrics.totalOrders) * 100;
+    const successRate =
+      (cachedMetrics.totalPaid / cachedMetrics.totalOrders) * 100;
 
     // Calculate month over month change in revenue
     const currentMonth = new Date().getMonth();
     const currentRevenue = cachedMetrics.monthlyRevenue[currentMonth] || 0;
-    const lastMonthRevenue = cachedMetrics.monthlyRevenue[currentMonth - 1] || 0;
-    const monthOverMonthChange = lastMonthRevenue ? ((currentRevenue - lastMonthRevenue) / lastMonthRevenue) * 100 : 0;
+    const lastMonthRevenue =
+      cachedMetrics.monthlyRevenue[currentMonth - 1] || 0;
+    const monthOverMonthChange = lastMonthRevenue
+      ? ((currentRevenue - lastMonthRevenue) / lastMonthRevenue) * 100
+      : 0;
 
     // Calculate rates for sales, expenses, and profit
     const totalRevenue = cachedMetrics.totalRevenue;
-    const salesRate = totalRevenue ? (cachedMetrics.totalRevenue / totalRevenue) * 100 : 0;
-    const expenseRate = totalRevenue ? (cachedMetrics.totalExpenses / totalRevenue) * 100 : 0;
-    const profitRate = totalRevenue ? (cachedMetrics.totalNetProfit / totalRevenue) * 100 : 0;
+    const salesRate = totalRevenue
+      ? (cachedMetrics.totalRevenue / totalRevenue) * 100
+      : 0;
+    const expenseRate = totalRevenue
+      ? (cachedMetrics.totalExpenses / totalRevenue) * 100
+      : 0;
+    const profitRate = totalRevenue
+      ? (cachedMetrics.totalNetProfit / totalRevenue) * 100
+      : 0;
 
     return {
       successRate: Math.round(successRate),
@@ -43,7 +53,7 @@ const Rate = ({ cachedMetrics }) => {
       salesRate: Math.round(salesRate),
       expenseRate: Math.round(expenseRate),
       profitRate: Math.round(profitRate),
-      hasData: true
+      hasData: true,
     };
   }, [cachedMetrics]);
 
@@ -57,17 +67,17 @@ const Rate = ({ cachedMetrics }) => {
           title="No insights available"
           message="Complete some orders to see business insights"
           icon={
-            <svg 
-              viewBox="0 0 24 24" 
-              fill="none" 
-              stroke="currentColor" 
-              strokeWidth="1.5" 
-              strokeLinecap="round" 
+            <svg
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="1.5"
+              strokeLinecap="round"
               strokeLinejoin="round"
               className="empty-state-icon"
             >
-              <path d="M21.21 15.89A10 10 0 1 1 8 2.83"/>
-              <path d="M22 12A10 10 0 0 0 12 2v10z"/>
+              <path d="M21.21 15.89A10 10 0 1 1 8 2.83" />
+              <path d="M22 12A10 10 0 0 0 12 2v10z" />
             </svg>
           }
           className="rate-empty-state"
@@ -81,7 +91,10 @@ const Rate = ({ cachedMetrics }) => {
       <div className="rate-header">
         <h2>Insights</h2>
         <div className="rate-row-two">
-          <p className="percent">{monthOverMonthChange >= 0 ? '+' : ''}{monthOverMonthChange}%</p>
+          <p className="percent">
+            {monthOverMonthChange >= 0 ? "+" : ""}
+            {monthOverMonthChange}%
+          </p>
           <p className="date">vs last month</p>
         </div>
       </div>
@@ -97,7 +110,10 @@ const Rate = ({ cachedMetrics }) => {
               <span>{salesRate}%</span>
             </div>
             <div className="rate-bar-progress">
-              <div className="rate-line-one" style={{ '--target-width': `${salesRate}%` }}></div>
+              <div
+                className="rate-line-one"
+                style={{ "--target-width": `${salesRate}%` }}
+              ></div>
             </div>
           </div>
           <div className="rate-bar">
@@ -106,7 +122,10 @@ const Rate = ({ cachedMetrics }) => {
               <span>{expenseRate}%</span>
             </div>
             <div className="rate-bar-progress">
-              <div className="rate-line-two" style={{ '--target-width': `${expenseRate}%` }}></div>
+              <div
+                className="rate-line-two"
+                style={{ "--target-width": `${expenseRate}%` }}
+              ></div>
             </div>
           </div>
           <div className="rate-bar">
@@ -115,7 +134,10 @@ const Rate = ({ cachedMetrics }) => {
               <span>{profitRate}%</span>
             </div>
             <div className="rate-bar-progress">
-              <div className="rate-line-three" style={{ '--target-width': `${profitRate}%` }}></div>
+              <div
+                className="rate-line-three"
+                style={{ "--target-width": `${profitRate}%` }}
+              ></div>
             </div>
           </div>
         </div>

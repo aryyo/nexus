@@ -1,6 +1,6 @@
-import React from 'react';
+import React from "react";
 import "../styles/Card.css";
-import { Icons } from './Icons';
+import { Icons } from "./Icons";
 
 const Cards = ({ cachedMetrics }) => {
   return (

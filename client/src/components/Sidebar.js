@@ -9,11 +9,9 @@ const Sidebar = ({ active, isOpen, onClose, setIsLoggedIn }) => {
 
   const handleLogout = () => {
     // Clear token from localStorage
-    localStorage.removeItem('token');
-    // Update app's auth state
+    localStorage.removeItem("token");
     setIsLoggedIn(false);
-    // Navigate to login page
-    navigate('/login');
+    navigate("/login");
   };
 
   const handleClick = (id) => {
@@ -21,7 +19,7 @@ const Sidebar = ({ active, isOpen, onClose, setIsLoggedIn }) => {
       setShowLogoutModal(true);
       return;
     }
-    
+
     navigate(`/${id}`);
     if (window.innerWidth <= 768) {
       onClose();
@@ -35,7 +33,9 @@ const Sidebar = ({ active, isOpen, onClose, setIsLoggedIn }) => {
           {menuItems.main.map((item) => (
             <button
               key={item.id}
-              className={`sidebar-menu-button ${active === item.id ? "active" : ""}`}
+              className={`sidebar-menu-button ${
+                active === item.id ? "active" : ""
+              }`}
               onClick={() => handleClick(item.id)}
             >
               {active === item.id ? item.activeIcon : item.icon}
@@ -48,7 +48,9 @@ const Sidebar = ({ active, isOpen, onClose, setIsLoggedIn }) => {
           {menuItems.secondary.map((item) => (
             <button
               key={item.id}
-              className={`sidebar-menu-button ${active === item.id ? "active" : ""}`}
+              className={`sidebar-menu-button ${
+                active === item.id ? "active" : ""
+              }`}
               onClick={() => handleClick(item.id)}
             >
               {active === item.id ? item.activeIcon : item.icon}
@@ -61,7 +63,9 @@ const Sidebar = ({ active, isOpen, onClose, setIsLoggedIn }) => {
           {menuItems.bottom.map((item) => (
             <button
               key={item.id}
-              className={`sidebar-menu-button ${active === item.id ? "active" : ""}`}
+              className={`sidebar-menu-button ${
+                active === item.id ? "active" : ""
+              }`}
               onClick={() => handleClick(item.id)}
             >
               {active === item.id ? item.activeIcon : item.icon}
@@ -76,16 +80,13 @@ const Sidebar = ({ active, isOpen, onClose, setIsLoggedIn }) => {
         <div className="logout-modal">
           <p>Are you sure you want to log out?</p>
           <div className="logout-options">
-            <button 
+            <button
               className="logout-cancel"
               onClick={() => setShowLogoutModal(false)}
             >
               Cancel
             </button>
-            <button 
-              className="logout-confirm"
-              onClick={handleLogout}
-            >
+            <button className="logout-confirm" onClick={handleLogout}>
               Log Out
             </button>
           </div>
