@@ -30,6 +30,7 @@ const AddProductModal = ({ isOpen, onClose, onAdd }) => {
 
   const handleChange = (e) => {
     const { name, value } = e.target;
+    // console.log(e.target.files[0]);
     setFormData((prev) => ({
       ...prev,
       [name]: value,
@@ -148,9 +149,9 @@ const AddProductModal = ({ isOpen, onClose, onAdd }) => {
           </div>
 
           <div className="form-group">
-            <label htmlFor="image">Image URL</label>
+            <label htmlFor="image">Upload Image</label>
             <input
-              type="url"
+              type="file"
               id="image"
               name="image"
               value={formData.image}

@@ -25,7 +25,7 @@ router.post("/", auth, async (req, res) => {
   try {
     const { name, price, stock, image } = req.body;
 
-    if (!name || !price || !stock || !image) {
+    if (!name || !price || stock < 0 || !image) {
       return res.status(400).json({
         success: false,
         message:

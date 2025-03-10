@@ -5,7 +5,10 @@ const productSchema = new mongoose.Schema({
   name: String,
   price: Number,
   stock: Number,
-  image: String,
+  image: {
+    fileType: String,
+    data: Buffer
+  },
 });
 
 const reportSchema = new mongoose.Schema({
