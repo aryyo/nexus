@@ -5,6 +5,12 @@ export const useProducts = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
+  const calculateStatus = (stock) => {
+    if (stock <= 0) return 'Out of Stock';
+    if (stock <= 10) return 'Low Stock';
+    return 'In Stock';
+  };
+
   const fetchProducts = async () => {
     try {
       // Get the token from localStorage
@@ -25,7 +31,12 @@ export const useProducts = () => {
       }
 
       const data = await response.json();
-      setProducts(data);
+      const productsWithStatus = data.map(product => ({
+        ...product,
+        status: calculateStatus(product.stock)
+      }));
+      
+      setProducts(productsWithStatus);
       setError(null);
     } catch (err) {
       console.error(err);
@@ -42,13 +53,7 @@ export const useProducts = () => {
         throw new Error('No authentication token found');
       }
 
-      // Calculate status based on stock quantity
-      let status = 'In Stock';
-      if (productData.stock <= 0) {
-        status = 'Out of Stock';
-      } else if (productData.stock <= 10) {
-        status = 'Low Stock';
-      }
+      const status = calculateStatus(productData.stock);
 
       const response = await fetch("http://localhost:3000/products", {
         method: 'POST',
@@ -58,7 +63,7 @@ export const useProducts = () => {
         },
         body: JSON.stringify({
           ...productData,
-          status // Include the calculated status
+          status
         })
       });
 
@@ -68,8 +73,13 @@ export const useProducts = () => {
       }
 
       const data = await response.json();
-      setProducts(prevProducts => [...prevProducts, data.product]);
-      return data.product;
+      const newProduct = {
+        ...data.product,
+        status: calculateStatus(data.product.stock)
+      };
+      
+      setProducts(prevProducts => [...prevProducts, newProduct]);
+      return newProduct;
     } catch (err) {
       console.error(err);
       throw err;
