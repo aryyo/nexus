@@ -98,6 +98,16 @@
   background-color: var(--primary-hover);
 }
 
+.add.disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  pointer-events: none;
+}
+
+.add.disabled:hover {
+  background-color: var(--primary);
+}
+
 .product-grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
@@ -108,11 +118,60 @@
   background-color: var(--card-bg);
   border: 1px solid var(--card-border);
   border-radius: 0.75rem;
-  overflow: hidden;
+  transition: all 0.2s ease;
+  position: relative;
+  cursor: default;
+}
+
+.selection-circle {
+  position: absolute;
+  top: 12px;
+  left: 12px;
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  border: 2px solid var(--border);
+  background-color: var(--background);
+  z-index: 2;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   transition: all 0.2s ease;
 }
 
-.product-card:hover {
+.selection-circle svg {
+  width: 16px;
+  height: 16px;
+  stroke: var(--background);
+}
+
+.selection-circle.selected {
+  background-color: var(--primary);
+  border-color: var(--primary);
+}
+
+.export.active {
+  background-color: var(--primary);
+  border-color: var(--primary);
+  color: var(--background);
+}
+
+.export.active:hover {
+  background-color: var(--primary-hover);
+}
+
+/* Make product card clickable in selection mode */
+.product-grid:has(.selection-circle) .product-card {
+  cursor: pointer;
+}
+
+.product-grid:has(.selection-circle) .product-card:hover {
+  opacity: 0.8;
+}
+
+/* Only apply hover effects if no dropdown is active or if this is the active card */
+.product-grid:not(.has-active-dropdown) .product-card:hover,
+.product-card.active {
   box-shadow: 0 4px 6px -1px var(--card-hover), 0 2px 4px -1px var(--card-hover);
   border-color: var(--border);
   transform: translateY(-2px);
@@ -131,7 +190,9 @@
   transition: transform 0.3s ease;
 }
 
-.product-card:hover .product-image {
+/* Only apply image hover effect if no dropdown is active or if this is the active card */
+.product-grid:not(.has-active-dropdown) .product-card:hover .product-image,
+.product-card.active .product-image {
   transform: scale(1.05);
 }
 
@@ -144,6 +205,7 @@
   justify-content: space-between;
   align-items: flex-start;
   margin-bottom: 0.75rem;
+  min-height: 24px;
 }
 
 .product-name {
@@ -151,6 +213,16 @@
   font-size: 1rem;
   font-weight: 500;
   color: var(--text);
+  line-height: 24px;
+  flex: 1;
+}
+
+.menu-container {
+  position: relative;
+  z-index: 102;
+  height: 24px;
+  display: flex;
+  align-items: center;
 }
 
 .menu-button {
@@ -161,9 +233,15 @@
   border-radius: 0.375rem;
   cursor: pointer;
   transition: all 0.2s ease;
+  height: 24px;
+  width: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
-.menu-button:hover {
+.menu-button:hover,
+.menu-button.active {
   background-color: var(--input-bg);
   color: var(--text);
 }

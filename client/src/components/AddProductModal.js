@@ -1,7 +1,13 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import "../styles/AddProductModal.css";
 
-const AddProductModal = ({ isOpen, onClose, onAdd }) => {
+const AddProductModal = ({
+  isOpen,
+  onClose,
+  onAdd,
+  initialData,
+  mode = "add",
+}) => {
   const [formData, setFormData] = useState({
     name: "",
     price: "",
@@ -11,14 +17,31 @@ const AddProductModal = ({ isOpen, onClose, onAdd }) => {
   const [errors, setErrors] = useState({});
   const [isSubmitting, setIsSubmitting] = useState(false);
 
+  useEffect(() => {
+    if (initialData) {
+      setFormData({
+        name: initialData.name || "",
+        price: initialData.price || "",
+        stock: initialData.stock || "",
+        image: initialData.image || "",
+      });
+    }
+  }, [initialData]);
+
   const validateForm = () => {
     const newErrors = {};
     if (!formData.name.trim()) {
       newErrors.name = "Product name is required";
     }
-    if (!formData.price || formData.price <= 0) {
-      newErrors.price = "Valid price is required";
+    
+    // Price validation
+    const priceRegex = /^\d+(\.\d{0,2})?$/;
+    if (!formData.price || !priceRegex.test(formData.price) || parseFloat(formData.price) <= 0) {
+      newErrors.price = "Price must be a valid number with up to 2 decimal places";
+    } else if (parseFloat(formData.price) > 999999.99) {
+      newErrors.price = "Price cannot exceed 999,999.99";
     }
+
     if (!formData.stock || formData.stock < 0) {
       newErrors.stock = "Valid stock quantity is required";
     }
@@ -30,15 +53,38 @@ const AddProductModal = ({ isOpen, onClose, onAdd }) => {
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-    // console.log(e.target.files[0]);
-    setFormData((prev) => ({
+    
+    if (name === 'price') {
+      const priceRegex = /^\d*\.?\d{0,2}$/;
+      if (value === '' || priceRegex.test(value)) {
+        setFormData(prev => ({
+          ...prev,
+          [name]: value
+        }));
+      }
+      return;
+    }
+
+    if (name === 'stock') {
+      const stockRegex = /^\d*$/;
+      if (value === '' || stockRegex.test(value)) {
+        setFormData(prev => ({
+          ...prev,
+          [name]: value
+        }));
+      }
+      return;
+    }
+
+    setFormData(prev => ({
       ...prev,
-      [name]: value,
+      [name]: value
     }));
+    
     if (errors[name]) {
-      setErrors((prev) => ({
+      setErrors(prev => ({
         ...prev,
-        [name]: "",
+        [name]: ""
       }));
     }
   };
@@ -79,7 +125,7 @@ const AddProductModal = ({ isOpen, onClose, onAdd }) => {
     <div className="modal-backdrop">
       <div className="modal-content">
         <div className="modal-header">
-          <h2>Add New Product</h2>
+          <h2>{mode === "edit" ? "Edit Product" : "Add New Product"}</h2>
           <button className="close-button" onClick={onClose}>
             <svg
               width="24"
@@ -116,14 +162,12 @@ const AddProductModal = ({ isOpen, onClose, onAdd }) => {
           <div className="form-group">
             <label htmlFor="price">Price ($)</label>
             <input
-              type="number"
+              type="text"
               id="price"
               name="price"
               value={formData.price}
               onChange={handleChange}
               placeholder="Enter price"
-              step="0.01"
-              min="0"
               className={errors.price ? "error" : ""}
             />
             {errors.price && (
@@ -134,13 +178,12 @@ const AddProductModal = ({ isOpen, onClose, onAdd }) => {
           <div className="form-group">
             <label htmlFor="stock">Stock Quantity</label>
             <input
-              type="number"
+              type="text"
               id="stock"
               name="stock"
               value={formData.stock}
               onChange={handleChange}
               placeholder="Enter stock quantity"
-              min="0"
               className={errors.stock ? "error" : ""}
             />
             {errors.stock && (
@@ -149,9 +192,9 @@ const AddProductModal = ({ isOpen, onClose, onAdd }) => {
           </div>
 
           <div className="form-group">
-            <label htmlFor="image">Upload Image</label>
+            <label htmlFor="image">Image URL</label>
             <input
-              type="file"
+              type="url"
               id="image"
               name="image"
               value={formData.image}
@@ -177,7 +220,13 @@ const AddProductModal = ({ isOpen, onClose, onAdd }) => {
               className="submit-button"
               disabled={isSubmitting}
             >
-              {isSubmitting ? "Adding..." : "Add Product"}
+              {isSubmitting
+                ? mode === "edit"
+                  ? "Updating..."
+                  : "Adding..."
+                : mode === "edit"
+                ? "Update Product"
+                : "Add Product"}
             </button>
           </div>
         </form>

@@ -2,12 +2,17 @@ import React, { useState } from "react";
 import "../styles/Product.css";
 import EmptyState from "../components/EmptyState";
 import AddProductModal from "../components/AddProductModal";
+import ProductDropdown from "../components/ProductDropdown";
 import { useProducts } from "../hooks/useProducts";
 
 const Product = () => {
   const [searchQuery, setSearchQuery] = useState("");
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const { products, addProduct } = useProducts();
+  const [selectedProduct, setSelectedProduct] = useState(null);
+  const [activeDropdown, setActiveDropdown] = useState(null);
+  const [isSelectionMode, setIsSelectionMode] = useState(false);
+  const [selectedProducts, setSelectedProducts] = useState(new Set());
+  const { products, addProduct, editProduct, deleteProduct } = useProducts();
 
   const filteredProducts = products.filter((product) =>
     product.name.toLowerCase().includes(searchQuery.toLowerCase())
@@ -17,10 +22,90 @@ const Product = () => {
     try {
       await addProduct(productData);
       setIsModalOpen(false);
+      setSelectedProduct(null);
     } catch (error) {
       console.error("Failed to add product:", error);
       throw error;
     }
+  };
+
+  const handleEditProduct = async (productData) => {
+    try {
+      await editProduct(selectedProduct._id, productData);
+      setIsModalOpen(false);
+      setSelectedProduct(null);
+      setActiveDropdown(null);
+    } catch (error) {
+      console.error("Failed to edit product:", error);
+      throw error;
+    }
+  };
+
+  const handleDeleteProduct = async (productId) => {
+    if (window.confirm("Are you sure you want to delete this product?")) {
+      try {
+        await deleteProduct(productId);
+        setActiveDropdown(null);
+      } catch (error) {
+        console.error("Failed to delete product:", error);
+      }
+    }
+  };
+
+  const toggleProductSelection = (productId) => {
+    setSelectedProducts(prev => {
+      const newSelection = new Set(prev);
+      if (newSelection.has(productId)) {
+        newSelection.delete(productId);
+      } else {
+        newSelection.add(productId);
+      }
+      return newSelection;
+    });
+  };
+
+  const handleBulkDelete = async () => {
+    if (selectedProducts.size === 0) return;
+    
+    if (window.confirm(`Are you sure you want to delete ${selectedProducts.size} selected products?`)) {
+      try {
+        const successfulDeletions = new Set();
+        
+        for (const productId of selectedProducts) {
+          try {
+            await deleteProduct(productId);
+            successfulDeletions.add(productId);
+          } catch (error) {
+            console.error(`Failed to delete product ${productId}:`, error);
+          }
+        }
+
+        setSelectedProducts(prev => {
+          const newSelection = new Set(prev);
+          successfulDeletions.forEach(id => newSelection.delete(id));
+          return newSelection;
+        });
+
+        if (successfulDeletions.size === selectedProducts.size) {
+          setIsSelectionMode(false);
+          setSelectedProducts(new Set());
+          setActiveDropdown(null); // Close any open dropdown when exiting selection mode
+        }
+      } catch (error) {
+        console.error("Error during bulk delete:", error);
+      }
+    }
+  };
+
+  const openEditModal = (product) => {
+    setSelectedProduct(product);
+    setIsModalOpen(true);
+    setActiveDropdown(null);
+  };
+
+  const handleModalClose = () => {
+    setIsModalOpen(false);
+    setSelectedProduct(null);
   };
 
   const getStatusClass = (status) => {
@@ -56,7 +141,18 @@ const Product = () => {
             onChange={(e) => setSearchQuery(e.target.value)}
           />
         </div>
-        <button className="export">
+        <button 
+          className={`export ${isSelectionMode ? 'active' : ''}`}
+          onClick={() => {
+            if (isSelectionMode && selectedProducts.size > 0) {
+              handleBulkDelete();
+            } else {
+              setIsSelectionMode(!isSelectionMode);
+              setSelectedProducts(new Set());
+              setActiveDropdown(null);
+            }
+          }}
+        >
           <svg
             width="20"
             height="20"
@@ -71,9 +167,16 @@ const Product = () => {
             <path d="M19 6v14c0 1-1 2-2 2H7c-1 0-2-1-2-2V6" />
             <path d="M8 6V4c0-1 1-2 2-2h4c1 0 2 1 2 2v2" />
           </svg>
-          Remove
+          {isSelectionMode 
+            ? `Remove (${selectedProducts.size})`
+            : 'Remove'
+          }
         </button>
-        <button className="add" onClick={() => setIsModalOpen(true)}>
+        <button 
+          className={`add ${isSelectionMode ? 'disabled' : ''}`} 
+          onClick={() => !isSelectionMode && setIsModalOpen(true)}
+          disabled={isSelectionMode}
+        >
           <svg
             width="20"
             height="20"
@@ -133,12 +236,24 @@ const Product = () => {
           className="products-empty-state"
         />
       ) : (
-        <div className="product-grid">
-          {filteredProducts.map((product, index) => (
+        <div className={`product-grid ${activeDropdown ? "has-active-dropdown" : ""}`}>
+          {filteredProducts.map((product) => (
             <div
-              key={`${product._id || product.name}-${index}`}
-              className="product-card"
+              key={product._id}
+              className={`product-card ${
+                activeDropdown === product._id ? "active" : ""
+              }`}
+              onClick={() => isSelectionMode && toggleProductSelection(product._id)}
             >
+              {isSelectionMode && (
+                <div className={`selection-circle ${selectedProducts.has(product._id) ? 'selected' : ''}`}>
+                  {selectedProducts.has(product._id) && (
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                      <polyline points="20 6 9 17 4 12" />
+                    </svg>
+                  )}
+                </div>
+              )}
               <div className="product-image-wrapper">
                 <img
                   src={product.image}
@@ -149,22 +264,42 @@ const Product = () => {
               <div className="product-info">
                 <div className="product-header">
                   <h3 className="product-name">{product.name}</h3>
-                  <button className="menu-button">
-                    <svg
-                      width="20"
-                      height="20"
-                      viewBox="0 0 24 24"
-                      fill="none"
-                      stroke="currentColor"
-                      strokeWidth="2"
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                    >
-                      <circle cx="12" cy="12" r="1" />
-                      <circle cx="12" cy="5" r="1" />
-                      <circle cx="12" cy="19" r="1" />
-                    </svg>
-                  </button>
+                  {!isSelectionMode && (
+                    <div className="menu-container">
+                      <button
+                        className={`menu-button ${
+                          activeDropdown === product._id ? "active" : ""
+                        }`}
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          setActiveDropdown(
+                            activeDropdown === product._id ? null : product._id
+                          );
+                        }}
+                      >
+                        <svg
+                          width="20"
+                          height="20"
+                          viewBox="0 0 24 24"
+                          fill="none"
+                          stroke="currentColor"
+                          strokeWidth="2"
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                        >
+                          <circle cx="12" cy="12" r="1" />
+                          <circle cx="12" cy="5" r="1" />
+                          <circle cx="12" cy="19" r="1" />
+                        </svg>
+                      </button>
+                      <ProductDropdown
+                        isOpen={activeDropdown === product._id}
+                        onEdit={() => openEditModal(product)}
+                        onDelete={() => handleDeleteProduct(product._id)}
+                        onClose={() => setActiveDropdown(null)}
+                      />
+                    </div>
+                  )}
                 </div>
                 <div className="product-details">
                   <div className="price-stock">
@@ -177,7 +312,7 @@ const Product = () => {
                       {product.status || "In Stock"}
                     </p>
                   </div>
-                  <p className="product-stock">{product.stock} in stock</p>
+                  {/* <p className="product-stock">{product.stock} in stock</p> */}
                 </div>
               </div>
             </div>
@@ -187,8 +322,10 @@ const Product = () => {
 
       <AddProductModal
         isOpen={isModalOpen}
-        onClose={() => setIsModalOpen(false)}
-        onAdd={handleAddProduct}
+        onClose={handleModalClose}
+        onAdd={selectedProduct ? handleEditProduct : handleAddProduct}
+        initialData={selectedProduct}
+        mode={selectedProduct ? "edit" : "add"}
       />
     </div>
   );
