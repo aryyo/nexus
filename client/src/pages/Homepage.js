@@ -1,5 +1,5 @@
-import React, { useState } from "react";
-import { Routes, Route, Navigate, useLocation } from "react-router-dom";
+import React, { useState, useEffect } from "react";
+import { Routes, Route, Navigate, useLocation, useNavigate } from "react-router-dom";
 import Navbar from "../components/Navbar";
 import Sidebar from "../components/Sidebar";
 import Dashboard from "./Dashboard";
@@ -14,11 +14,31 @@ import "../styles/Homepage.css";
 
 const Homepage = ({ setIsLoggedIn }) => {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
+  const [isAuthChecked, setIsAuthChecked] = useState(false);
   const location = useLocation();
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    const checkAuth = () => {
+      const token = localStorage.getItem("token");
+      if (!token) {
+        setIsLoggedIn(false);
+        navigate("/login", { replace: true });
+        return;
+      }
+      setIsAuthChecked(true);
+    };
+
+    checkAuth();
+  }, [setIsLoggedIn, navigate]);
 
   const toggleSidebar = () => {
     setIsSidebarOpen(!isSidebarOpen);
   };
+
+  if (!isAuthChecked) {
+    return <div>Checking authentication...</div>;
+  }
 
   return (
     <div className="homepage-container">
