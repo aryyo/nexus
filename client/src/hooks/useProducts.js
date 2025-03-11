@@ -1,8 +1,8 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 
-export const useProducts = () => {
+export const useProducts = (shouldFetch = false) => {
   const [products, setProducts] = useState([]);
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
 
   const calculateStatus = (stock) => {
@@ -11,14 +11,16 @@ export const useProducts = () => {
     return "In Stock";
   };
 
-  const fetchProducts = async () => {
-    try {
-      // Get the token from localStorage
-      const token = localStorage.getItem("token");
-      if (!token) {
-        throw new Error("No authentication token found");
-      }
+  const fetchProducts = useCallback(async () => {
+    const token = localStorage.getItem("token");
+    if (!token) {
+      setError("No authentication token found");
+      setLoading(false);
+      return;
+    }
 
+    setLoading(true);
+    try {
       const response = await fetch("http://localhost:3000/products", {
         headers: {
           Authorization: `Bearer ${token}`,
@@ -44,7 +46,7 @@ export const useProducts = () => {
     } finally {
       setLoading(false);
     }
-  };
+  }, []);
 
   const addProduct = async (productData) => {
     try {
@@ -167,8 +169,10 @@ export const useProducts = () => {
   };
 
   useEffect(() => {
-    fetchProducts();
-  }, []);
+    if (shouldFetch) {
+      fetchProducts();
+    }
+  }, [fetchProducts, shouldFetch]);
 
   return {
     products,

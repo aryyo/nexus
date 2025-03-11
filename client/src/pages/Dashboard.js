@@ -3,9 +3,20 @@ import Charts from "../components/Charts";
 import Rate from "../components/Rate";
 import Summary from "../components/Summary";
 import Cards from "../components/Card";
+import { useOrderMetrics } from "../hooks/useOrderMetrics";
 import "../styles/Dashboard.css";
 
-const Dashboard = ({ orders, cachedMetrics }) => {
+const Dashboard = () => {
+  const { orders, cachedMetrics, loading, error } = useOrderMetrics(true);
+
+  if (loading) {
+    return <div>Loading...</div>;
+  }
+
+  if (error) {
+    return <div>Error: {error}</div>;
+  }
+
   if (!orders || !cachedMetrics) {
     return null;
   }
@@ -68,7 +79,7 @@ const Dashboard = ({ orders, cachedMetrics }) => {
           Add
         </button>
       </div>
-      <Cards cachedMetrics={cachedMetrics} />
+      <Cards orders={orders} cachedMetrics={cachedMetrics} />
       <div className="data">
         <div className="data-graph">
           <div className="charts-header">
@@ -79,11 +90,11 @@ const Dashboard = ({ orders, cachedMetrics }) => {
               <option>Last 3 months</option>
             </select>
           </div>
-          <Charts cachedMetrics={cachedMetrics} />
+          <Charts orders={orders} cachedMetrics={cachedMetrics} />
         </div>
         <div className="data-cards">
-          <Rate cachedMetrics={cachedMetrics} />
-          <Summary cachedMetrics={cachedMetrics} />
+          <Rate orders={orders} cachedMetrics={cachedMetrics} />
+          <Summary orders={orders} cachedMetrics={cachedMetrics} />
         </div>
       </div>
     </div>

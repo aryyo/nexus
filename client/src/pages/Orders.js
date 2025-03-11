@@ -3,13 +3,23 @@ import "../styles/Orders.css";
 import OrderList from "../components/OrderList";
 import OrderSidebar from "../components/OrderSidebar";
 import AddOrderModal from "../components/AddOrderModal";
+import { useOrderMetrics } from "../hooks/useOrderMetrics";
 
-const Orders = ({ orders, cachedMetrics }) => {
+const Orders = () => {
+  const { orders, cachedMetrics, loading, error } = useOrderMetrics(true);
   const [searchQuery, setSearchQuery] = useState("");
   const [isSelectionMode, setIsSelectionMode] = useState(false);
   const [selectedOrders, setSelectedOrders] = useState(new Set());
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedOrder, setSelectedOrder] = useState(null);
+
+  if (loading) {
+    return <div>Loading...</div>;
+  }
+
+  if (error) {
+    return <div>Error: {error}</div>;
+  }
 
   const hasOrders = orders && orders.length > 0;
 

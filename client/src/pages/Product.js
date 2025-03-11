@@ -6,13 +6,28 @@ import ProductDropdown from "../components/ProductDropdown";
 import { useProducts } from "../hooks/useProducts";
 
 const Product = () => {
+  const { 
+    products, 
+    loading, 
+    error, 
+    addProduct, 
+    editProduct, 
+    deleteProduct 
+  } = useProducts(true);
   const [searchQuery, setSearchQuery] = useState("");
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedProduct, setSelectedProduct] = useState(null);
   const [activeDropdown, setActiveDropdown] = useState(null);
   const [isSelectionMode, setIsSelectionMode] = useState(false);
   const [selectedProducts, setSelectedProducts] = useState(new Set());
-  const { products, addProduct, editProduct, deleteProduct } = useProducts();
+
+  if (loading) {
+    return <div>Loading...</div>;
+  }
+
+  if (error) {
+    return <div>Error: {error}</div>;
+  }
 
   const filteredProducts = products.filter((product) =>
     product.name.toLowerCase().includes(searchQuery.toLowerCase())

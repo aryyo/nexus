@@ -10,36 +10,15 @@ import Billing from "./Billing";
 import Account from "./Account";
 import Report from "./Report";
 import Settings from "./Settings";
-import { useOrderMetrics } from "../hooks/useOrderMetrics";
-import { useProducts } from "../hooks/useProducts";
 import "../styles/Homepage.css";
 
 const Homepage = ({ setIsLoggedIn }) => {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
-  const {
-    orders,
-    cachedMetrics,
-    loading: ordersLoading,
-    error: ordersError,
-  } = useOrderMetrics();
-  const {
-    products,
-    loading: productsLoading,
-    error: productsError,
-  } = useProducts();
   const location = useLocation();
 
   const toggleSidebar = () => {
     setIsSidebarOpen(!isSidebarOpen);
   };
-
-  if (ordersLoading || productsLoading) {
-    return <div>Loading...</div>;
-  }
-
-  if (ordersError || productsError) {
-    return <div>Error: {ordersError || productsError}</div>;
-  }
 
   return (
     <div className="homepage-container">
@@ -59,17 +38,9 @@ const Homepage = ({ setIsLoggedIn }) => {
         )}
         <Routes>
           <Route path="/" element={<Navigate to="/dashboard" replace />} />
-          <Route
-            path="/dashboard"
-            element={
-              <Dashboard orders={orders} cachedMetrics={cachedMetrics} />
-            }
-          />
-          <Route
-            path="/orders"
-            element={<Orders orders={orders} cachedMetrics={cachedMetrics} />}
-          />
-          <Route path="/products" element={<Product products={products} />} />
+          <Route path="/dashboard" element={<Dashboard />} />
+          <Route path="/orders" element={<Orders />} />
+          <Route path="/products" element={<Product />} />
           <Route path="/help" element={<Help />} />
           <Route path="/billing" element={<Billing />} />
           <Route path="/account" element={<Account />} />

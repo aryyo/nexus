@@ -1,43 +1,47 @@
-import { useState, useEffect, useMemo } from 'react';
+import { useState, useEffect, useMemo, useCallback } from 'react';
 
-export const useOrderMetrics = () => {
+export const useOrderMetrics = (shouldFetch = false) => {
   const [orders, setOrders] = useState([]);
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
 
-  useEffect(() => {
-    const fetchOrders = async () => {
-      try {
-        // Get the token from localStorage
-        const token = localStorage.getItem('token');
-        if (!token) {
-          throw new Error('No authentication token found');
+  const fetchOrders = useCallback(async () => {
+    const token = localStorage.getItem('token');
+    if (!token) {
+      setError('No authentication token found');
+      setLoading(false);
+      return;
+    }
+
+    setLoading(true);
+    try {
+      const response = await fetch("http://localhost:3000/orders", {
+        headers: {
+          'Authorization': `Bearer ${token}`,
+          'Content-Type': 'application/json'
         }
+      });
 
-        const response = await fetch("http://localhost:3000/orders", {
-          headers: {
-            'Authorization': `Bearer ${token}`,
-            'Content-Type': 'application/json'
-          }
-        });
-
-        if (!response.ok) {
-          throw new Error('Failed to fetch orders');
-        }
-
-        const data = await response.json();
-        setOrders(data);
-        setError(null);
-      } catch (err) {
-        console.error(err);
-        setError(err.message || 'Failed to fetch orders');
-      } finally {
-        setLoading(false);
+      if (!response.ok) {
+        throw new Error('Failed to fetch orders');
       }
-    };
 
-    fetchOrders();
+      const data = await response.json();
+      setOrders(data);
+      setError(null);
+    } catch (err) {
+      console.error(err);
+      setError(err.message || 'Failed to fetch orders');
+    } finally {
+      setLoading(false);
+    }
   }, []);
+
+  useEffect(() => {
+    if (shouldFetch) {
+      fetchOrders();
+    }
+  }, [fetchOrders, shouldFetch]);
 
   const cachedMetrics = useMemo(() => {
     const totalOrders = orders.length;
@@ -150,5 +154,11 @@ export const useOrderMetrics = () => {
     };
   }, [orders]);
 
-  return { orders, cachedMetrics, loading, error };
+  return { 
+    orders, 
+    cachedMetrics, 
+    loading, 
+    error,
+    refreshOrders: fetchOrders 
+  };
 };
