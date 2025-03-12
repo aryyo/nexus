@@ -261,6 +261,15 @@
 }
 
 @media (max-width: 480px) {
+  .login-container {
+    margin-top: -4vh;
+    height: 100vh;
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
   .login-box {
     padding: 1.5rem;
   }
