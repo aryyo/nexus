@@ -3,6 +3,7 @@ import "../styles/Orders.css";
 import OrderList from "../components/OrderList";
 import OrderSidebar from "../components/OrderSidebar";
 import AddOrderModal from "../components/AddOrderModal";
+import { LoadingSpinner, ErrorMessage } from "../components/LoadingState";
 import { useOrderMetrics } from "../hooks/useOrderMetrics";
 
 const Orders = () => {
@@ -13,12 +14,13 @@ const Orders = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedOrder, setSelectedOrder] = useState(null);
 
+
   if (loading) {
-    return <div>Loading...</div>;
+    return <LoadingSpinner fullPage />;
   }
 
   if (error) {
-    return <div>Error: {error}</div>;
+    return <ErrorMessage message={error} fullPage />;
   }
 
   const hasOrders = orders && orders.length > 0;

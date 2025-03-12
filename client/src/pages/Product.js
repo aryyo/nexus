@@ -3,6 +3,7 @@ import "../styles/Product.css";
 import EmptyState from "../components/EmptyState";
 import AddProductModal from "../components/AddProductModal";
 import ProductDropdown from "../components/ProductDropdown";
+import { LoadingSpinner, ErrorMessage } from "../components/LoadingState";
 import { useProducts } from "../hooks/useProducts";
 
 const Product = () => {
@@ -22,11 +23,11 @@ const Product = () => {
   const [selectedProducts, setSelectedProducts] = useState(new Set());
 
   if (loading) {
-    return <div>Loading...</div>;
+    return <LoadingSpinner fullPage />;
   }
 
   if (error) {
-    return <div>Error: {error}</div>;
+    return <ErrorMessage message={error} fullPage />;
   }
 
   const filteredProducts = products.filter((product) =>

@@ -3,6 +3,7 @@ import Charts from "../components/Charts";
 import Rate from "../components/Rate";
 import Summary from "../components/Summary";
 import Cards from "../components/Card";
+import { LoadingSpinner, ErrorMessage } from "../components/LoadingState";
 import { useOrderMetrics } from "../hooks/useOrderMetrics";
 import "../styles/Dashboard.css";
 
@@ -10,11 +11,11 @@ const Dashboard = () => {
   const { orders, cachedMetrics, loading, error } = useOrderMetrics(true);
 
   if (loading) {
-    return <div>Loading...</div>;
+    return <LoadingSpinner fullPage />;
   }
 
   if (error) {
-    return <div>Error: {error}</div>;
+    return <ErrorMessage message={error} fullPage />;
   }
 
   if (!orders || !cachedMetrics) {

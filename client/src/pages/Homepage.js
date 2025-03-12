@@ -10,6 +10,7 @@ import Billing from "./Billing";
 import Account from "./Account";
 import Report from "./Report";
 import Settings from "./Settings";
+import { LoadingSpinner } from "../components/LoadingState";
 import "../styles/Homepage.css";
 
 const Homepage = ({ setIsLoggedIn }) => {
@@ -37,7 +38,20 @@ const Homepage = ({ setIsLoggedIn }) => {
   };
 
   if (!isAuthChecked) {
-    return <div>Checking authentication...</div>;
+    return (
+      <div className="homepage-container">
+        <Navbar onToggleSidebar={toggleSidebar} />
+        <div className="homepage">
+          <Sidebar
+            active={location.pathname.substring(1) || "dashboard"}
+            isOpen={isSidebarOpen}
+            onClose={() => setIsSidebarOpen(false)}
+            setIsLoggedIn={setIsLoggedIn}
+          />
+          <LoadingSpinner fullPage />
+        </div>
+      </div>
+    );
   }
 
   return (
