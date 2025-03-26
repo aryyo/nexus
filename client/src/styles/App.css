@@ -34,7 +34,7 @@ html, body {
 :root[data-theme="dark"] {
   --text: #e2dcf7;
   --text-alt: #9d94c2;
-  --background: #13091f;
+  --background: #1a1a1e;
   --background-alt: #1d0f2d;
   --border: #392b54;
   --primary: #8657ff;
@@ -42,7 +42,7 @@ html, body {
   --secondary: #b794ff;
   --success: #4caf50;
   --warning: #ff9800;
-  --card-bg: #1d0f2d;
+  --card-bg: #121214;
   --card-border: #392b54;
   --card-hover: rgba(134, 87, 255, 0.1);
   --input-bg: #2a1b3f;

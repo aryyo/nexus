@@ -34,7 +34,7 @@ const AddProductModal = ({
       newErrors.name = "Product name is required";
     }
     
-    // Price validation
+    // Price validation 
     const priceRegex = /^\d+(\.\d{0,2})?$/;
     if (!formData.price || !priceRegex.test(formData.price) || parseFloat(formData.price) <= 0) {
       newErrors.price = "Price must be a valid number with up to 2 decimal places";

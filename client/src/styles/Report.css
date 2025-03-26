@@ -119,13 +119,13 @@
   justify-content: space-between;
   align-items: center;
   padding: 1rem;
-  background-color: var(--background-alt);
+  background-color: var(--background);
   border-radius: 0.75rem;
   transition: all 0.2s ease;
 }
 
 .option-item:hover {
-  background-color: var(--input-bg);
+  /* background-color: var(--input-bg); */
 }
 
 .option-info h4 {
