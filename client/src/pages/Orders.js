@@ -7,7 +7,7 @@ import { LoadingSpinner, ErrorMessage } from "../components/LoadingState";
 import { useOrderMetrics } from "../hooks/useOrderMetrics";
 
 const Orders = () => {
-  const { orders, cachedMetrics, loading, error } = useOrderMetrics(true);
+  const { orders, cachedMetrics, loading, error, addOrder, deleteOrder, bulkDeleteOrders } = useOrderMetrics(true);
   const [searchQuery, setSearchQuery] = useState("");
   const [isSelectionMode, setIsSelectionMode] = useState(false);
   const [selectedOrders, setSelectedOrders] = useState(new Set());
@@ -31,20 +31,35 @@ const Orders = () => {
     order._id.toLowerCase().includes(searchQuery.toLowerCase())
   ) || [];
 
-  const handleBulkDelete = () => {
+  const handleBulkDelete = async () => {
     if (selectedOrders.size === 0) return;
     
     if (window.confirm(`Are you sure you want to delete ${selectedOrders.size} selected orders?`)) {
-      // TODO: Implement bulk delete functionality
-      setIsSelectionMode(false);
-      setSelectedOrders(new Set());
+      try {
+        await bulkDeleteOrders(selectedOrders);
+        setIsSelectionMode(false);
+        setSelectedOrders(new Set());
+      } catch (error) {
+        console.error("Failed to delete orders:", error);
+        alert("Failed to delete orders. Please try again.");
+      }
+    }
+  };
+
+  const handleSingleDelete = async (orderId) => {
+    if (window.confirm("Are you sure you want to delete this order?")) {
+      try {
+        await deleteOrder(orderId);
+      } catch (error) {
+        console.error("Failed to delete order:", error);
+        alert("Failed to delete order. Please try again.");
+      }
     }
   };
 
   const handleAddOrder = async (orderData) => {
     try {
-      // TODO: Implement add order functionality
-      console.log('Adding order:', orderData);
+      await addOrder(orderData);
       setIsModalOpen(false);
       setSelectedOrder(null);
     } catch (error) {
@@ -146,6 +161,7 @@ const Orders = () => {
               isSelectionMode={isSelectionMode}
               selectedOrders={selectedOrders}
               setSelectedOrders={setSelectedOrders}
+              onDelete={handleSingleDelete}
             />
           </div>
           <OrderSidebar orders={orders} cachedMetrics={cachedMetrics} />

@@ -37,6 +37,76 @@ export const useOrderMetrics = (shouldFetch = false) => {
     }
   }, []);
 
+  const addOrder = useCallback(async (orderData) => {
+    const token = localStorage.getItem('token');
+    if (!token) {
+      throw new Error('No authentication token found');
+    }
+
+    try {
+      const response = await fetch("http://localhost:3000/orders", {
+        method: 'POST',
+        headers: {
+          'Authorization': `Bearer ${token}`,
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          id: orderData.id,
+          customerName: orderData.customerName,
+          type: orderData.type,
+          status: orderData.status,
+          productName: orderData.productName,
+          total: orderData.total,
+          date: orderData.date
+        })
+      });
+
+      if (!response.ok) {
+        throw new Error('Failed to add order');
+      }
+
+      const newOrder = await response.json();
+      setOrders(prevOrders => [...prevOrders, newOrder]);
+      return newOrder;
+    } catch (err) {
+      console.error('Error adding order:', err);
+      throw err;
+    }
+  }, []);
+
+  const bulkDeleteOrders = useCallback(async (orderIds) => {
+    const token = localStorage.getItem('token');
+    if (!token) {
+      throw new Error('No authentication token found');
+    }
+
+    try {
+      const response = await fetch("http://localhost:3000/orders/bulk-delete", {
+        method: 'DELETE',
+        headers: {
+          'Authorization': `Bearer ${token}`,
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ orderIds: Array.from(orderIds) })
+      });
+
+      if (!response.ok) {
+        const errorData = await response.json();
+        throw new Error(errorData.message || 'Failed to delete orders');
+      }
+
+      // Remove deleted orders from state
+      setOrders(prevOrders => 
+        prevOrders.filter(order => !orderIds.has(order._id))
+      );
+
+      return await response.json();
+    } catch (err) {
+      console.error('Error deleting orders:', err);
+      throw err;
+    }
+  }, []);
+
   useEffect(() => {
     if (shouldFetch) {
       fetchOrders();
@@ -159,6 +229,8 @@ export const useOrderMetrics = (shouldFetch = false) => {
     cachedMetrics, 
     loading, 
     error,
-    refreshOrders: fetchOrders 
+    addOrder,
+    bulkDeleteOrders,
+    fetchOrders 
   };
 };

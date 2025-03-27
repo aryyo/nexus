@@ -273,7 +273,7 @@
   }
 }
 
-@media (max-width: 1200px) {
+@media (max-width: 1400px) {
   .orders-sidebar {
     display: grid;
     grid-template-columns: repeat(2, 1fr);

@@ -1,83 +1,152 @@
 import React, { useState, useEffect } from "react";
 import "../styles/Modal.css";
 
+const generateOrderId = () => {
+  const timestamp = Date.now().toString(36);
+  const randomStr = Math.random().toString(36).substring(2, 8);
+  return `${timestamp}-${randomStr}`;
+};
+
+const VALID_ORDER_TYPES = ["Shipping", "Pickup"];
+const VALID_ORDER_STATUSES = ["Paid", "Cancelled", "Refunded"];
+
 const AddOrderModal = ({ isOpen, onClose, onAdd, initialData, mode = "add" }) => {
   const [formData, setFormData] = useState({
-    customerName: "",
-    type: "Standard",
-    status: "Pending",
-    productName: "",
-    total: "",
-    date: new Date().toISOString().split("T")[0]
+    id: mode === "add" ? generateOrderId() : (initialData?.id || ""),
+    customerName: initialData?.customerName || "",
+    type: initialData?.type || "Shipping",
+    status: initialData?.status || "Paid",
+    productName: initialData?.product || "",
+    total: initialData?.total || "",
+    date: initialData?.datePlaced || new Date().toISOString().split('T')[0],
   });
 
   const [errors, setErrors] = useState({});
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   useEffect(() => {
     if (initialData) {
       setFormData({
-        customerName: initialData.customer?.name || "",
-        type: initialData.type || "Standard",
-        status: initialData.status || "Pending",
-        productName: initialData.product?.name || "",
+        id: mode === "add" ? generateOrderId() : initialData.id,
+        customerName: initialData.customerName || "",
+        type: initialData.type || "Shipping",
+        status: initialData.status || "Paid",
+        productName: initialData.product || "",
         total: initialData.total || "",
-        date: initialData.date?.split("T")[0] || new Date().toISOString().split("T")[0]
+        date: initialData.datePlaced?.split("T")[0] || new Date().toISOString().split("T")[0]
       });
+    } else if (mode === "add") {
+      setFormData(prev => ({
+        ...prev,
+        id: generateOrderId()
+      }));
     }
-  }, [initialData]);
+    // Clear errors when modal opens/closes
+    setErrors({});
+  }, [initialData, mode, isOpen]);
 
-  const validatePrice = (value) => {
-    const sanitizedValue = value.replace(/[^\d.]/g, '');
+  const validateForm = () => {
+    const newErrors = {};
     
-    const parts = sanitizedValue.split('.');
-    if (parts.length > 2) {
-      return parts[0] + '.' + parts.slice(1).join('');
+    // Customer name validation
+    if (!formData.customerName.trim()) {
+      newErrors.customerName = "Customer name is required";
     }
-    
-    if (parts[1]?.length > 2) {
-      return parts[0] + '.' + parts[1].slice(0, 2);
+
+    // Type validation
+    if (!VALID_ORDER_TYPES.includes(formData.type)) {
+      newErrors.type = `Invalid order type. Must be one of: ${VALID_ORDER_TYPES.join(", ")}`;
     }
-    
-    return sanitizedValue;
+
+    // Status validation
+    if (!VALID_ORDER_STATUSES.includes(formData.status)) {
+      newErrors.status = `Invalid order status. Must be one of: ${VALID_ORDER_STATUSES.join(", ")}`;
+    }
+
+    // Product name validation
+    if (!formData.productName.trim()) {
+      newErrors.productName = "Product name is required";
+    }
+
+    // Total validation
+    const totalNum = parseFloat(formData.total);
+    if (!formData.total || isNaN(totalNum)) {
+      newErrors.total = "Total must be a valid number";
+    } else if (totalNum <= 0) {
+      newErrors.total = "Total must be greater than 0";
+    } else if (totalNum > 999999.99) {
+      newErrors.total = "Total cannot exceed 999,999.99";
+    }
+
+    // Date validation
+    const dateObj = new Date(formData.date);
+    if (isNaN(dateObj.getTime())) {
+      newErrors.date = "Invalid date format";
+    }
+
+    return newErrors;
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    
-    if (!formData.total || parseFloat(formData.total) <= 0) {
-      setErrors(prev => ({
-        ...prev,
-        total: "Please enter a valid total amount"
-      }));
+    const newErrors = validateForm();
+
+    if (Object.keys(newErrors).length > 0) {
+      setErrors(newErrors);
       return;
     }
 
-    onAdd({
-      ...formData,
-      total: parseFloat(formData.total)
-    });
+    setIsSubmitting(true);
+    try {
+      await onAdd({
+        ...formData,
+        total: parseFloat(formData.total)
+      });
+      // Reset form and close modal on success
+      setFormData({
+        id: generateOrderId(),
+        customerName: "",
+        type: "Shipping",
+        status: "Paid",
+        productName: "",
+        total: "",
+        date: new Date().toISOString().split('T')[0],
+      });
+      setErrors({});
+      onClose();
+    } catch (error) {
+      setErrors({
+        submit: error.message || "Failed to add order. Please try again."
+      });
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   const handleChange = (e) => {
     const { name, value } = e.target;
     
     if (name === 'total') {
-      const validatedPrice = validatePrice(value);
-      setFormData(prev => ({
-        ...prev,
-        [name]: validatedPrice
-      }));
-      
-      if (parseFloat(validatedPrice) > 0) {
-        setErrors(prev => ({
+      // Allow only numbers and one decimal point
+      const regex = /^\d*\.?\d{0,2}$/;
+      if (value === '' || regex.test(value)) {
+        setFormData(prev => ({
           ...prev,
-          total: undefined
+          [name]: value
         }));
       }
     } else {
       setFormData(prev => ({
         ...prev,
         [name]: value
+      }));
+    }
+
+    // Clear error for the field being edited
+    if (errors[name]) {
+      setErrors(prev => ({
+        ...prev,
+        [name]: ""
       }));
     }
   };
@@ -116,6 +185,7 @@ const AddOrderModal = ({ isOpen, onClose, onAdd, initialData, mode = "add" }) =>
               onChange={handleChange}
               required
             />
+            {errors.customerName && <div className="error-message">{errors.customerName}</div>}
           </div>
           <div className="form-group">
             <label htmlFor="type">Type</label>
@@ -126,9 +196,11 @@ const AddOrderModal = ({ isOpen, onClose, onAdd, initialData, mode = "add" }) =>
               onChange={handleChange}
               required
             >
-              <option value="Standard">Shipping</option>
-              <option value="Express">Pickup</option>
+              {VALID_ORDER_TYPES.map(type => (
+                <option key={type} value={type}>{type}</option>
+              ))}
             </select>
+            {errors.type && <div className="error-message">{errors.type}</div>}
           </div>
           <div className="form-group">
             <label htmlFor="status">Status</label>
@@ -139,10 +211,11 @@ const AddOrderModal = ({ isOpen, onClose, onAdd, initialData, mode = "add" }) =>
               onChange={handleChange}
               required
             >
-              <option value="Pending">Paid</option>
-              <option value="Processing">Cancelled</option>
-              <option value="Cancelled">Refunded</option>
+              {VALID_ORDER_STATUSES.map(status => (
+                <option key={status} value={status}>{status}</option>
+              ))}
             </select>
+            {errors.status && <div className="error-message">{errors.status}</div>}
           </div>
           <div className="form-group">
             <label htmlFor="productName">Product Name</label>
@@ -154,9 +227,10 @@ const AddOrderModal = ({ isOpen, onClose, onAdd, initialData, mode = "add" }) =>
               onChange={handleChange}
               required
             />
+            {errors.productName && <div className="error-message">{errors.productName}</div>}
           </div>
           <div className="form-group">
-            <label htmlFor="total">Total</label>
+            <label htmlFor="total">Total ($)</label>
             <input
               type="text"
               id="total"
@@ -178,13 +252,29 @@ const AddOrderModal = ({ isOpen, onClose, onAdd, initialData, mode = "add" }) =>
               onChange={handleChange}
               required
             />
+            {errors.date && <div className="error-message">{errors.date}</div>}
           </div>
+          {errors.submit && (
+            <div className="error-message submit-error">{errors.submit}</div>
+          )}
           <div className="modal-footer">
-            <button type="button" className="cancel-button" onClick={onClose}>
+            <button 
+              type="button" 
+              className="cancel-button" 
+              onClick={onClose}
+              disabled={isSubmitting}
+            >
               Cancel
             </button>
-            <button type="submit" className="submit-button">
-              {mode === "add" ? "Add Order" : "Save Changes"}
+            <button 
+              type="submit" 
+              className="submit-button"
+              disabled={isSubmitting}
+            >
+              {isSubmitting 
+                ? mode === "add" ? "Adding..." : "Saving..." 
+                : mode === "add" ? "Add Order" : "Save Changes"
+              }
             </button>
           </div>
         </form>

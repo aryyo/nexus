@@ -119,6 +119,12 @@
   gap: 1.25rem;
 }
 
+@media (max-width: 1400px) {
+  .orders {
+    flex-direction: column;
+  }
+}
+
 @media (max-width: 1200px) {
   .orders {
     flex-direction: column;
@@ -169,4 +175,39 @@
     flex-direction: column;
     height: auto;
   }
+}
+
+.table-row.selectable {
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.table-row.selectable:hover {
+  background-color: var(--hover-bg);
+}
+
+.table-row.selected {
+  background-color: var(--selected-bg);
+}
+
+.table-row.selected:hover {
+  background-color: var(--selected-hover-bg);
+}
+
+.export.active {
+  background-color: var(--danger);
+  color: white;
+}
+
+.export.active:hover {
+  background-color: var(--danger-hover);
+}
+
+.export.active svg {
+  stroke: white;
+}
+
+.add.disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
 }
