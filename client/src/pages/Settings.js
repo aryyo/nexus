@@ -1,20 +1,56 @@
 import React, { useState, useEffect } from "react";
+import { LoadingSpinner, ErrorMessage } from "../components/LoadingState";
+import { useUserSettings } from "../hooks/useUserSettings";
 import "../styles/Settings.css";
 
 const Settings = () => {
   const [theme, setTheme] = useState("light");
+  const [transparentSidebar, setTransparentSidebar] = useState(false);
+  const [compactView, setCompactView] = useState(false);
+  const { loading, error, updateSettings, settings } = useUserSettings();
 
   useEffect(() => {
-    // Get initial theme from HTML attribute
-    const currentTheme =
-      document.documentElement.getAttribute("data-theme") || "light";
-    setTheme(currentTheme);
-  }, []);
+    // Initialize settings from the backend
+    if (settings) {
+      setTheme(settings.interfaceTheme || "light");
+      setTransparentSidebar(settings.transparentSidebar || false);
+      setCompactView(settings.tablePreference === "compact");
+    }
+  }, [settings]);
+
+  const handleSettingChange = (setting, value) => {
+    const updates = {
+      ...settings,
+      [setting]: value
+    };
+    updateSettings(updates);
+  };
 
   const handleThemeChange = (selectedTheme) => {
     document.documentElement.setAttribute("data-theme", selectedTheme);
     setTheme(selectedTheme);
+    handleSettingChange("interfaceTheme", selectedTheme);
   };
+
+  const handleSidebarTransparencyChange = (e) => {
+    const value = e.target.checked;
+    setTransparentSidebar(value);
+    handleSettingChange("transparentSidebar", value);
+  };
+
+  const handleCompactViewChange = (e) => {
+    const value = e.target.checked;
+    setCompactView(value);
+    handleSettingChange("tablePreference", value ? "compact" : "default");
+  };
+
+  if (loading) {
+    return <LoadingSpinner fullPage />;
+  }
+
+  if (error) {
+    return <ErrorMessage message={error} fullPage />;
+  }
 
   return (
     <div className="settings-page">
@@ -36,9 +72,7 @@ const Settings = () => {
               </div>
               <div className="theme-selector">
                 <button
-                  className={`theme-button ${
-                    theme === "light" ? "active" : ""
-                  }`}
+                  className={`theme-button ${theme === "light" ? "active" : ""}`}
                   onClick={() => handleThemeChange("light")}
                 >
                   <svg
@@ -90,7 +124,11 @@ const Settings = () => {
                 <p>Enable transparent effect for the sidebar background</p>
               </div>
               <label className="settings-toggle">
-                <input type="checkbox" />
+                <input 
+                  type="checkbox" 
+                  checked={transparentSidebar}
+                  onChange={handleSidebarTransparencyChange}
+                />
                 <span className="settings-toggle-slider"></span>
               </label>
             </div>
@@ -101,14 +139,18 @@ const Settings = () => {
                 <p>Reduce padding and margins for a more compact layout</p>
               </div>
               <label className="settings-toggle">
-                <input type="checkbox" />
+                <input 
+                  type="checkbox" 
+                  checked={compactView}
+                  onChange={handleCompactViewChange}
+                />
                 <span className="settings-toggle-slider"></span>
               </label>
             </div>
           </div>
         </div>
 
-        <div className="settings-card">
+        {/* <div className="settings-card">
           <div className="card-header">
             <h3>Notifications</h3>
           </div>
@@ -166,7 +208,7 @@ const Settings = () => {
               </label>
             </div>
           </div>
-        </div>
+        </div> */}
       </div>
     </div>
   );

@@ -26,7 +26,6 @@ const paymentHistorySchema = new mongoose.Schema({
 });
 
 const settingsSchema = new mongoose.Schema({
-  darkMode: Boolean,
   tablePreference: String,
   interfaceTheme: String,
   transparentSidebar: Boolean,

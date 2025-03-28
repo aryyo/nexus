@@ -107,6 +107,38 @@ export const useOrderMetrics = (shouldFetch = false) => {
     }
   }, []);
 
+  const deleteOrder = useCallback(async (orderId) => {
+    const token = localStorage.getItem('token');
+    if (!token) {
+      throw new Error('No authentication token found');
+    }
+
+    try {
+      const response = await fetch(`http://localhost:3000/orders/${orderId}`, {
+        method: 'DELETE',
+        headers: {
+          'Authorization': `Bearer ${token}`,
+          'Content-Type': 'application/json'
+        }
+      });
+
+      if (!response.ok) {
+        const errorData = await response.json();
+        throw new Error(errorData.message || 'Failed to delete order');
+      }
+
+      // Remove deleted order from state
+      setOrders(prevOrders => 
+        prevOrders.filter(order => order._id !== orderId)
+      );
+
+      return await response.json();
+    } catch (err) {
+      console.error('Error deleting order:', err);
+      throw err;
+    }
+  }, []);
+
   useEffect(() => {
     if (shouldFetch) {
       fetchOrders();
@@ -231,6 +263,7 @@ export const useOrderMetrics = (shouldFetch = false) => {
     error,
     addOrder,
     bulkDeleteOrders,
+    deleteOrder,
     fetchOrders 
   };
 };

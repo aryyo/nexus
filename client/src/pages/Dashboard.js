@@ -5,17 +5,19 @@ import Summary from "../components/Summary";
 import Cards from "../components/Card";
 import { LoadingSpinner, ErrorMessage } from "../components/LoadingState";
 import { useOrderMetrics } from "../hooks/useOrderMetrics";
+import { useUserSettings } from "../hooks/useUserSettings";
 import "../styles/Dashboard.css";
 
 const Dashboard = () => {
   const { orders, cachedMetrics, loading, error } = useOrderMetrics(true);
+  const { settings, loading: settingsLoading, error: settingsError } = useUserSettings();
 
-  if (loading) {
+  if (loading || settingsLoading) {
     return <LoadingSpinner fullPage />;
   }
 
-  if (error) {
-    return <ErrorMessage message={error} fullPage />;
+  if (error || settingsError) {
+    return <ErrorMessage message={error || settingsError} fullPage />;
   }
 
   if (!orders || !cachedMetrics) {

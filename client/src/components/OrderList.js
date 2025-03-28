@@ -121,9 +121,7 @@ const OrderList = ({ orders, isSelectionMode, selectedOrders, setSelectedOrders,
 
   const handleDelete = (e, orderId) => {
     e.stopPropagation();
-    if (window.confirm("Are you sure you want to delete this order?")) {
-      onDelete(orderId);
-    }
+    onDelete(orderId);
   };
 
   const SelectionCheckbox = ({ isSelected }) => (

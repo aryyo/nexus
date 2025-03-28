@@ -3,7 +3,7 @@
   width: 100vw;
 }
 
-html, body {
+html, body, #root {
   margin: 0;
   padding: 0;
   height: 100%;
@@ -29,6 +29,8 @@ html, body {
   --input-placeholder: #9d8ee0;
   --header-border: #e2dcf7;
   --sidebar-border: #e2dcf7;
+  --sidebar-bg: #ffffff;
+  --sidebar-bg-transparent: rgba(255, 255, 255, 0.8);
 }
 
 :root[data-theme="dark"] {
@@ -51,8 +53,42 @@ html, body {
   --input-placeholder: #9d8ee0;
   --header-border: #392b54;
   --sidebar-border: #392b54;
+  --sidebar-bg: #121214;
+  --sidebar-bg-transparent: rgba(0, 0, 0, 0);
 }
 
 * {
   transition: background-color 0.3s ease, border-color 0.3s ease, color 0.3s ease;
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+:root[data-compact-view="true"] {
+  --spacing-xs: 0.25rem;
+  --spacing-sm: 0.5rem;
+  --spacing-md: 0.75rem;
+  --spacing-lg: 1rem;
+  --spacing-xl: 1.5rem;
+  --card-padding: 1rem;
+  --input-padding: 0.5rem;
+}
+
+:root:not([data-compact-view="true"]) {
+  --spacing-xs: 0.5rem;
+  --spacing-sm: 0.75rem;
+  --spacing-md: 1rem;
+  --spacing-lg: 1.5rem;
+  --spacing-xl: 2rem;
+  --card-padding: 1.5rem;
+  --input-padding: 0.75rem;
+}
+
+:root[data-sidebar-transparent="true"] .sidebar {
+  background-color: var(--sidebar-bg-transparent);
+  backdrop-filter: blur(8px);
+}
+
+:root:not([data-sidebar-transparent="true"]) .sidebar {
+  background-color: var(--sidebar-bg);
 }
