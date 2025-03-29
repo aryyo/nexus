@@ -4,7 +4,6 @@ import { useState, useEffect } from "react";
 import Homepage from "./pages/Homepage";
 import Login from "./pages/Auth";
 import { useUserSettings } from "./hooks/useUserSettings";
-import { LoadingSpinner } from "./components/LoadingState";
 
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(() => {
@@ -35,7 +34,7 @@ function App() {
   }, [settings]);
 
   if (isLoggedIn && settingsLoading) {
-    return <LoadingSpinner fullPage />;
+    return null; //leave blank to avoid mismatch spinners
   }
 
   return (

@@ -39,7 +39,6 @@ const userSchema = new mongoose.Schema(
     profilePicture: String,
     address: String,
     phoneNumber: String,
-    title: String,
     settings: settingsSchema,
     products: [productSchema],
     reports: [reportSchema],

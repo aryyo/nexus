@@ -9,6 +9,7 @@ const loginRouter = require("./routes/login");
 const registerRouter = require("./routes/register");
 const productsRouter = require("./routes/products");
 const settingsRouter = require("./routes/settings");
+const userRouter = require("./routes/user");
 const port = process.env.PORT;
 const uri = process.env.MONGO_URI;
 const app = express();
@@ -29,6 +30,7 @@ app.use("/login", loginRouter);
 app.use("/register", registerRouter);
 app.use("/products", productsRouter);
 app.use("/settings", settingsRouter);
+app.use("/user", userRouter);
 app.listen(port, () => {
   console.log(`Server is running on http://localhost:${port}`);
 });

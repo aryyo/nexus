@@ -72,6 +72,8 @@
   height: 4rem;
   border-radius: 0.75rem;
   object-fit: cover;
+  border: 2px solid var(--primary);
+  padding: 2px;
 }
 
 .profile-details h2 {
@@ -167,7 +169,7 @@
   display: flex;
   align-items: center;
   gap: 0.5rem;
-  padding: 0.5rem 1rem;
+  padding: 0.25rem .5rem;
   font-size: 0.875rem;
   font-weight: 500;
   color: var(--input-text);
@@ -180,6 +182,41 @@
 
 .edit-button:hover {
   background-color: var(--input-bg);
+}
+
+.edit-actions {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.cancel-button,
+.save-button {
+  padding: 0.5rem 1rem;
+  font-size: 0.875rem;
+  font-weight: 500;
+  border-radius: 0.5rem;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.cancel-button {
+  background-color: var(--card-bg);
+  border: 1px solid var(--border);
+  color: var(--input-text);
+}
+
+.cancel-button:hover {
+  background-color: var(--input-bg);
+}
+
+.save-button {
+  background-color: var(--primary);
+  border: none;
+  color: var(--background);
+}
+
+.save-button:hover {
+  background-color: var(--primary-hover);
 }
 
 .info-grid {
@@ -197,6 +234,7 @@
 .info-group label {
   font-size: 0.875rem;
   color: var(--input-text);
+  font-weight: 500;
 }
 
 .info-group p {
@@ -205,6 +243,47 @@
   font-weight: 500;
   color: var(--text);
   line-height: 1.25;
+}
+
+.info-input {
+  padding: 0.5rem 0.75rem;
+  font-size: 0.875rem;
+  border: 1px solid var(--border);
+  border-radius: 0.5rem;
+  background-color: var(--input-bg);
+  color: var(--text);
+  transition: all 0.2s ease;
+}
+
+.info-input:focus {
+  outline: none;
+  border-color: var(--primary);
+  box-shadow: 0 0 0 2px var(--primary-light);
+}
+
+.info-input.error {
+  border-color: var(--error-border);
+}
+
+.info-input.error:focus {
+  border-color: var(--error-border);
+  box-shadow: 0 0 0 2px var(--error-bg);
+}
+
+.validation-error {
+  font-size: 0.75rem;
+  color: var(--error-text);
+  margin-top: 0.25rem;
+}
+
+.error-message {
+  margin-top: 1rem;
+  padding: 0.75rem;
+  background-color: var(--error-bg);
+  border: 1px solid var(--error-border);
+  border-radius: 0.5rem;
+  color: var(--error-text);
+  font-size: 0.875rem;
 }
 
 /* Security Card */
