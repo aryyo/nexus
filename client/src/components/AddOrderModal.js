@@ -12,7 +12,7 @@ const VALID_ORDER_TYPES = ["Shipping", "Pickup"];
 const VALID_ORDER_STATUSES = ["Paid", "Cancelled", "Refunded"];
 
 const AddOrderModal = ({ isOpen, onClose, onAdd, initialData, mode = "add" }) => {
-  const { products, loading: productsLoading } = useProducts(true);
+  const { products, loading: productsLoading, editProduct } = useProducts(true);
   const [formData, setFormData] = useState({
     id: mode === "add" ? generateOrderId() : (initialData?.id || ""),
     customerName: initialData?.customerName || "",
@@ -43,34 +43,28 @@ const AddOrderModal = ({ isOpen, onClose, onAdd, initialData, mode = "add" }) =>
         id: generateOrderId()
       }));
     }
-    // Clear errors when modal opens/closes
     setErrors({});
   }, [initialData, mode, isOpen]);
 
   const validateForm = () => {
     const newErrors = {};
     
-    // Customer name validation
     if (!formData.customerName.trim()) {
       newErrors.customerName = "Customer name is required";
     }
 
-    // Type validation
     if (!VALID_ORDER_TYPES.includes(formData.type)) {
       newErrors.type = `Invalid order type. Must be one of: ${VALID_ORDER_TYPES.join(", ")}`;
     }
 
-    // Status validation
     if (!VALID_ORDER_STATUSES.includes(formData.status)) {
       newErrors.status = `Invalid order status. Must be one of: ${VALID_ORDER_STATUSES.join(", ")}`;
     }
 
-    // Product validation
     if (!formData.productName) {
       newErrors.productName = "Please select a product";
     }
 
-    // Total validation
     const totalNum = parseFloat(formData.total);
     if (!formData.total || isNaN(totalNum)) {
       newErrors.total = "Total must be a valid number";
@@ -80,7 +74,6 @@ const AddOrderModal = ({ isOpen, onClose, onAdd, initialData, mode = "add" }) =>
       newErrors.total = "Total cannot exceed 999,999.99";
     }
 
-    // Date validation
     const dateObj = new Date(formData.date);
     if (isNaN(dateObj.getTime())) {
       newErrors.date = "Invalid date format";
@@ -119,11 +112,23 @@ const AddOrderModal = ({ isOpen, onClose, onAdd, initialData, mode = "add" }) =>
 
     setIsSubmitting(true);
     try {
+      const selectedProduct = products.find(p => p.name === formData.productName);
+      if (!selectedProduct) {
+        throw new Error("Selected product not found");
+      }
+
+      await editProduct(selectedProduct._id, {
+        name: selectedProduct.name,
+        price: selectedProduct.price,
+        stock: selectedProduct.stock - 1,
+        image: selectedProduct.image || "https://via.placeholder.com/150"
+      });
+
       await onAdd({
         ...formData,
         total: parseFloat(formData.total)
       });
-      // Reset form and close modal on success
+
       setFormData({
         id: generateOrderId(),
         customerName: "",
@@ -148,7 +153,6 @@ const AddOrderModal = ({ isOpen, onClose, onAdd, initialData, mode = "add" }) =>
     const { name, value } = e.target;
     
     if (name === 'productName') {
-      // Find the selected product and set its price as the total
       const selectedProduct = products.find(p => p.name === value);
       if (selectedProduct) {
         const calculation = calculateTotal(selectedProduct.price, formData.type, selectedProduct.name);
@@ -167,7 +171,6 @@ const AddOrderModal = ({ isOpen, onClose, onAdd, initialData, mode = "add" }) =>
         }));
       }
     } else if (name === 'type' && formData.productName) {
-      // Recalculate total when order type changes
       const selectedProduct = products.find(p => p.name === formData.productName);
       if (selectedProduct) {
         const calculation = calculateTotal(selectedProduct.price, value, selectedProduct.name);
@@ -185,7 +188,6 @@ const AddOrderModal = ({ isOpen, onClose, onAdd, initialData, mode = "add" }) =>
       }));
     }
 
-    // Clear error for the field being edited
     if (errors[name]) {
       setErrors(prev => ({
         ...prev,
@@ -196,7 +198,6 @@ const AddOrderModal = ({ isOpen, onClose, onAdd, initialData, mode = "add" }) =>
 
   if (!isOpen) return null;
 
-  // Filter products to only show in-stock items
   const availableProducts = products.filter(product => product.status !== "Out of Stock");
 
   return (

@@ -26,7 +26,6 @@ router.post("/", auth, async (req, res) => {
   try {
     const { name, price, stock, image } = req.body;
 
-    // Basic field validation
     if (!name || !price || stock < 0 || !image) {
       return res.status(400).json({
         success: false,
@@ -34,7 +33,6 @@ router.post("/", auth, async (req, res) => {
       });
     }
 
-    // Price validation
     const priceNum = parseFloat(price);
     const priceRegex = /^\d+(\.\d{0,2})?$/;
     if (!priceRegex.test(price) || priceNum <= 0 || priceNum > 999999.99) {
@@ -44,7 +42,6 @@ router.post("/", auth, async (req, res) => {
       });
     }
 
-    // Determine status based on stock
     let status = "In Stock";
     if (stock <= 0) {
       status = "Out of Stock";
@@ -90,15 +87,14 @@ router.put("/:productId", auth, async (req, res) => {
     const { name, price, stock, image } = req.body;
     const productId = req.params.productId;
 
-    // Basic field validation
     if (!name || !price || stock < 0 || !image) {
+      // console.log("Missing required fields:", { name, price, stock, image });
       return res.status(400).json({
         success: false,
         message: "Please provide all required fields: name, price, stock, and image",
       });
     }
 
-    // Price validation
     const priceNum = parseFloat(price);
     const priceRegex = /^\d+(\.\d{0,2})?$/;
     if (!priceRegex.test(price) || priceNum <= 0 || priceNum > 999999.99) {
