@@ -29,7 +29,7 @@ const Dashboard = () => {
       <div className="overview">
         <p>Overview</p>
       </div>
-      <div className="header">
+      {/* <div className="header">
         <button className="calendar">
           <svg
             width="20"
@@ -81,7 +81,7 @@ const Dashboard = () => {
           </svg>
           Add
         </button>
-      </div>
+      </div> */}
       <Cards orders={orders} cachedMetrics={cachedMetrics} />
       <div className="data">
         <div className="data-graph">

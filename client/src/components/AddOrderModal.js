@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import "../styles/Modal.css";
+import { useProducts } from "../hooks/useProducts";
 
 const generateOrderId = () => {
   const timestamp = Date.now().toString(36);
@@ -11,6 +12,7 @@ const VALID_ORDER_TYPES = ["Shipping", "Pickup"];
 const VALID_ORDER_STATUSES = ["Paid", "Cancelled", "Refunded"];
 
 const AddOrderModal = ({ isOpen, onClose, onAdd, initialData, mode = "add" }) => {
+  const { products, loading: productsLoading } = useProducts(true);
   const [formData, setFormData] = useState({
     id: mode === "add" ? generateOrderId() : (initialData?.id || ""),
     customerName: initialData?.customerName || "",
@@ -63,9 +65,9 @@ const AddOrderModal = ({ isOpen, onClose, onAdd, initialData, mode = "add" }) =>
       newErrors.status = `Invalid order status. Must be one of: ${VALID_ORDER_STATUSES.join(", ")}`;
     }
 
-    // Product name validation
-    if (!formData.productName.trim()) {
-      newErrors.productName = "Product name is required";
+    // Product validation
+    if (!formData.productName) {
+      newErrors.productName = "Please select a product";
     }
 
     // Total validation
@@ -85,6 +87,25 @@ const AddOrderModal = ({ isOpen, onClose, onAdd, initialData, mode = "add" }) =>
     }
 
     return newErrors;
+  };
+
+  const calculateTotal = (productPrice, orderType, productName) => {
+    const salesTaxRate = 0.0725;
+    const salesTax = productPrice * salesTaxRate;
+    
+    let shippingCost = 0;
+    if (orderType === "Shipping") {
+      shippingCost = ["Laptop", "Monitor"].includes(productName) ? 15 : 5.99;
+    }
+    
+    return {
+      total: (productPrice + salesTax + shippingCost).toFixed(2),
+      breakdown: {
+        productPrice: productPrice.toFixed(2),
+        salesTax: salesTax.toFixed(2),
+        shippingCost: shippingCost.toFixed(2)
+      }
+    };
   };
 
   const handleSubmit = async (e) => {
@@ -126,13 +147,35 @@ const AddOrderModal = ({ isOpen, onClose, onAdd, initialData, mode = "add" }) =>
   const handleChange = (e) => {
     const { name, value } = e.target;
     
-    if (name === 'total') {
-      // Allow only numbers and one decimal point
-      const regex = /^\d*\.?\d{0,2}$/;
-      if (value === '' || regex.test(value)) {
+    if (name === 'productName') {
+      // Find the selected product and set its price as the total
+      const selectedProduct = products.find(p => p.name === value);
+      if (selectedProduct) {
+        const calculation = calculateTotal(selectedProduct.price, formData.type, selectedProduct.name);
         setFormData(prev => ({
           ...prev,
-          [name]: value
+          [name]: value,
+          total: calculation.total,
+          breakdown: calculation.breakdown
+        }));
+      } else {
+        setFormData(prev => ({
+          ...prev,
+          [name]: value,
+          total: "",
+          breakdown: null
+        }));
+      }
+    } else if (name === 'type' && formData.productName) {
+      // Recalculate total when order type changes
+      const selectedProduct = products.find(p => p.name === formData.productName);
+      if (selectedProduct) {
+        const calculation = calculateTotal(selectedProduct.price, value, selectedProduct.name);
+        setFormData(prev => ({
+          ...prev,
+          [name]: value,
+          total: calculation.total,
+          breakdown: calculation.breakdown
         }));
       }
     } else {
@@ -152,6 +195,9 @@ const AddOrderModal = ({ isOpen, onClose, onAdd, initialData, mode = "add" }) =>
   };
 
   if (!isOpen) return null;
+
+  // Filter products to only show in-stock items
+  const availableProducts = products.filter(product => product.status !== "Out of Stock");
 
   return (
     <div className="modal-overlay">
@@ -218,29 +264,55 @@ const AddOrderModal = ({ isOpen, onClose, onAdd, initialData, mode = "add" }) =>
             {errors.status && <div className="error-message">{errors.status}</div>}
           </div>
           <div className="form-group">
-            <label htmlFor="productName">Product Name</label>
-            <input
-              type="text"
+            <label htmlFor="productName">Product</label>
+            <select
               id="productName"
               name="productName"
               value={formData.productName}
               onChange={handleChange}
               required
-            />
+              disabled={productsLoading}
+            >
+              <option value="">Select a product</option>
+              {availableProducts.map(product => (
+                <option key={product._id} value={product.name}>
+                  {product.name} - ${product.price}
+                </option>
+              ))}
+            </select>
             {errors.productName && <div className="error-message">{errors.productName}</div>}
           </div>
           <div className="form-group">
             <label htmlFor="total">Total ($)</label>
-            <input
-              type="text"
-              id="total"
-              name="total"
-              value={formData.total}
-              onChange={handleChange}
-              placeholder="0.00"
-              required
-            />
+            <div className="total-display">
+              {formData.breakdown ? (
+                <div className="total-calculation">
+                  <span>{formData.breakdown.productPrice}</span>
+                  <span className="operator">+</span>
+                  <span>{formData.breakdown.salesTax}</span>
+                  {formData.type === "Shipping" && (
+                    <>
+                      <span className="operator">+</span>
+                      <span>{formData.breakdown.shippingCost}</span>
+                    </>
+                  )}
+                  <span className="operator">=</span>
+                  <span className="final-total">{formData.total}</span>
+                </div>
+              ) : (
+                "0.00"
+              )}
+            </div>
             {errors.total && <div className="error-message">{errors.total}</div>}
+            {formData.total && (
+              <div className="total-breakdown">
+                <small>
+                  Includes 7.25% tax and {formData.type === "Shipping" ? 
+                    (["Laptop", "Monitor"].includes(formData.productName) ? "$15.00" : "$5.99") + " shipping" : 
+                    "no shipping"}
+                </small>
+              </div>
+            )}
           </div>
           <div className="form-group">
             <label htmlFor="date">Date</label>
