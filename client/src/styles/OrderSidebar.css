@@ -165,18 +165,6 @@
   transition: flex 0.5s ease-in-out;
 }
 
-.line-one {
-  background-color: var(--success);
-}
-
-.line-two {
-  background-color: var(--warning);
-}
-
-.line-three {
-  background-color: var(--primary);
-}
-
 .bar-data {
   display: flex;
   flex-direction: column;
