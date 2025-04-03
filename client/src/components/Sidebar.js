@@ -42,9 +42,7 @@ const Sidebar = ({ active, isOpen, onClose, setIsLoggedIn }) => {
               <span>{item.label}</span>
             </button>
           ))}
-        </div>
 
-        <div className="secondary-menu">
           {menuItems.secondary.map((item) => (
             <button
               key={item.id}
@@ -58,7 +56,6 @@ const Sidebar = ({ active, isOpen, onClose, setIsLoggedIn }) => {
             </button>
           ))}
         </div>
-
         <div className="bottom-menu">
           {menuItems.bottom.map((item) => (
             <button
