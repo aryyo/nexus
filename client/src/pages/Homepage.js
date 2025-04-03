@@ -7,9 +7,7 @@ import Orders from "./Orders";
 import Help from "./Help";
 import Product from "./Product";
 import Billing from "./Billing";
-import Account from "./Account";
 import Report from "./Report";
-import Settings from "./Settings";
 import { LoadingSpinner } from "../components/LoadingState";
 import "../styles/Homepage.css";
 
@@ -77,9 +75,7 @@ const Homepage = ({ setIsLoggedIn }) => {
           <Route path="/products" element={<Product />} />
           <Route path="/help" element={<Help />} />
           <Route path="/billing" element={<Billing />} />
-          <Route path="/account" element={<Account />} />
           <Route path="/report" element={<Report />} />
-          <Route path="/settings" element={<Settings />} />
           <Route path="*" element={<Navigate to="/dashboard" replace />} />
         </Routes>
       </div>

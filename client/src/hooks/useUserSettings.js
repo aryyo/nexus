@@ -59,7 +59,7 @@ export const useUserSettings = () => {
 
       const updatedSettings = await response.json();
       setSettings(updatedSettings);
-      console.log('Updated settings:', updatedSettings);
+      // console.log('Updated settings:', updatedSettings);
       return updatedSettings;
     } catch (err) {
       console.error('Error updating settings:', err);

@@ -26,14 +26,6 @@ export const menuItems = {
       icon: Icons.invoice,
       activeIcon: Icons.invoiceG,
     },
-  ],
-  secondary: [
-    {
-      id: "account",
-      label: "My Account",
-      icon: Icons.user,
-      activeIcon: Icons.userG,
-    },
     {
       id: "help",
       label: "Get Help",
@@ -45,20 +37,6 @@ export const menuItems = {
       label: "Report",
       icon: Icons.report,
       activeIcon: Icons.reportG,
-    },
-  ],
-  bottom: [
-    {
-      id: "settings",
-      label: "Settings",
-      icon: Icons.settings,
-      activeIcon: Icons.settingsG,
-    },
-    {
-      id: "log-out",
-      label: "Log Out",
-      icon: Icons.logout,
-      activeIcon: Icons.logoutG,
     },
   ],
 }; 

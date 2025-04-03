@@ -1,6 +1,5 @@
 import "../styles/OrderList.css";
 import React from "react";
-import EmptyState from "./EmptyState";
 
 const formatOrderId = (id) => {
   if (!id) return "Unknown";
