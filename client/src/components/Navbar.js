@@ -177,8 +177,8 @@ const Navbar = ({ onToggleSidebar }) => {
         </div>
       </div>
       <div className="nav-right">
-        <button className="nav-button">{Icons.mail}</button>
-        <button className="nav-button">{Icons.bell}</button>
+        {/* <button className="nav-button">{Icons.mail}</button>
+        <button className="nav-button">{Icons.bell}</button> */}
         <div className="user-profile" onClick={toggleDropdown} ref={dropdownRef}>
           {Icons.user}
           {showDropdown && (
