@@ -162,7 +162,7 @@
 .dropdown-item {
   display: flex;
   align-items: center;
-  gap: 0.75rem;
+  justify-content: space-between;
   width: 100%;
   padding: 0.75rem 1rem;
   border: none;
@@ -181,11 +181,12 @@
 .dropdown-item span {
   display: flex;
   align-items: center;
+  margin-left: auto;
 }
 
 .dropdown-item span svg {
-  width: 18px;
-  height: 18px;
+  width: 16px;
+  height: 16px;
   stroke-width: 2;
   stroke: currentColor;
   fill: none;
@@ -194,11 +195,11 @@
 }
 
 .dropdown-item.logout {
-  color: var(--warning);
+  color: var(--text);
 }
 
 .dropdown-item.logout:hover {
-  background-color: var(--warning-bg);
+  background-color: var(--input-bg);
 }
 
 .edit-profile-modal {
@@ -342,6 +343,9 @@
 .settings-label {
   font-size: 0.875rem;
   color: var(--text);
+  font-family: "Rethink Sans", serif;
+  font-weight: 400;
+  font-style: normal;
 }
 
 .theme-toggle {
@@ -365,7 +369,7 @@
   border-radius: 1rem;
   color: var(--input-text);
   cursor: pointer;
-  transition: all 0.2s ease;
+  transition: color 0.15s ease;
   position: relative;
   z-index: 1;
 }
@@ -383,18 +387,30 @@
 }
 
 .theme-btn.active {
-  background-color: var(--primary);
   color: white;
-}
-
-.theme-btn.active:hover {
-  background-color: var(--primary-hover);
 }
 
 .theme-btn svg {
   width: 16px;
   height: 16px;
-  transition: all 0.2s ease;
+  transition: all 0.15s ease;
+}
+
+.theme-toggle::after {
+  content: '';
+  position: absolute;
+  top: 0.25rem;
+  left: 0.25rem;
+  width: 1.75rem;
+  height: 1.5rem;
+  background-color: var(--primary);
+  border-radius: 1rem;
+  transition: transform 0.15s ease;
+  z-index: 0;
+}
+
+.theme-toggle[data-theme="dark"]::after {
+  transform: translateX(2rem);
 }
 
 .settings-toggle {
@@ -402,6 +418,7 @@
   display: inline-block;
   width: 2.5rem;
   height: 1.5rem;
+  cursor: pointer;
 }
 
 .settings-toggle input {
@@ -420,7 +437,7 @@
   bottom: 0;
   background-color: var(--input-border);
   border-radius: 1rem;
-  transition: all 0.3s ease;
+  transition: background-color 0.15s ease;
 }
 
 .settings-toggle-slider:before {
@@ -432,7 +449,7 @@
   bottom: 0.1875rem;
   background-color: white;
   border-radius: 50%;
-  transition: all 0.3s ease;
+  transition: transform 0.15s ease;
 }
 
 .settings-toggle input:checked + .settings-toggle-slider {

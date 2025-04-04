@@ -16,15 +16,24 @@ const Navbar = ({ onToggleSidebar }) => {
     name: "",
     email: "",
     phoneNumber: "",
-    address: ""
+    address: "",
   });
   const [validationErrors, setValidationErrors] = useState({});
 
   useEffect(() => {
     if (settings) {
-      document.documentElement.setAttribute("data-theme", settings.interfaceTheme || "light");
-      document.documentElement.setAttribute("data-sidebar-transparent", settings.transparentSidebar ? "true" : "false");
-      document.documentElement.setAttribute("data-compact-view", settings.tablePreference === "compact" ? "true" : "false");
+      document.documentElement.setAttribute(
+        "data-theme",
+        settings.interfaceTheme || "light"
+      );
+      document.documentElement.setAttribute(
+        "data-sidebar-transparent",
+        settings.transparentSidebar ? "true" : "false"
+      );
+      document.documentElement.setAttribute(
+        "data-compact-view",
+        settings.tablePreference === "compact" ? "true" : "false"
+      );
     }
   }, [settings]);
 
@@ -35,34 +44,37 @@ const Navbar = ({ onToggleSidebar }) => {
       }
     };
 
-    document.addEventListener('mousedown', handleClickOutside);
+    document.addEventListener("mousedown", handleClickOutside);
     return () => {
-      document.removeEventListener('mousedown', handleClickOutside);
+      document.removeEventListener("mousedown", handleClickOutside);
     };
   }, []);
 
   const handleSettingChange = (setting, value) => {
     const updates = {
       ...settings,
-      [setting]: value
+      [setting]: value,
     };
     updateSettings(updates);
   };
 
   const validatePhoneNumber = (phone) => {
-    const cleanPhone = phone.replace(/\D/g, '');
+    const cleanPhone = phone.replace(/\D/g, "");
     return cleanPhone.length === 10;
   };
 
   const formatPhoneNumber = (value) => {
-    const numbers = value.replace(/\D/g, '');
-    
+    const numbers = value.replace(/\D/g, "");
+
     if (numbers.length <= 3) {
       return numbers;
     } else if (numbers.length <= 6) {
       return `${numbers.slice(0, 3)}-${numbers.slice(3)}`;
     } else {
-      return `${numbers.slice(0, 3)}-${numbers.slice(3, 6)}-${numbers.slice(6, 10)}`;
+      return `${numbers.slice(0, 3)}-${numbers.slice(3, 6)}-${numbers.slice(
+        6,
+        10
+      )}`;
     }
   };
 
@@ -76,7 +88,7 @@ const Navbar = ({ onToggleSidebar }) => {
       name: user?.name || "",
       email: user?.email || "",
       phoneNumber: user?.phoneNumber || "",
-      address: user?.address || ""
+      address: user?.address || "",
     });
     setValidationErrors({});
     setIsEditing(true);
@@ -84,25 +96,25 @@ const Navbar = ({ onToggleSidebar }) => {
 
   const handlePhoneChange = (e) => {
     const formattedNumber = formatPhoneNumber(e.target.value);
-    setEditData(prev => ({
+    setEditData((prev) => ({
       ...prev,
-      phoneNumber: formattedNumber
+      phoneNumber: formattedNumber,
     }));
 
     if (!formattedNumber) {
-      setValidationErrors(prev => ({
+      setValidationErrors((prev) => ({
         ...prev,
-        phoneNumber: "Phone number is required"
+        phoneNumber: "Phone number is required",
       }));
     } else if (!validatePhoneNumber(formattedNumber)) {
-      setValidationErrors(prev => ({
+      setValidationErrors((prev) => ({
         ...prev,
-        phoneNumber: "Please enter a valid 10-digit phone number"
+        phoneNumber: "Please enter a valid 10-digit phone number",
       }));
     } else {
-      setValidationErrors(prev => ({
+      setValidationErrors((prev) => ({
         ...prev,
-        phoneNumber: ""
+        phoneNumber: "",
       }));
     }
   };
@@ -114,16 +126,22 @@ const Navbar = ({ onToggleSidebar }) => {
   };
 
   const handleSidebarTransparencyChange = (e) => {
-    e.stopPropagation(); 
+    e.stopPropagation();
     const value = e.target.checked;
-    document.documentElement.setAttribute("data-sidebar-transparent", value ? "true" : "false");
+    document.documentElement.setAttribute(
+      "data-sidebar-transparent",
+      value ? "true" : "false"
+    );
     handleSettingChange("transparentSidebar", value);
   };
 
   const handleCompactViewChange = (e) => {
-    e.stopPropagation(); 
+    e.stopPropagation();
     const value = e.target.checked;
-    document.documentElement.setAttribute("data-compact-view", value ? "true" : "false");
+    document.documentElement.setAttribute(
+      "data-compact-view",
+      value ? "true" : "false"
+    );
     handleSettingChange("tablePreference", value ? "compact" : "default");
   };
 
@@ -179,10 +197,17 @@ const Navbar = ({ onToggleSidebar }) => {
       <div className="nav-right">
         {/* <button className="nav-button">{Icons.mail}</button>
         <button className="nav-button">{Icons.bell}</button> */}
-        <div className="user-profile" onClick={toggleDropdown} ref={dropdownRef}>
+        <div
+          className="user-profile"
+          onClick={toggleDropdown}
+          ref={dropdownRef}
+        >
           {Icons.user}
           {showDropdown && (
-            <div className="user-dropdown-menu" onClick={e => e.stopPropagation()}>
+            <div
+              className="user-dropdown-menu"
+              onClick={(e) => e.stopPropagation()}
+            >
               <div className="dropdown-header">
                 <img
                   src={user?.profilePicture || "/profile.jpg"}
@@ -196,10 +221,11 @@ const Navbar = ({ onToggleSidebar }) => {
               </div>
               <div className="dropdown-divider" />
               <button className="dropdown-item" onClick={handleEditClick}>
+                <div className="settings-label">Edit Profile</div>
                 <span>
                   <svg
-                    width="18"
-                    height="18"
+                    width="16"
+                    height="16"
                     viewBox="0 0 24 24"
                     fill="none"
                     stroke="currentColor"
@@ -210,16 +236,20 @@ const Navbar = ({ onToggleSidebar }) => {
                     <path d="M17 3a2.85 2.83 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5L17 3Z" />
                   </svg>
                 </span>
-                Edit Profile
               </button>
               <div className="dropdown-divider" />
               <div className="dropdown-settings">
                 <div className="settings-item">
                   <div className="settings-label">Theme</div>
-                  <div className="theme-toggle">
+                  <div
+                    className="theme-toggle"
+                    data-theme={settings?.interfaceTheme || "light"}
+                  >
                     <button
-                      className={`theme-btn light ${settings?.interfaceTheme === 'light' ? 'active' : ''}`}
-                      onClick={() => handleThemeChange('light')}
+                      className={`theme-btn light ${
+                        settings?.interfaceTheme === "light" ? "active" : ""
+                      }`}
+                      onClick={() => handleThemeChange("light")}
                       title="Light Mode"
                     >
                       <svg
@@ -244,8 +274,10 @@ const Navbar = ({ onToggleSidebar }) => {
                       </svg>
                     </button>
                     <button
-                      className={`theme-btn dark ${settings?.interfaceTheme === 'dark' ? 'active' : ''}`}
-                      onClick={() => handleThemeChange('dark')}
+                      className={`theme-btn dark ${
+                        settings?.interfaceTheme === "dark" ? "active" : ""
+                      }`}
+                      onClick={() => handleThemeChange("dark")}
                       title="Dark Mode"
                     >
                       <svg
@@ -265,7 +297,10 @@ const Navbar = ({ onToggleSidebar }) => {
                 </div>
                 <div className="settings-item">
                   <div className="settings-label">Transparent Sidebar</div>
-                  <label className="settings-toggle" onClick={e => e.stopPropagation()}>
+                  <label
+                    className="settings-toggle"
+                    onClick={(e) => e.stopPropagation()}
+                  >
                     <input
                       type="checkbox"
                       checked={settings?.transparentSidebar || false}
@@ -276,10 +311,13 @@ const Navbar = ({ onToggleSidebar }) => {
                 </div>
                 <div className="settings-item">
                   <div className="settings-label">Compact Spacing</div>
-                  <label className="settings-toggle" onClick={e => e.stopPropagation()}>
+                  <label
+                    className="settings-toggle"
+                    onClick={(e) => e.stopPropagation()}
+                  >
                     <input
                       type="checkbox"
-                      checked={settings?.tablePreference === 'compact'}
+                      checked={settings?.tablePreference === "compact"}
                       onChange={handleCompactViewChange}
                     />
                     <span className="settings-toggle-slider"></span>
@@ -288,8 +326,23 @@ const Navbar = ({ onToggleSidebar }) => {
               </div>
               <div className="dropdown-divider" />
               <button className="dropdown-item logout" onClick={handleLogout}>
-                <span>{Icons.logout}</span>
-                Log Out
+                <div className="settings-label">Log Out</div>
+                <span>
+                  <svg
+                    width="18"
+                    height="18"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    strokeWidth="2"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                  >
+                    <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4" />
+                    <polyline points="16 17 21 12 16 7" />
+                    <line x1="21" y1="12" x2="9" y2="12" />
+                  </svg>
+                </span>
               </button>
             </div>
           )}
@@ -344,7 +397,9 @@ const Navbar = ({ onToggleSidebar }) => {
                 className={validationErrors.phoneNumber ? "error" : ""}
               />
               {validationErrors.phoneNumber && (
-                <span className="error-message">{validationErrors.phoneNumber}</span>
+                <span className="error-message">
+                  {validationErrors.phoneNumber}
+                </span>
               )}
             </div>
             <div className="form-group">
@@ -361,14 +416,19 @@ const Navbar = ({ onToggleSidebar }) => {
                 className={validationErrors.address ? "error" : ""}
               />
               {validationErrors.address && (
-                <span className="error-message">{validationErrors.address}</span>
+                <span className="error-message">
+                  {validationErrors.address}
+                </span>
               )}
             </div>
             <div className="modal-actions">
-              <button className="cancel-button" onClick={() => {
-                setIsEditing(false);
-                setValidationErrors({});
-              }}>
+              <button
+                className="cancel-button"
+                onClick={() => {
+                  setIsEditing(false);
+                  setValidationErrors({});
+                }}
+              >
                 Cancel
               </button>
               <button className="save-button" onClick={handleSave}>
