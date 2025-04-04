@@ -6,7 +6,7 @@ const Billing = () => {
       <div className="overview">
         <p>Billing</p>
       </div>
-      <div className="header">
+      {/* <div className="header">
         <button className="calendar">
           <svg
             width="20"
@@ -59,7 +59,7 @@ const Billing = () => {
           </svg>
           Change Plan
         </button>
-      </div>
+      </div> */}
 
       <div className="billing-summary">
         <div className="summary-card">

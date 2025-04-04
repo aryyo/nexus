@@ -32,11 +32,5 @@ export const menuItems = {
       icon: Icons.help,
       activeIcon: Icons.helpG,
     },
-    {
-      id: "report",
-      label: "Report",
-      icon: Icons.report,
-      activeIcon: Icons.reportG,
-    },
   ],
 }; 

@@ -7,7 +7,6 @@ import Orders from "./Orders";
 import Help from "./Help";
 import Product from "./Product";
 import Billing from "./Billing";
-import Report from "./Report";
 import { LoadingSpinner } from "../components/LoadingState";
 import "../styles/Homepage.css";
 
@@ -75,7 +74,6 @@ const Homepage = ({ setIsLoggedIn }) => {
           <Route path="/products" element={<Product />} />
           <Route path="/help" element={<Help />} />
           <Route path="/billing" element={<Billing />} />
-          <Route path="/report" element={<Report />} />
           <Route path="*" element={<Navigate to="/dashboard" replace />} />
         </Routes>
       </div>
