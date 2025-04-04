@@ -157,7 +157,6 @@
 .dropdown-divider {
   height: 1px;
   background-color: var(--border);
-  margin: 0.5rem 0;
 }
 
 .dropdown-item {
@@ -187,6 +186,11 @@
 .dropdown-item span svg {
   width: 18px;
   height: 18px;
+  stroke-width: 2;
+  stroke: currentColor;
+  fill: none;
+  stroke-linecap: round;
+  stroke-linejoin: round;
 }
 
 .dropdown-item.logout {
@@ -345,7 +349,7 @@
   gap: 0.25rem;
   background-color: var(--input-bg);
   padding: 0.25rem;
-  border-radius: 0.375rem;
+  border-radius: 1rem;
   position: relative;
   width: fit-content;
 }
@@ -355,10 +359,10 @@
   align-items: center;
   justify-content: center;
   width: 1.75rem;
-  height: 1.75rem;
+  height: 1.5rem;
   border: none;
   background: none;
-  border-radius: 0.25rem;
+  border-radius: 1rem;
   color: var(--input-text);
   cursor: pointer;
   transition: all 0.2s ease;
