@@ -351,87 +351,105 @@ const Navbar = ({ onToggleSidebar }) => {
 
       {isEditing && (
         <div className="edit-profile-modal">
-          <div className="modal-content">
-            <h3>Edit Profile</h3>
-            <div className="form-group">
-              <label>Full Name *</label>
-              <input
-                type="text"
-                value={editData.name}
-                onChange={(e) => {
-                  setEditData({ ...editData, name: e.target.value });
-                  if (e.target.value.trim()) {
-                    setValidationErrors({ ...validationErrors, name: "" });
-                  }
-                }}
-                className={validationErrors.name ? "error" : ""}
-              />
-              {validationErrors.name && (
-                <span className="error-message">{validationErrors.name}</span>
-              )}
+          <div className="navbar-modal-content">
+            <div className="navbar-modal-header">
+              <div className="navbar-profile-section">
+                <img
+                  src={user?.profilePicture || "/profile.jpg"}
+                  alt="Profile"
+                  className="navbar-profile-picture"
+                />
+                <button className="navbar-change-photo-btn">
+                  <svg
+                    width="16"
+                    height="16"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    strokeWidth="2"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                  >
+                    <path d="M17 3a2.85 2.83 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5L17 3Z" />
+                  </svg>
+                  Change Photo
+                </button>
+              </div>
+              <div className="navbar-form-section">
+                <h3>Edit Profile</h3>
+                <div className="navbar-input-group">
+                  <input
+                    type="text"
+                    value={editData.name}
+                    placeholder="Full Name"
+                    onChange={(e) => {
+                      setEditData({ ...editData, name: e.target.value });
+                      if (e.target.value.trim()) {
+                        setValidationErrors({ ...validationErrors, name: "" });
+                      }
+                    }}
+                    className={validationErrors.name ? "error" : ""}
+                  />
+                  {validationErrors.name && (
+                    <span className="navbar-error-message">{validationErrors.name}</span>
+                  )}
+                </div>
+                <div className="navbar-input-group">
+                  <input
+                    type="email"
+                    value={editData.email}
+                    placeholder="Email Address"
+                    onChange={(e) => {
+                      setEditData({ ...editData, email: e.target.value });
+                      if (e.target.value.trim()) {
+                        setValidationErrors({ ...validationErrors, email: "" });
+                      }
+                    }}
+                    className={validationErrors.email ? "error" : ""}
+                  />
+                  {validationErrors.email && (
+                    <span className="navbar-error-message">{validationErrors.email}</span>
+                  )}
+                </div>
+                <div className="navbar-input-group">
+                  <input
+                    type="tel"
+                    value={editData.phoneNumber}
+                    placeholder="Phone Number"
+                    onChange={handlePhoneChange}
+                    className={validationErrors.phoneNumber ? "error" : ""}
+                  />
+                  {validationErrors.phoneNumber && (
+                    <span className="navbar-error-message">{validationErrors.phoneNumber}</span>
+                  )}
+                </div>
+                <div className="navbar-input-group">
+                  <input
+                    type="text"
+                    value={editData.address}
+                    placeholder="Address"
+                    onChange={(e) => {
+                      setEditData({ ...editData, address: e.target.value });
+                      if (e.target.value.trim()) {
+                        setValidationErrors({ ...validationErrors, address: "" });
+                      }
+                    }}
+                    className={validationErrors.address ? "error" : ""}
+                  />
+                  {validationErrors.address && (
+                    <span className="navbar-error-message">{validationErrors.address}</span>
+                  )}
+                </div>
+              </div>
             </div>
-            <div className="form-group">
-              <label>Email *</label>
-              <input
-                type="email"
-                value={editData.email}
-                onChange={(e) => {
-                  setEditData({ ...editData, email: e.target.value });
-                  if (e.target.value.trim()) {
-                    setValidationErrors({ ...validationErrors, email: "" });
-                  }
-                }}
-                className={validationErrors.email ? "error" : ""}
-              />
-              {validationErrors.email && (
-                <span className="error-message">{validationErrors.email}</span>
-              )}
-            </div>
-            <div className="form-group">
-              <label>Phone Number *</label>
-              <input
-                type="tel"
-                value={editData.phoneNumber}
-                onChange={handlePhoneChange}
-                placeholder="123-456-7890"
-                className={validationErrors.phoneNumber ? "error" : ""}
-              />
-              {validationErrors.phoneNumber && (
-                <span className="error-message">
-                  {validationErrors.phoneNumber}
-                </span>
-              )}
-            </div>
-            <div className="form-group">
-              <label>Address *</label>
-              <input
-                type="text"
-                value={editData.address}
-                onChange={(e) => {
-                  setEditData({ ...editData, address: e.target.value });
-                  if (e.target.value.trim()) {
-                    setValidationErrors({ ...validationErrors, address: "" });
-                  }
-                }}
-                className={validationErrors.address ? "error" : ""}
-              />
-              {validationErrors.address && (
-                <span className="error-message">
-                  {validationErrors.address}
-                </span>
-              )}
-            </div>
-            <div className="modal-actions">
-              <button
-                className="cancel-button"
-                onClick={() => {
-                  setIsEditing(false);
-                  setValidationErrors({});
-                }}
-              >
+            <div className="navbar-modal-actions">
+              <button className="navbar-cancel-button" onClick={() => {
+                setIsEditing(false);
+                setValidationErrors({});
+              }}>
                 Cancel
               </button>
-              <button className="save-button" onClick={handleSave}>
+              <button className="navbar-save-button" onClick={handleSave}>
                 Save Changes
               </button>
             </div>
