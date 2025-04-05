@@ -12,6 +12,13 @@ const Navbar = ({ onToggleSidebar }) => {
   const { settings, updateSettings } = useUserSettings();
   const navigate = useNavigate();
   const [isEditing, setIsEditing] = useState(false);
+  const [isChangingPassword, setIsChangingPassword] = useState(false);
+  const [passwordData, setPasswordData] = useState({
+    currentPassword: "",
+    newPassword: "",
+    confirmPassword: "",
+  });
+  const [passwordErrors, setPasswordErrors] = useState({});
   const [editData, setEditData] = useState({
     name: "",
     email: "",
@@ -182,6 +189,77 @@ const Navbar = ({ onToggleSidebar }) => {
     }
   };
 
+  const handleChangePasswordClick = () => {
+    setPasswordData({
+      currentPassword: "",
+      newPassword: "",
+      confirmPassword: "",
+    });
+    setPasswordErrors({});
+    setIsChangingPassword(true);
+    setShowDropdown(false);
+  };
+
+  const validatePasswordData = () => {
+    const errors = {};
+
+    if (!passwordData.currentPassword) {
+      errors.currentPassword = "Current password is required";
+    }
+    if (!passwordData.newPassword) {
+      errors.newPassword = "New password is required";
+    } else if (passwordData.newPassword.length < 6) {
+      errors.newPassword = "Password must be at least 6 characters long";
+    }
+    if (!passwordData.confirmPassword) {
+      errors.confirmPassword = "Please confirm your new password";
+    } else if (passwordData.newPassword !== passwordData.confirmPassword) {
+      errors.confirmPassword = "Passwords do not match";
+    }
+
+    return errors;
+  };
+
+  const handlePasswordChange = async () => {
+    const errors = validatePasswordData();
+    if (Object.keys(errors).length > 0) {
+      setPasswordErrors(errors);
+      return;
+    }
+
+    try {
+      const token = localStorage.getItem('token');
+      const response = await fetch('http://localhost:3000/user/change-password', {
+        method: 'POST',
+        headers: {
+          'Authorization': `Bearer ${token}`,
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          currentPassword: passwordData.currentPassword,
+          newPassword: passwordData.newPassword
+        })
+      });
+
+      if (!response.ok) {
+        const data = await response.json();
+        throw new Error(data.message || 'Failed to change password');
+      }
+
+      setIsChangingPassword(false);
+      setPasswordData({
+        currentPassword: "",
+        newPassword: "",
+        confirmPassword: "",
+      });
+      setPasswordErrors({});
+    } catch (error) {
+      setPasswordErrors({
+        currentPassword: error.message
+      });
+    }
+  };
+
   return (
     <div className="navbar">
       <div className="nav-left">
@@ -234,6 +312,24 @@ const Navbar = ({ onToggleSidebar }) => {
                     strokeLinejoin="round"
                   >
                     <path d="M17 3a2.85 2.83 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5L17 3Z" />
+                  </svg>
+                </span>
+              </button>
+              <button className="dropdown-item" onClick={handleChangePasswordClick}>
+                <div className="settings-label">Change Password</div>
+                <span>
+                  <svg
+                    width="16"
+                    height="16"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    strokeWidth="2"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                  >
+                    <rect x="3" y="11" width="18" height="11" rx="2" ry="2" />
+                    <path d="M7 11V7a5 5 0 0 1 10 0v4" />
                   </svg>
                 </span>
               </button>
@@ -453,6 +549,83 @@ const Navbar = ({ onToggleSidebar }) => {
               </button>
               <button className="navbar-save-button" onClick={handleSave}>
                 Save Changes
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {isChangingPassword && (
+        <div className="edit-profile-modal">
+          <div className="navbar-modal-content">
+            <div className="navbar-modal-header">
+              <div className="navbar-form-section">
+                <h3>Change Password</h3>
+                <div className="navbar-input-group">
+                  <input
+                    type="password"
+                    value={passwordData.currentPassword}
+                    placeholder="Current Password"
+                    onChange={(e) => {
+                      setPasswordData({ ...passwordData, currentPassword: e.target.value });
+                      if (e.target.value) {
+                        setPasswordErrors({ ...passwordErrors, currentPassword: "" });
+                      }
+                    }}
+                    className={passwordErrors.currentPassword ? "error" : ""}
+                  />
+                  {passwordErrors.currentPassword && (
+                    <span className="navbar-error-message">{passwordErrors.currentPassword}</span>
+                  )}
+                </div>
+                <div className="navbar-input-group">
+                  <input
+                    type="password"
+                    value={passwordData.newPassword}
+                    placeholder="New Password"
+                    onChange={(e) => {
+                      setPasswordData({ ...passwordData, newPassword: e.target.value });
+                      if (e.target.value) {
+                        setPasswordErrors({ ...passwordErrors, newPassword: "" });
+                      }
+                    }}
+                    className={passwordErrors.newPassword ? "error" : ""}
+                  />
+                  {passwordErrors.newPassword && (
+                    <span className="navbar-error-message">{passwordErrors.newPassword}</span>
+                  )}
+                </div>
+                <div className="navbar-input-group">
+                  <input
+                    type="password"
+                    value={passwordData.confirmPassword}
+                    placeholder="Confirm New Password"
+                    onChange={(e) => {
+                      setPasswordData({ ...passwordData, confirmPassword: e.target.value });
+                      if (e.target.value) {
+                        setPasswordErrors({ ...passwordErrors, confirmPassword: "" });
+                      }
+                    }}
+                    className={passwordErrors.confirmPassword ? "error" : ""}
+                  />
+                  {passwordErrors.confirmPassword && (
+                    <span className="navbar-error-message">{passwordErrors.confirmPassword}</span>
+                  )}
+                </div>
+              </div>
+            </div>
+            <div className="navbar-modal-actions">
+              <button 
+                className="navbar-cancel-button" 
+                onClick={() => {
+                  setIsChangingPassword(false);
+                  setPasswordErrors({});
+                }}
+              >
+                Cancel
+              </button>
+              <button className="navbar-save-button" onClick={handlePasswordChange}>
+                Change Password
               </button>
             </div>
           </div>
