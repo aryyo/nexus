@@ -71,6 +71,31 @@ const Help = () => {
         </div>
       </div>
 
+      <div className="contact-section">
+        <div className="section-header">
+          <h2>Need More Help?</h2>
+        </div>
+        <div className="contact-card">
+          <div className="contact-info">
+            <h3>Contact Support</h3>
+            <p>Our support team is here to help you with any questions or concerns.</p>
+            <div className="contact-details">
+              <div className="contact-item">
+                <span className="contact-label">Email:</span>
+                <a href="mailto:support@nexus.com">support@nexus.com</a>
+              </div>
+              <div className="contact-item">
+                <span className="contact-label">Phone:</span>
+                <a href="tel:1-800-123-4567">1-800-123-4567</a>
+              </div>
+              <div className="contact-item">
+                <span className="contact-label">Hours:</span>
+                <span>Monday - Friday, 9AM - 6PM EST</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
       
     </div>
   );
