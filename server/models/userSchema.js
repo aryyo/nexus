@@ -18,13 +18,6 @@ const reportSchema = new mongoose.Schema({
   dateUploaded: Date,
 });
 
-const paymentHistorySchema = new mongoose.Schema({
-  date: Date,
-  amount: Number,
-  status: String,
-  plan: String,
-});
-
 const settingsSchema = new mongoose.Schema({
   tablePreference: String,
   interfaceTheme: String,
@@ -42,7 +35,6 @@ const userSchema = new mongoose.Schema(
     settings: settingsSchema,
     products: [productSchema],
     reports: [reportSchema],
-    paymentHistory: [paymentHistorySchema],
   },
   {
     timestamps: true,
