@@ -22,11 +22,9 @@ const Rate = ({ cachedMetrics }) => {
       };
     }
 
-    // Calculate success rate (paid orders vs total orders)
     const successRate =
       (cachedMetrics.totalPaid / cachedMetrics.totalOrders) * 100;
 
-    // Calculate month over month change in revenue
     const currentMonth = new Date().getMonth();
     const currentRevenue = cachedMetrics.monthlyRevenue[currentMonth] || 0;
     const lastMonthRevenue =
@@ -35,7 +33,6 @@ const Rate = ({ cachedMetrics }) => {
       ? ((currentRevenue - lastMonthRevenue) / lastMonthRevenue) * 100
       : 0;
 
-    // Calculate rates for sales, expenses, and profit
     const totalRevenue = cachedMetrics.totalRevenue;
     const salesRate = totalRevenue
       ? (cachedMetrics.totalRevenue / totalRevenue) * 100
