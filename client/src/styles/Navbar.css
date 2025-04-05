@@ -247,13 +247,16 @@
 .navbar-change-photo-btn {
   display: flex;
   align-items: center;
+  justify-content: center;
   gap: 0.5rem;
-  padding: 0.5rem 1rem;
+  padding-inline: 0.25rem;
+  padding-block: 0.5rem;
+  width: 120px;
   border: 1px solid var(--border);
   border-radius: 0.5rem;
   background: none;
   color: var(--text);
-  font-size: 0.875rem;
+  font-size: 0.8rem;
   cursor: pointer;
   transition: all 0.2s ease;
 }
