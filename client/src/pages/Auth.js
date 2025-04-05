@@ -142,7 +142,6 @@ const Auth = ({ setIsLoggedIn }) => {
             <div className="error-message submit-error">{submitError}</div>
           )}
           <div className="form-group">
-            <label htmlFor="email">E-mail</label>
             <input
               type="email"
               id="email"
