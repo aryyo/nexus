@@ -24,17 +24,16 @@
   flex: 1;
 }
 
-.overview {
+.orders-overview {
   width: 100%;
   min-height: 2.5rem;
   display: flex;
   flex-direction: column;
   justify-content: center;
   border-bottom: 1px solid var(--border);
-  padding-bottom: 0.75rem;
 }
 
-.overview p {
+.orders-overview p {
   margin: 0;
   font-size: 1.5rem;
   font-weight: 600;

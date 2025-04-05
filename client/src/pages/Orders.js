@@ -75,7 +75,7 @@ const Orders = () => {
 
   return (
     <div className="content">
-      <div className="overview">
+      <div className="orders-overview">
         <p>Orders</p>
       </div>
 
