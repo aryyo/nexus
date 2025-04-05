@@ -51,6 +51,8 @@
   outline: none;
   cursor: pointer;
   transition: all 0.2s ease;
+  padding-inline: 0.5rem;
+  height: 100%;
 }
 
 .time-select:hover {
