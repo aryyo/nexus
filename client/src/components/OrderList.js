@@ -143,7 +143,7 @@ const OrderList = ({ orders, isSelectionMode, selectedOrders, setSelectedOrders,
   return (
     <div className="orders-table-wrapper">
       <div className="orders-table">
-        <div className="table-header">
+        <div className="table-header" style={{ gridTemplateColumns: "repeat(8, minmax(0, 1fr))" }}>
           {columns.map((column) => (
             <div key={column.key} className="header-cell">
               {column.label}

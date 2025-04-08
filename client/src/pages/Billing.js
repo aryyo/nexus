@@ -1,6 +1,7 @@
 import React from "react";
 import { useInvoices } from "../hooks/useInvoices";
 import { LoadingSpinner, ErrorMessage } from "../components/LoadingState";
+import InvoicePDF from "../components/InvoicePDF";
 import "../styles/Billing.css";
 import "../styles/OrderList.css";
 
@@ -36,7 +37,7 @@ const columns = [
   { label: "Customer", key: "customerName", formatter: formatName },
   { label: "Date", key: "datePlaced", formatter: formatDate },
   { label: "Total", key: "total", formatter: formatTotal },
-  { label: "Actions", key: "actions" }
+  { label: "Actions", key: "actions" },
 ];
 
 const Billing = () => {
@@ -148,14 +149,17 @@ const Billing = () => {
           </svg>
           <h3>No invoices found</h3>
           <p>
-            There are no invoices to display at this time. New invoices will appear
-            here.
+            There are no invoices to display at this time. New invoices will
+            appear here.
           </p>
         </div>
       ) : (
         <div className="orders-table-wrapper">
           <div className="orders-table">
-            <div className="table-header" style={{ gridTemplateColumns: 'repeat(5, minmax(0, 1fr))' }}>
+            <div
+              className="table-header"
+              style={{ gridTemplateColumns: "repeat(5, minmax(0, 1fr))" }}
+            >
               {columns.map((column) => (
                 <div key={column.key} className="header-cell">
                   {column.label}
@@ -164,36 +168,33 @@ const Billing = () => {
             </div>
             <div className="table-body">
               {invoices.map((invoice) => (
-                <div className="table-row" key={invoice._id} style={{ gridTemplateColumns: 'repeat(5, minmax(0, 1fr))' }}>
+                <div
+                  className="table-row"
+                  key={invoice._id}
+                  style={{ gridTemplateColumns: "repeat(5, minmax(0, 1fr))" }}
+                >
                   {columns.map((column) => {
-                    if (column.key === 'actions') {
+                    if (column.key === "actions") {
                       return (
                         <div className="table-cell actions" key={column.key}>
-                          <button className="download-button">
-                            <svg
-                              width="16"
-                              height="16"
-                              viewBox="0 0 24 24"
-                              fill="none"
-                              stroke="currentColor"
-                              strokeWidth="2"
-                              strokeLinecap="round"
-                              strokeLinejoin="round"
-                            >
-                              <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
-                              <polyline points="7 10 12 15 17 10" />
-                              <line x1="12" y1="15" x2="12" y2="3" />
-                            </svg>
-                          </button>
+                          <InvoicePDF invoice={invoice} />
                         </div>
                       );
                     }
                     return (
                       <div className="table-cell" key={column.key}>
                         {column.component ? (
-                          <column.component {...{ [column.key.toLowerCase()]: invoice[column.key] }} />
+                          <column.component
+                            {...{
+                              [column.key.toLowerCase()]: invoice[column.key],
+                            }}
+                          />
                         ) : (
-                          <span>{column.formatter ? column.formatter(invoice[column.key]) : invoice[column.key]}</span>
+                          <span>
+                            {column.formatter
+                              ? column.formatter(invoice[column.key])
+                              : invoice[column.key]}
+                          </span>
                         )}
                       </div>
                     );
