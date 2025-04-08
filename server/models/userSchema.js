@@ -11,6 +11,20 @@ const productSchema = new mongoose.Schema({
   },
 });
 
+const invoiceSchema = new mongoose.Schema({
+  orderId: { type: String, required: true },
+  userId: String,
+  customerName: String,
+  type: String,
+  status: String,
+  item: String,
+  subtotal: Number,
+  tax: Number,
+  shipping: Number,
+  total: Number,
+  datePlaced: Date,
+})
+
 const settingsSchema = new mongoose.Schema({
   tablePreference: String,
   interfaceTheme: String,
@@ -27,6 +41,7 @@ const userSchema = new mongoose.Schema(
     phoneNumber: String,
     settings: settingsSchema,
     products: [productSchema],
+    invoices: [invoiceSchema],
   },
   {
     timestamps: true,
