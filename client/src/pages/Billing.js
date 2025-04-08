@@ -2,6 +2,88 @@ import React from "react";
 import { useInvoices } from "../hooks/useInvoices";
 import { LoadingSpinner, ErrorMessage } from "../components/LoadingState";
 import "../styles/Billing.css";
+import "../styles/OrderList.css";
+
+const formatOrderId = (id) => {
+  if (!id) return "Unknown";
+  return `#${id.slice(0, 8)}`;
+};
+
+const formatName = (name) => {
+  if (!name) return "Unknown";
+  return name;
+};
+
+const formatTotal = (total) => {
+  if (typeof total !== "number") return "$0.00";
+  return new Intl.NumberFormat("en-US", {
+    style: "currency",
+    currency: "USD",
+  }).format(total);
+};
+
+const formatDate = (date) => {
+  if (!date) return "Unknown";
+  return new Intl.DateTimeFormat("en-US", {
+    year: "numeric",
+    month: "short",
+    day: "numeric",
+  }).format(new Date(date));
+};
+
+const StatusBadge = ({ status }) => {
+  const statusClasses = {
+    Paid: "status-badge success",
+    Cancelled: "status-badge warning",
+    Refunded: "status-badge info",
+  };
+
+  return (
+    <span className={statusClasses[status] || "status-badge"}>
+      {status}
+    </span>
+  );
+};
+
+const TypeBadge = ({ type }) => {
+  return (
+    <span className={`type-badge ${type.toLowerCase()}`}>
+      <svg
+        className="type-icon"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        strokeWidth="2"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      >
+        {type === "Shipping" ? (
+          <>
+            <path d="M5 15h14" />
+            <path d="M5 9h14" />
+            <path d="M17 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V5a2 2 0 0 0-2-2Z" />
+          </>
+        ) : (
+          <>
+            <circle cx="12" cy="12" r="10" />
+            <path d="m8 12 3 3 5-5" />
+          </>
+        )}
+      </svg>
+      {type}
+    </span>
+  );
+};
+
+const columns = [
+  { label: "Order", key: "orderId", formatter: formatOrderId },
+  { label: "Customer", key: "customerName", formatter: formatName },
+  { label: "Type", key: "type", component: TypeBadge },
+  { label: "Status", key: "status", component: StatusBadge },
+  { label: "Total", key: "total", formatter: formatTotal },
+  { label: "Date", key: "datePlaced", formatter: formatDate },
+  { label: "Actions", key: "actions" }
+];
 
 const Billing = () => {
   const { invoices, loading, error } = useInvoices(true);
@@ -15,22 +97,6 @@ const Billing = () => {
   }
 
   const hasInvoices = invoices && invoices.length > 0;
-
-  const formatDate = (dateString) => {
-    const date = new Date(dateString);
-    return date.toLocaleDateString('en-US', {
-      month: 'short',
-      day: 'numeric',
-      year: 'numeric'
-    });
-  };
-
-  const formatCurrency = (amount) => {
-    return new Intl.NumberFormat('en-US', {
-      style: 'currency',
-      currency: 'USD'
-    }).format(amount);
-  };
 
   return (
     <div className="billing-page">
@@ -133,56 +199,54 @@ const Billing = () => {
           </p>
         </div>
       ) : (
-        <div className="billing-history">
-          <div className="table-container">
-            <table className="history-table">
-              <thead>
-                <tr>
-                  <th>Order ID</th>
-                  <th>Customer</th>
-                  <th>Date</th>
-                  <th>Type</th>
-                  <th>Amount</th>
-                  <th>Status</th>
-                  <th>Action</th>
-                </tr>
-              </thead>
-              <tbody>
-                {invoices.map((invoice) => (
-                  <tr key={invoice._id}>
-                    <td>#{invoice.orderId}</td>
-                    <td>{invoice.customerName}</td>
-                    <td>{formatDate(invoice.datePlaced)}</td>
-                    <td>{invoice.type}</td>
-                    <td>{formatCurrency(invoice.total)}</td>
-                    <td>
-                      <span className={`status ${invoice.status.toLowerCase()}`}>
-                        {invoice.status}
-                      </span>
-                    </td>
-                    <td>
-                      <button className="download-button">
-                        <svg
-                          width="16"
-                          height="16"
-                          viewBox="0 0 24 24"
-                          fill="none"
-                          stroke="currentColor"
-                          strokeWidth="2"
-                          strokeLinecap="round"
-                          strokeLinejoin="round"
-                        >
-                          <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
-                          <polyline points="7 10 12 15 17 10" />
-                          <line x1="12" y1="15" x2="12" y2="3" />
-                        </svg>
-                        Download
-                      </button>
-                    </td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
+        <div className="orders-table-wrapper">
+          <div className="orders-table">
+            <div className="table-header" style={{ gridTemplateColumns: 'repeat(7, minmax(0, 1fr))' }}>
+              {columns.map((column) => (
+                <div key={column.key} className="header-cell">
+                  {column.label}
+                </div>
+              ))}
+            </div>
+            <div className="table-body">
+              {invoices.map((invoice) => (
+                <div className="table-row" key={invoice._id} style={{ gridTemplateColumns: 'repeat(7, minmax(0, 1fr))' }}>
+                  {columns.map((column) => {
+                    if (column.key === 'actions') {
+                      return (
+                        <div className="table-cell actions" key={column.key}>
+                          <button className="download-button">
+                            <svg
+                              width="16"
+                              height="16"
+                              viewBox="0 0 24 24"
+                              fill="none"
+                              stroke="currentColor"
+                              strokeWidth="2"
+                              strokeLinecap="round"
+                              strokeLinejoin="round"
+                            >
+                              <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
+                              <polyline points="7 10 12 15 17 10" />
+                              <line x1="12" y1="15" x2="12" y2="3" />
+                            </svg>
+                          </button>
+                        </div>
+                      );
+                    }
+                    return (
+                      <div className="table-cell" key={column.key}>
+                        {column.component ? (
+                          <column.component {...{ [column.key.toLowerCase()]: invoice[column.key] }} />
+                        ) : (
+                          <span>{column.formatter ? column.formatter(invoice[column.key]) : invoice[column.key]}</span>
+                        )}
+                      </div>
+                    );
+                  })}
+                </div>
+              ))}
+            </div>
           </div>
         </div>
       )}
