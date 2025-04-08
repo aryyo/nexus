@@ -77,8 +77,8 @@ export const useInvoices = (shouldFetch = false) => {
       }
 
       const newInvoice = await response.json();
-      setInvoices(prevInvoices => [...prevInvoices, newInvoice]);
-      return newInvoice;
+      setInvoices(prevInvoices => [...prevInvoices, newInvoice.invoice]);
+      return newInvoice.invoice;
     } catch (err) {
       console.error('Error adding invoice:', err);
       throw err;

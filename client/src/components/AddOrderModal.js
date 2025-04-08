@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import "../styles/Modal.css";
 import { useProducts } from "../hooks/useProducts";
+import { useInvoices } from "../hooks/useInvoices";
 
 const generateOrderId = () => {
   const timestamp = Date.now().toString(36);
@@ -13,6 +14,7 @@ const VALID_ORDER_STATUSES = ["Paid", "Cancelled", "Refunded"];
 
 const AddOrderModal = ({ isOpen, onClose, onAdd, initialData, mode = "add" }) => {
   const { products, loading: productsLoading, editProduct } = useProducts(true);
+  const { addInvoice } = useInvoices();
   const [formData, setFormData] = useState({
     id: mode === "add" ? generateOrderId() : (initialData?.id || ""),
     customerName: initialData?.customerName || "",
@@ -124,10 +126,25 @@ const AddOrderModal = ({ isOpen, onClose, onAdd, initialData, mode = "add" }) =>
         image: selectedProduct.image || "https://via.placeholder.com/150"
       });
 
-      await onAdd({
+      const orderData = {
         ...formData,
         total: parseFloat(formData.total)
-      });
+      };
+      await onAdd(orderData);
+
+      const invoiceData = {
+        orderId: formData.id,
+        customerName: formData.customerName,
+        type: formData.type,
+        status: formData.status,
+        item: formData.productName,
+        subtotal: parseFloat(formData.breakdown.productPrice),
+        tax: parseFloat(formData.breakdown.salesTax),
+        shipping: parseFloat(formData.breakdown.shippingCost),
+        total: parseFloat(formData.total),
+        datePlaced: new Date(formData.date)
+      };
+      await addInvoice(invoiceData);
 
       setFormData({
         id: generateOrderId(),

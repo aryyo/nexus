@@ -1,7 +1,36 @@
+import React from "react";
+import { useInvoices } from "../hooks/useInvoices";
+import { LoadingSpinner, ErrorMessage } from "../components/LoadingState";
 import "../styles/Billing.css";
 
 const Billing = () => {
-  const hasInvoices = false;
+  const { invoices, loading, error } = useInvoices(true);
+
+  if (loading) {
+    return <LoadingSpinner fullPage />;
+  }
+
+  if (error) {
+    return <ErrorMessage message={error} fullPage />;
+  }
+
+  const hasInvoices = invoices && invoices.length > 0;
+
+  const formatDate = (dateString) => {
+    const date = new Date(dateString);
+    return date.toLocaleDateString('en-US', {
+      month: 'short',
+      day: 'numeric',
+      year: 'numeric'
+    });
+  };
+
+  const formatCurrency = (amount) => {
+    return new Intl.NumberFormat('en-US', {
+      style: 'currency',
+      currency: 'USD'
+    }).format(amount);
+  };
 
   return (
     <div className="billing-page">
@@ -84,128 +113,79 @@ const Billing = () => {
       </div>
 
       {!hasInvoices ? (
-      <div className="empty-state">
-        <svg
-          className="empty-state-icon"
-          viewBox="0 0 24 24"
-          fill="none"
-          stroke="currentColor"
-          strokeWidth="1.5"
-          strokeLinecap="round"
-          strokeLinejoin="round"
-        >
-          <rect x="2" y="4" width="20" height="16" rx="2" />
-          <path d="m22 8-10 6L2 8" />
-        </svg>
-        <h3>No invoices found</h3>
-        <p>
-          There are no invoices to display at this time. New invoices will appear
-          here.
-        </p>
-      </div>) : 
-
-      (<div className="billing-history">
-        <div className="table-container">
-          <table className="history-table">
-            <thead>
-              <tr>
-                <th>Customer Invoice ID</th>
-                <th>Date</th>
-                <th>Amount</th>
-                <th>Plan</th>
-                <th>Status</th>
-                <th>Action</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td>#INV-2024-002</td>
-                <td>Feb 1, 2024</td>
-                <td>$60.73</td>
-                <td>Standard</td>
-                <td>
-                  <span className="status paid">Paid</span>
-                </td>
-                <td>
-                  <button className="download-button">
-                    <svg
-                      width="16"
-                      height="16"
-                      viewBox="0 0 24 24"
-                      fill="none"
-                      stroke="currentColor"
-                      strokeWidth="2"
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                    >
-                      <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
-                      <polyline points="7 10 12 15 17 10" />
-                      <line x1="12" y1="15" x2="12" y2="3" />
-                    </svg>
-                    Download
-                  </button>
-                </td>
-              </tr>
-              <tr>
-                <td>#INV-2024-001</td>
-                <td>Jan 1, 2024</td>
-                <td>$58.15</td>
-                <td>Standard</td>
-                <td>
-                  <span className="status paid">Paid</span>
-                </td>
-                <td>
-                  <button className="download-button">
-                    <svg
-                      width="16"
-                      height="16"
-                      viewBox="0 0 24 24"
-                      fill="none"
-                      stroke="currentColor"
-                      strokeWidth="2"
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                    >
-                      <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
-                      <polyline points="7 10 12 15 17 10" />
-                      <line x1="12" y1="15" x2="12" y2="3" />
-                    </svg>
-                    Download
-                  </button>
-                </td>
-              </tr>
-              <tr>
-                <td>#INV-2023-012</td>
-                <td>Dec 1, 2023</td>
-                <td>$83.46</td>
-                <td>Standard</td>
-                <td>
-                  <span className="status paid">Paid</span>
-                </td>
-                <td>
-                  <button className="download-button">
-                    <svg
-                      width="16"
-                      height="16"
-                      viewBox="0 0 24 24"
-                      fill="none"
-                      stroke="currentColor"
-                      strokeWidth="2"
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                    >
-                      <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
-                      <polyline points="7 10 12 15 17 10" />
-                      <line x1="12" y1="15" x2="12" y2="3" />
-                    </svg>
-                    Download
-                  </button>
-                </td>
-              </tr>
-            </tbody>
-          </table>
+        <div className="empty-state">
+          <svg
+            className="empty-state-icon"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            strokeWidth="1.5"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+          >
+            <rect x="2" y="4" width="20" height="16" rx="2" />
+            <path d="m22 8-10 6L2 8" />
+          </svg>
+          <h3>No invoices found</h3>
+          <p>
+            There are no invoices to display at this time. New invoices will appear
+            here.
+          </p>
         </div>
-      </div>)}
+      ) : (
+        <div className="billing-history">
+          <div className="table-container">
+            <table className="history-table">
+              <thead>
+                <tr>
+                  <th>Order ID</th>
+                  <th>Customer</th>
+                  <th>Date</th>
+                  <th>Type</th>
+                  <th>Amount</th>
+                  <th>Status</th>
+                  <th>Action</th>
+                </tr>
+              </thead>
+              <tbody>
+                {invoices.map((invoice) => (
+                  <tr key={invoice._id}>
+                    <td>#{invoice.orderId}</td>
+                    <td>{invoice.customerName}</td>
+                    <td>{formatDate(invoice.datePlaced)}</td>
+                    <td>{invoice.type}</td>
+                    <td>{formatCurrency(invoice.total)}</td>
+                    <td>
+                      <span className={`status ${invoice.status.toLowerCase()}`}>
+                        {invoice.status}
+                      </span>
+                    </td>
+                    <td>
+                      <button className="download-button">
+                        <svg
+                          width="16"
+                          height="16"
+                          viewBox="0 0 24 24"
+                          fill="none"
+                          stroke="currentColor"
+                          strokeWidth="2"
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                        >
+                          <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
+                          <polyline points="7 10 12 15 17 10" />
+                          <line x1="12" y1="15" x2="12" y2="3" />
+                        </svg>
+                        Download
+                      </button>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        </div>
+      )}
     </div>
   );
 };
