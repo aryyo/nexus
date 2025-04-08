@@ -119,6 +119,8 @@ const AddOrderModal = ({ isOpen, onClose, onAdd, initialData, mode = "add" }) =>
         throw new Error("Selected product not found");
       }
 
+      const calculation = calculateTotal(selectedProduct.price, formData.type, selectedProduct.name);
+      
       await editProduct(selectedProduct._id, {
         name: selectedProduct.name,
         price: selectedProduct.price,
@@ -128,9 +130,9 @@ const AddOrderModal = ({ isOpen, onClose, onAdd, initialData, mode = "add" }) =>
 
       const orderData = {
         ...formData,
-        total: parseFloat(formData.total)
+        total: parseFloat(calculation.total)
       };
-      const newOrder = await onAdd(orderData);
+      await onAdd(orderData);
 
       const invoiceData = {
         orderId: formData.id,
@@ -138,10 +140,10 @@ const AddOrderModal = ({ isOpen, onClose, onAdd, initialData, mode = "add" }) =>
         type: formData.type,
         status: formData.status,
         item: formData.productName,
-        subtotal: parseFloat(formData.breakdown.productPrice),
-        tax: parseFloat(formData.breakdown.salesTax),
-        shipping: parseFloat(formData.breakdown.shippingCost),
-        total: parseFloat(formData.total),
+        subtotal: parseFloat(calculation.breakdown.productPrice),
+        tax: parseFloat(calculation.breakdown.salesTax),
+        shipping: parseFloat(calculation.breakdown.shippingCost),
+        total: parseFloat(calculation.total),
         datePlaced: new Date(formData.date)
       };
 
@@ -193,7 +195,7 @@ const AddOrderModal = ({ isOpen, onClose, onAdd, initialData, mode = "add" }) =>
           breakdown: null
         }));
       }
-    } else if (name === 'type' && formData.productName) {
+    } else if (name === 'type') {
       const selectedProduct = products.find(p => p.name === formData.productName);
       if (selectedProduct) {
         const calculation = calculateTotal(selectedProduct.price, value, selectedProduct.name);
@@ -202,6 +204,11 @@ const AddOrderModal = ({ isOpen, onClose, onAdd, initialData, mode = "add" }) =>
           [name]: value,
           total: calculation.total,
           breakdown: calculation.breakdown
+        }));
+      } else {
+        setFormData(prev => ({
+          ...prev,
+          [name]: value
         }));
       }
     } else {
