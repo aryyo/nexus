@@ -130,7 +130,7 @@ const AddOrderModal = ({ isOpen, onClose, onAdd, initialData, mode = "add" }) =>
         ...formData,
         total: parseFloat(formData.total)
       };
-      await onAdd(orderData);
+      const newOrder = await onAdd(orderData);
 
       const invoiceData = {
         orderId: formData.id,
@@ -144,7 +144,12 @@ const AddOrderModal = ({ isOpen, onClose, onAdd, initialData, mode = "add" }) =>
         total: parseFloat(formData.total),
         datePlaced: new Date(formData.date)
       };
-      await addInvoice(invoiceData);
+
+      try {
+        await addInvoice(invoiceData);
+      } catch (invoiceError) {
+        console.error('Failed to create invoice:', invoiceError);
+      }
 
       setFormData({
         id: generateOrderId(),
@@ -158,6 +163,7 @@ const AddOrderModal = ({ isOpen, onClose, onAdd, initialData, mode = "add" }) =>
       setErrors({});
       onClose();
     } catch (error) {
+      console.error('Error in order creation:', error);
       setErrors({
         submit: error.message || "Failed to add order. Please try again."
       });
