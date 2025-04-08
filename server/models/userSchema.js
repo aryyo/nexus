@@ -11,13 +11,6 @@ const productSchema = new mongoose.Schema({
   },
 });
 
-const reportSchema = new mongoose.Schema({
-  id: mongoose.Schema.Types.ObjectId,
-  title: String,
-  url: String,
-  dateUploaded: Date,
-});
-
 const settingsSchema = new mongoose.Schema({
   tablePreference: String,
   interfaceTheme: String,
@@ -34,7 +27,6 @@ const userSchema = new mongoose.Schema(
     phoneNumber: String,
     settings: settingsSchema,
     products: [productSchema],
-    reports: [reportSchema],
   },
   {
     timestamps: true,
