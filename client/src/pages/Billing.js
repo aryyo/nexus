@@ -31,57 +31,11 @@ const formatDate = (date) => {
   }).format(new Date(date));
 };
 
-const StatusBadge = ({ status }) => {
-  const statusClasses = {
-    Paid: "status-badge success",
-    Cancelled: "status-badge warning",
-    Refunded: "status-badge info",
-  };
-
-  return (
-    <span className={statusClasses[status] || "status-badge"}>
-      {status}
-    </span>
-  );
-};
-
-const TypeBadge = ({ type }) => {
-  return (
-    <span className={`type-badge ${type.toLowerCase()}`}>
-      <svg
-        className="type-icon"
-        viewBox="0 0 24 24"
-        fill="none"
-        stroke="currentColor"
-        strokeWidth="2"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-      >
-        {type === "Shipping" ? (
-          <>
-            <path d="M5 15h14" />
-            <path d="M5 9h14" />
-            <path d="M17 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V5a2 2 0 0 0-2-2Z" />
-          </>
-        ) : (
-          <>
-            <circle cx="12" cy="12" r="10" />
-            <path d="m8 12 3 3 5-5" />
-          </>
-        )}
-      </svg>
-      {type}
-    </span>
-  );
-};
-
 const columns = [
-  { label: "Order", key: "orderId", formatter: formatOrderId },
+  { label: "Invoice ID", key: "orderId", formatter: formatOrderId },
   { label: "Customer", key: "customerName", formatter: formatName },
-  { label: "Type", key: "type", component: TypeBadge },
-  { label: "Status", key: "status", component: StatusBadge },
-  { label: "Total", key: "total", formatter: formatTotal },
   { label: "Date", key: "datePlaced", formatter: formatDate },
+  { label: "Total", key: "total", formatter: formatTotal },
   { label: "Actions", key: "actions" }
 ];
 
@@ -201,7 +155,7 @@ const Billing = () => {
       ) : (
         <div className="orders-table-wrapper">
           <div className="orders-table">
-            <div className="table-header" style={{ gridTemplateColumns: 'repeat(7, minmax(0, 1fr))' }}>
+            <div className="table-header" style={{ gridTemplateColumns: 'repeat(5, minmax(0, 1fr))' }}>
               {columns.map((column) => (
                 <div key={column.key} className="header-cell">
                   {column.label}
@@ -210,7 +164,7 @@ const Billing = () => {
             </div>
             <div className="table-body">
               {invoices.map((invoice) => (
-                <div className="table-row" key={invoice._id} style={{ gridTemplateColumns: 'repeat(7, minmax(0, 1fr))' }}>
+                <div className="table-row" key={invoice._id} style={{ gridTemplateColumns: 'repeat(5, minmax(0, 1fr))' }}>
                   {columns.map((column) => {
                     if (column.key === 'actions') {
                       return (
