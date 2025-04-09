@@ -162,7 +162,7 @@ export const useOrderMetrics = (shouldFetch = false) => {
     const totalCancelled = orders.filter((order) => order.status === "Cancelled").length;
     const totalRefunded = orders.filter((order) => order.status === "Refunded").length;
   
-    const averagePrice = totalOrders > 0 ? totalRevenue / totalPaid : 0;
+    const averagePrice = totalPaid > 0 ? totalRevenue / totalPaid : 0;
     const rejectRate = totalOrders > 0 ? ((totalCancelled + totalRefunded) * 100) / totalOrders : 0;
   
     const totalShipments = orders.filter((order) => order.type === "Shipping").length;
