@@ -52,10 +52,13 @@ const Billing = () => {
   };
 
   const handleDelete = async (invoiceId) => {
-    try {
-      await deleteInvoice(invoiceId);
-    } catch (error) {
-      console.error('Failed to delete invoice:', error);
+    if (window.confirm("Are you sure you want to delete this invoice?")) {
+      try {
+        await deleteInvoice(invoiceId);
+      } catch (error) {
+        console.error('Failed to delete invoice:', error);
+        alert("Failed to delete invoice. Please try again.");
+      }
     }
   };
 
