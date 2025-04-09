@@ -12,10 +12,6 @@ const Cards = ({ cachedMetrics }) => {
         </div>
         <div className="card-row-two">
           <p className="count">${cachedMetrics.income.toFixed(2)}</p>
-          <div className="metrics">
-            <p className="percent">+5%</p>
-            <p className="date">vs last year</p>
-          </div>
         </div>
       </div>
       <div className="card">
@@ -25,10 +21,6 @@ const Cards = ({ cachedMetrics }) => {
         </div>
         <div className="card-row-two">
           <p className="count">{cachedMetrics.totalOrders}</p>
-          <div className="metrics">
-            <p className="percent">+5%</p>
-            <p className="date">vs last year</p>
-          </div>
         </div>
       </div>
       <div className="card">
@@ -38,10 +30,6 @@ const Cards = ({ cachedMetrics }) => {
         </div>
         <div className="card-row-two">
           <p className="count">${cachedMetrics.totalExpenses.toFixed(2)}</p>
-          <div className="metrics">
-            <p className="percent">+5%</p>
-            <p className="date">vs last year</p>
-          </div>
         </div>
       </div>
       <div className="card">
@@ -51,10 +39,6 @@ const Cards = ({ cachedMetrics }) => {
         </div>
         <div className="card-row-two">
           <p className="count">${cachedMetrics.totalNetProfit.toFixed(2)}</p>
-          <div className="metrics">
-            <p className="percent">+5%</p>
-            <p className="date">vs last year</p>
-          </div>
         </div>
       </div>
     </div>

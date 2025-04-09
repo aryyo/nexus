@@ -7,7 +7,7 @@ import { Chart as ChartJS, ArcElement, Tooltip, Legend } from "chart.js";
 ChartJS.register(ArcElement, Tooltip, Legend);
 
 const Summary = ({ cachedMetrics }) => {
-  const { chartData, totalOrders, yearOverYearChange, orderStats, hasData } =
+  const { chartData, totalOrders, orderStats, hasData } =
     useMemo(() => {
       if (!cachedMetrics || !cachedMetrics.totalOrders) {
         return {
@@ -24,7 +24,6 @@ const Summary = ({ cachedMetrics }) => {
             ],
           },
           totalOrders: 0,
-          yearOverYearChange: 0,
           orderStats: [],
           hasData: false,
         };
@@ -51,22 +50,10 @@ const Summary = ({ cachedMetrics }) => {
             ],
           },
           totalOrders: 0,
-          yearOverYearChange: 0,
           orderStats: [],
           hasData: false,
         };
       }
-
-      // Calculate year over year change (simplified)
-      const currentYear = cachedMetrics.monthlyRevenue
-        .slice(-12)
-        .reduce((a, b) => a + b, 0);
-      const previousYear = cachedMetrics.monthlyRevenue
-        .slice(-24, -12)
-        .reduce((a, b) => a + b, 0);
-      const yearOverYearChange = previousYear
-        ? ((currentYear - previousYear) / previousYear) * 100
-        : 0;
 
       return {
         chartData: {
@@ -83,7 +70,6 @@ const Summary = ({ cachedMetrics }) => {
           ],
         },
         totalOrders: total,
-        yearOverYearChange: Math.round(yearOverYearChange),
         orderStats: [
           { label: "Paid Orders", value: paid, color: "#926cfd" },
           { label: "Cancelled Orders", value: cancelled, color: "#10b981" },
@@ -154,13 +140,6 @@ const Summary = ({ cachedMetrics }) => {
     <div className="summary-widget">
       <div className="summary-widget-header">
         <h2>Summary</h2>
-        <div className="summary-info">
-          <p className="percent">
-            {yearOverYearChange >= 0 ? "+" : ""}
-            {yearOverYearChange}%
-          </p>
-          <p className="date">vs last year</p>
-        </div>
       </div>
       <div className="summary-widget-data">
         <div className="summary-widget-chart">

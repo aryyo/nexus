@@ -335,6 +335,7 @@
   align-items: center;
   justify-content: center;
   cursor: pointer;
+  transition: none;
 }
 
 .checkbox.checked {

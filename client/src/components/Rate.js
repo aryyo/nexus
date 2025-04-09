@@ -5,7 +5,6 @@ import EmptyState from "./EmptyState";
 const Rate = ({ cachedMetrics }) => {
   const {
     successRate,
-    monthOverMonthChange,
     salesRate,
     expenseRate,
     profitRate,
@@ -14,7 +13,6 @@ const Rate = ({ cachedMetrics }) => {
     if (!cachedMetrics || !cachedMetrics.totalOrders) {
       return {
         successRate: 0,
-        monthOverMonthChange: 0,
         salesRate: 0,
         expenseRate: 0,
         profitRate: 0,
@@ -24,14 +22,6 @@ const Rate = ({ cachedMetrics }) => {
 
     const successRate =
       (cachedMetrics.totalPaid / cachedMetrics.totalOrders) * 100;
-
-    const currentMonth = new Date().getMonth();
-    const currentRevenue = cachedMetrics.monthlyRevenue[currentMonth] || 0;
-    const lastMonthRevenue =
-      cachedMetrics.monthlyRevenue[currentMonth - 1] || 0;
-    const monthOverMonthChange = lastMonthRevenue
-      ? ((currentRevenue - lastMonthRevenue) / lastMonthRevenue) * 100
-      : 0;
 
     const totalRevenue = cachedMetrics.totalRevenue;
     const salesRate = totalRevenue
@@ -46,7 +36,6 @@ const Rate = ({ cachedMetrics }) => {
 
     return {
       successRate: Math.round(successRate),
-      monthOverMonthChange: Math.round(monthOverMonthChange),
       salesRate: Math.round(salesRate),
       expenseRate: Math.round(expenseRate),
       profitRate: Math.round(profitRate),
@@ -87,13 +76,6 @@ const Rate = ({ cachedMetrics }) => {
     <div className="rate">
       <div className="rate-header">
         <h2>Insights</h2>
-        <div className="rate-row-two">
-          <p className="percent">
-            {monthOverMonthChange >= 0 ? "+" : ""}
-            {monthOverMonthChange}%
-          </p>
-          <p className="date">vs last month</p>
-        </div>
       </div>
       <div className="rate-section">
         <div className="rate-row-two">

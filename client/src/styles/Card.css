@@ -38,8 +38,7 @@
 
 .card-row-two {
   display: flex;
-  align-items: baseline;
-  justify-content: space-between;
+  align-items: center;
 }
 
 .count {
@@ -47,25 +46,6 @@
   font-size: 1.5rem;
   font-weight: 600;
   color: var(--text);
-}
-
-.metrics {
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
-}
-
-.percent {
-  margin: 0;
-  font-size: 0.875rem;
-  font-weight: 500;
-  color: var(--success);
-}
-
-.date {
-  margin: 0;
-  font-size: 0.75rem;
-  color: var(--text-alt);
 }
 
 @media (max-width: 1200px) {
