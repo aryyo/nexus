@@ -265,6 +265,28 @@
   background-color: var(--input-bg);
 }
 
+.navbar-change-photo-btn:disabled {
+  opacity: 0.7;
+  cursor: not-allowed;
+}
+
+.navbar-change-photo-btn.uploading {
+  background-color: var(--input-bg);
+}
+
+.navbar-change-photo-btn .spinner {
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
 .navbar-form-section {
   flex: 1;
 }

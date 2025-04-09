@@ -3,6 +3,22 @@ const router = express.Router();
 const User = require("../models/userSchema");
 const auth = require("../middleware/auth");
 const bcrypt = require("bcryptjs");
+const multer = require("multer");
+
+const storage = multer.memoryStorage();
+const upload = multer({
+  storage: storage,
+  limits: {
+    fileSize: 5 * 1024 * 1024, 
+  },
+  fileFilter: (req, file, cb) => {
+    if (!file.mimetype.startsWith('image/')) {
+      return cb(new Error('Only image files are allowed'));
+    }
+    
+    cb(null, true);
+  }
+}).single('profilePicture');
 
 router.get("/", auth, async (req, res) => {
   try {
@@ -104,6 +120,61 @@ router.post("/change-password", auth, async (req, res) => {
       message: "Failed to change password"
     });
   }
+});
+
+router.post("/profile-picture", auth, (req, res) => {
+  upload(req, res, async (err) => {
+    try {
+      if (err instanceof multer.MulterError) {
+        if (err.code === 'LIMIT_FILE_SIZE') {
+          return res.status(400).json({
+            success: false,
+            message: 'File size should be less than 5MB'
+          });
+        }
+        return res.status(400).json({
+          success: false,
+          message: 'Error uploading file'
+        });
+      } else if (err) {
+        return res.status(400).json({
+          success: false,
+          message: err.message
+        });
+      }
+
+      if (!req.file) {
+        return res.status(400).json({
+          success: false,
+          message: "No image file provided"
+        });
+      }
+
+      const user = await User.findById(req.user.id);
+      if (!user) {
+        return res.status(404).json({
+          success: false,
+          message: "User not found"
+        });
+      }
+
+      const base64Image = `data:${req.file.mimetype};base64,${req.file.buffer.toString('base64')}`;
+      
+      user.profilePicture = base64Image;
+      await user.save();
+
+      res.status(200).json({
+        success: true,
+        profilePicture: base64Image
+      });
+    } catch (error) {
+      console.error("Error uploading profile picture:", error);
+      res.status(500).json({
+        success: false,
+        message: "Failed to upload profile picture"
+      });
+    }
+  });
 });
 
 module.exports = router; 

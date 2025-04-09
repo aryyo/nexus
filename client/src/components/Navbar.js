@@ -8,6 +8,7 @@ import { useUserSettings } from "../hooks/useUserSettings";
 const Navbar = ({ onToggleSidebar }) => {
   const [showDropdown, setShowDropdown] = useState(false);
   const dropdownRef = useRef(null);
+  const fileInputRef = useRef(null);
   const { user, updateUser } = useUser();
   const { settings, updateSettings } = useUserSettings();
   const navigate = useNavigate();
@@ -26,6 +27,7 @@ const Navbar = ({ onToggleSidebar }) => {
     address: "",
   });
   const [validationErrors, setValidationErrors] = useState({});
+  const [isUploading, setIsUploading] = useState(false);
 
   useEffect(() => {
     if (settings) {
@@ -260,6 +262,52 @@ const Navbar = ({ onToggleSidebar }) => {
     }
   };
 
+  const handleChangePhoto = () => {
+    fileInputRef.current?.click();
+  };
+
+  const handleFileChange = async (e) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+
+    if (!file.type.startsWith('image/')) {
+      alert('Please select an image file');
+      return;
+    }
+
+    if (file.size > 5 * 1024 * 1024) {
+      alert('Image size should be less than 5MB');
+      return;
+    }
+
+    setIsUploading(true);
+    try {
+      const formData = new FormData();
+      formData.append('profilePicture', file);
+
+      const token = localStorage.getItem('token');
+      const response = await fetch('http://localhost:3000/user/profile-picture', {
+        method: 'POST',
+        headers: {
+          'Authorization': `Bearer ${token}`
+        },
+        body: formData
+      });
+
+      if (!response.ok) {
+        throw new Error('Failed to upload image');
+      }
+
+      const data = await response.json();
+      await updateUser({ ...user, profilePicture: data.profilePicture });
+    } catch (error) {
+      console.error('Failed to upload profile picture:', error);
+      alert('Failed to upload profile picture. Please try again.');
+    } finally {
+      setIsUploading(false);
+    }
+  };
+
   return (
     <div className="navbar">
       <div className="nav-left">
@@ -455,22 +503,54 @@ const Navbar = ({ onToggleSidebar }) => {
                   alt="Profile"
                   className="navbar-profile-picture"
                 />
-                <button className="navbar-change-photo-btn">
-                  <svg
-                    width="16"
-                    height="16"
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    stroke="currentColor"
-                    strokeWidth="2"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                  >
-                    <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
-                    <polyline points="17 8 12 3 7 8" />
-                    <line x1="12" y1="3" x2="12" y2="15" />
-                  </svg>
-                  Change Photo
+                <button 
+                  className={`navbar-change-photo-btn ${isUploading ? 'uploading' : ''}`} 
+                  onClick={handleChangePhoto}
+                  disabled={isUploading}
+                >
+                  {isUploading ? (
+                    <>
+                      <svg
+                        className="spinner"
+                        width="16"
+                        height="16"
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        stroke="currentColor"
+                        strokeWidth="2"
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                      >
+                        <line x1="12" y1="2" x2="12" y2="6" />
+                        <line x1="12" y1="18" x2="12" y2="22" />
+                        <line x1="4.93" y1="4.93" x2="7.76" y2="7.76" />
+                        <line x1="16.24" y1="16.24" x2="19.07" y2="19.07" />
+                        <line x1="2" y1="12" x2="6" y2="12" />
+                        <line x1="18" y1="12" x2="22" y2="12" />
+                        <line x1="4.93" y1="19.07" x2="7.76" y2="16.24" />
+                        <line x1="16.24" y1="7.76" x2="19.07" y2="4.93" />
+                      </svg>
+                      Uploading...
+                    </>
+                  ) : (
+                    <>
+                      <svg
+                        width="16"
+                        height="16"
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        stroke="currentColor"
+                        strokeWidth="2"
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                      >
+                        <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
+                        <polyline points="17 8 12 3 7 8" />
+                        <line x1="12" y1="3" x2="12" y2="15" />
+                      </svg>
+                      Change Photo
+                    </>
+                  )}
                 </button>
               </div>
               <div className="navbar-form-section">
@@ -631,6 +711,14 @@ const Navbar = ({ onToggleSidebar }) => {
           </div>
         </div>
       )}
+
+      <input
+        type="file"
+        ref={fileInputRef}
+        style={{ display: 'none' }}
+        accept="image/*"
+        onChange={handleFileChange}
+      />
     </div>
   );
 };
