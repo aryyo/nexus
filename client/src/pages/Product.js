@@ -270,13 +270,6 @@ const Product = () => {
                   )}
                 </div>
               )}
-              <div className="product-image-wrapper">
-                <img
-                  src={product.image}
-                  alt={product.name}
-                  className="product-image"
-                />
-              </div>
               <div className="product-info">
                 <div className="product-header">
                   <h3 className="product-name">{product.name}</h3>
@@ -325,10 +318,9 @@ const Product = () => {
                         product.status
                       )}`}
                     >
-                      {product.status || "In Stock"}
+                      {product.stock > 0 ? `${product.stock} units` : "Out of Stock"}
                     </p>
                   </div>
-                  {/* <p className="product-stock">{product.stock} in stock</p> */}
                 </div>
               </div>
             </div>

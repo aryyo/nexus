@@ -5,10 +5,6 @@ const productSchema = new mongoose.Schema({
   name: String,
   price: Number,
   stock: Number,
-  image: {
-    fileType: String,
-    data: Buffer
-  },
 });
 
 const invoiceSchema = new mongoose.Schema({

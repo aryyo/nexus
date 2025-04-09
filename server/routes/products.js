@@ -24,12 +24,12 @@ router.get("/", auth, async (req, res) => {
 
 router.post("/", auth, async (req, res) => {
   try {
-    const { name, price, stock, image } = req.body;
+    const { name, price, stock } = req.body;
 
-    if (!name || !price || stock < 0 || !image) {
+    if (!name || !price || stock < 0) {
       return res.status(400).json({
         success: false,
-        message: "Please provide all required fields: name, price, stock, and image",
+        message: "Please provide all required fields: name, price, and stock",
       });
     }
 
@@ -42,11 +42,11 @@ router.post("/", auth, async (req, res) => {
       });
     }
 
-    let status = "In Stock";
+    let status = "in-stock";
     if (stock <= 0) {
-      status = "Out of Stock";
+      status = "out-of-stock";
     } else if (stock <= 20) {
-      status = "Low Stock";
+      status = "low-stock";
     }
 
     const newProduct = {
@@ -55,7 +55,6 @@ router.post("/", auth, async (req, res) => {
       price: priceNum,
       stock: Number(stock),
       status,
-      image,
     };
 
     const user = await User.findById(req.user.id);
@@ -84,14 +83,13 @@ router.post("/", auth, async (req, res) => {
 
 router.put("/:productId", auth, async (req, res) => {
   try {
-    const { name, price, stock, image } = req.body;
+    const { name, price, stock } = req.body;
     const productId = req.params.productId;
 
-    if (!name || !price || stock < 0 || !image) {
-      // console.log("Missing required fields:", { name, price, stock, image });
+    if (!name || !price || stock < 0) {
       return res.status(400).json({
         success: false,
-        message: "Please provide all required fields: name, price, stock, and image",
+        message: "Please provide all required fields: name, price, and stock",
       });
     }
 
@@ -104,11 +102,11 @@ router.put("/:productId", auth, async (req, res) => {
       });
     }
 
-    let status = "In Stock";
+    let status = "in-stock";
     if (stock <= 0) {
-      status = "Out of Stock";
+      status = "out-of-stock";
     } else if (stock <= 20) {
-      status = "Low Stock";
+      status = "low-stock";
     }
 
     const user = await User.findById(req.user.id);
@@ -136,7 +134,6 @@ router.put("/:productId", auth, async (req, res) => {
       price: priceNum,
       stock: Number(stock),
       status,
-      image,
     };
 
     user.products[productIndex] = updatedProduct;

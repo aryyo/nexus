@@ -52,14 +52,14 @@ export const useUser = () => {
         body: JSON.stringify(userData)
       });
 
+      const data = await response.json();
+
       if (!response.ok) {
-        const errorData = await response.json();
-        throw new Error(errorData.message || 'Failed to update user data');
+        throw new Error(data.message || 'Failed to update user data');
       }
 
-      const updatedUser = await response.json();
-      setUser(updatedUser);
-      return updatedUser;
+      setUser(data);
+      return data;
     } catch (err) {
       console.error('Error updating user:', err);
       throw err;

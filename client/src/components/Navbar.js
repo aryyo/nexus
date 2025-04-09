@@ -188,6 +188,19 @@ const Navbar = ({ onToggleSidebar }) => {
       setValidationErrors({});
     } catch (error) {
       console.error("Failed to update profile:", error);
+      if (error.message === "Email already registered") {
+        setValidationErrors(prev => ({
+          ...prev,
+          email: "This email is already registered"
+        }));
+      } else if (error.message === "Invalid email format") {
+        setValidationErrors(prev => ({
+          ...prev,
+          email: "Please enter a valid email address"
+        }));
+      } else {
+        alert("Failed to update profile. Please try again.");
+      }
     }
   };
 

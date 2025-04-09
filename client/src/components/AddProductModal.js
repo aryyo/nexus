@@ -12,7 +12,6 @@ const AddProductModal = ({
     name: "",
     price: "",
     stock: "",
-    image: "",
   });
   const [errors, setErrors] = useState({});
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -23,7 +22,6 @@ const AddProductModal = ({
         name: initialData.name || "",
         price: initialData.price || "",
         stock: initialData.stock || "",
-        image: initialData.image || "",
       });
     }
   }, [initialData]);
@@ -43,9 +41,6 @@ const AddProductModal = ({
 
     if (!formData.stock || formData.stock < 0) {
       newErrors.stock = "Valid stock quantity is required";
-    }
-    if (!formData.image.trim()) {
-      newErrors.image = "Image URL is required";
     }
     return newErrors;
   };
@@ -109,7 +104,6 @@ const AddProductModal = ({
         name: "",
         price: "",
         stock: "",
-        image: "",
       });
     } catch (error) {
       setErrors({ submit: error.message });
@@ -187,22 +181,6 @@ const AddProductModal = ({
             />
             {errors.stock && (
               <span className="error-message">{errors.stock}</span>
-            )}
-          </div>
-
-          <div className="form-group">
-            <label htmlFor="image">Image URL</label>
-            <input
-              type="url"
-              id="image"
-              name="image"
-              value={formData.image}
-              onChange={handleChange}
-              placeholder="Enter image URL"
-              className={errors.image ? "error" : ""}
-            />
-            {errors.image && (
-              <span className="error-message">{errors.image}</span>
             )}
           </div>
 
