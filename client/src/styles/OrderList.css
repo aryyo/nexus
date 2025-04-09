@@ -29,10 +29,6 @@
   letter-spacing: 0.025em;
 }
 
-.header-cell.actions {
-  text-align: center;
-}
-
 .table-body {
   position: relative;
 }
@@ -57,14 +53,6 @@
   background-color: #f8fafc;
 }
 
-.table-row.selectable {
-  cursor: pointer;
-}
-
-.table-row.selected {
-  background-color: #eff6ff;
-}
-
 .table-cell {
   font-size: 0.8125rem;
   color: #1e293b;
@@ -83,10 +71,6 @@
   border-radius: 9999px;
   font-size: 0.6875rem;
   font-weight: 500;
-  text-transform: uppercase;
-  letter-spacing: 0.025em;
-  background-color: #e2e8f0;
-  color: #475569;
 }
 
 .status-badge.success {
@@ -102,6 +86,16 @@
 .status-badge.info {
   background-color: #dbeafe;
   color: #1e40af;
+}
+
+.status-badge.shipping {
+  background-color: #f0f9ff;
+  color: #0369a1;
+}
+
+.status-badge.pickup {
+  background-color: #fdf4ff;
+  color: #86198f;
 }
 
 .type-badge {
@@ -124,16 +118,6 @@
   flex-shrink: 0;
 }
 
-.type-badge.shipping {
-  background-color: #f0f9ff;
-  color: #0369a1;
-}
-
-.type-badge.pickup {
-  background-color: #fdf4ff;
-  color: #86198f;
-}
-
 .checkbox {
   width: 1.125rem;
   height: 1.125rem;
@@ -145,6 +129,7 @@
   transition: all 0.2s ease;
   cursor: pointer;
   flex-shrink: 0;
+  margin-left: 1rem;
 }
 
 .checkbox.checked {
@@ -265,4 +250,39 @@
     width: 0.75rem;
     height: 0.75rem;
   }
+}
+
+.order-actions {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+}
+
+.icon-button {
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 4px;
+  border-radius: 4px;
+  transition: background-color 0.2s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.icon-button:hover {
+  background-color: rgba(0, 0, 0, 0.05);
+}
+
+.icon-button.edit {
+  color: #4a90e2;
+}
+
+.icon-button.delete {
+  color: #e25c5c;
+}
+
+.icon-button svg {
+  width: 16px;
+  height: 16px;
 }

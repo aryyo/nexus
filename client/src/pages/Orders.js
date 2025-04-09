@@ -7,7 +7,7 @@ import { LoadingSpinner, ErrorMessage } from "../components/LoadingState";
 import { useOrderMetrics } from "../hooks/useOrderMetrics";
 
 const Orders = () => {
-  const { orders, cachedMetrics, loading, error, addOrder, deleteOrder, bulkDeleteOrders } = useOrderMetrics(true);
+  const { orders, cachedMetrics, loading, error, addOrder, deleteOrder, bulkDeleteOrders, editOrder } = useOrderMetrics(true);
   const [searchQuery, setSearchQuery] = useState("");
   const [isSelectionMode, setIsSelectionMode] = useState(false);
   const [selectedOrders, setSelectedOrders] = useState(new Set());
@@ -59,13 +59,22 @@ const Orders = () => {
 
   const handleAddOrder = async (orderData) => {
     try {
-      await addOrder(orderData);
+      if (selectedOrder) {
+        await editOrder(selectedOrder._id, orderData);
+      } else {
+        await addOrder(orderData);
+      }
       setIsModalOpen(false);
       setSelectedOrder(null);
     } catch (error) {
-      console.error("Failed to add order:", error);
+      console.error("Failed to handle order:", error);
       throw error;
     }
+  };
+
+  const handleEdit = (order) => {
+    setSelectedOrder(order);
+    setIsModalOpen(true);
   };
 
   const handleModalClose = () => {
@@ -162,6 +171,7 @@ const Orders = () => {
               selectedOrders={selectedOrders}
               setSelectedOrders={setSelectedOrders}
               onDelete={handleSingleDelete}
+              onEdit={handleEdit}
             />
           </div>
           <OrderSidebar orders={orders} cachedMetrics={cachedMetrics} />

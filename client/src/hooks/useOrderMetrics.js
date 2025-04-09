@@ -95,7 +95,6 @@ export const useOrderMetrics = (shouldFetch = false) => {
         throw new Error(errorData.message || 'Failed to delete orders');
       }
 
-      // Remove deleted orders from state
       setOrders(prevOrders => 
         prevOrders.filter(order => !orderIds.has(order._id))
       );
@@ -127,7 +126,6 @@ export const useOrderMetrics = (shouldFetch = false) => {
         throw new Error(errorData.message || 'Failed to delete order');
       }
 
-      // Remove deleted order from state
       setOrders(prevOrders => 
         prevOrders.filter(order => order._id !== orderId)
       );
@@ -135,6 +133,49 @@ export const useOrderMetrics = (shouldFetch = false) => {
       return await response.json();
     } catch (err) {
       console.error('Error deleting order:', err);
+      throw err;
+    }
+  }, []);
+
+  const editOrder = useCallback(async (orderId, orderData) => {
+    const token = localStorage.getItem('token');
+    if (!token) {
+      throw new Error('No authentication token found');
+    }
+
+    try {
+      const response = await fetch(`http://localhost:3000/orders/${orderId}`, {
+        method: 'PUT',
+        headers: {
+          'Authorization': `Bearer ${token}`,
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          customerName: orderData.customerName,
+          type: orderData.type,
+          status: orderData.status,
+          productName: orderData.productName,
+          total: orderData.total,
+          date: orderData.date
+        })
+      });
+
+      if (!response.ok) {
+        const errorData = await response.json();
+        throw new Error(errorData.message || 'Failed to update order');
+      }
+
+      const updatedOrder = await response.json();
+      
+      setOrders(prevOrders => 
+        prevOrders.map(order => 
+          order._id === orderId ? updatedOrder : order
+        )
+      );
+
+      return updatedOrder;
+    } catch (err) {
+      console.error('Error updating order:', err);
       throw err;
     }
   }, []);
@@ -264,6 +305,7 @@ export const useOrderMetrics = (shouldFetch = false) => {
     addOrder,
     bulkDeleteOrders,
     deleteOrder,
+    editOrder,
     fetchOrders 
   };
 };

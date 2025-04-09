@@ -30,13 +30,17 @@ const AddOrderModal = ({ isOpen, onClose, onAdd, initialData, mode = "add" }) =>
 
   useEffect(() => {
     if (initialData) {
+      const selectedProduct = products.find(p => p.name === initialData.product);
+      const calculation = selectedProduct ? calculateTotal(selectedProduct.price, initialData.type, selectedProduct.name) : null;
+      
       setFormData({
         id: mode === "add" ? generateOrderId() : initialData.id,
         customerName: initialData.customerName || "",
         type: initialData.type || "Shipping",
         status: initialData.status || "Paid",
         productName: initialData.product || "",
-        total: initialData.total || "",
+        total: calculation ? calculation.total : "",
+        breakdown: calculation ? calculation.breakdown : null,
         date: initialData.datePlaced?.split("T")[0] || new Date().toISOString().split("T")[0]
       });
     } else if (mode === "add") {
@@ -46,7 +50,7 @@ const AddOrderModal = ({ isOpen, onClose, onAdd, initialData, mode = "add" }) =>
       }));
     }
     setErrors({});
-  }, [initialData, mode, isOpen]);
+  }, [initialData, mode, isOpen, products]);
 
   const validateForm = () => {
     const newErrors = {};
