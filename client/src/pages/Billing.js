@@ -62,10 +62,6 @@ const Billing = () => {
         <div className="summary-card">
           <div className="card-header">
             <h2>Current Period</h2>
-            <div className="percentage">
-              <p className="percent">+12%</p>
-              <p className="date">vs last month</p>
-            </div>
           </div>
           <div className="card-content">
             <p className="amount">$46.99</p>
@@ -78,10 +74,6 @@ const Billing = () => {
         <div className="summary-card">
           <div className="card-header">
             <h2>Last Period</h2>
-            <div className="percentage">
-              <p className="percent">+8%</p>
-              <p className="date">vs previous</p>
-            </div>
           </div>
           <div className="card-content">
             <p className="amount">$49.99</p>

@@ -44,7 +44,12 @@ export const useInvoices = (shouldFetch = false) => {
     }
 
     const requiredFields = ['orderId', 'customerName', 'type', 'status', 'item', 'subtotal', 'tax', 'shipping', 'total', 'datePlaced'];
-    const missingFields = requiredFields.filter(field => !invoiceData[field]);
+    const missingFields = requiredFields.filter(field => {
+      if (['subtotal', 'tax', 'shipping', 'total'].includes(field)) {
+        return invoiceData[field] === undefined || invoiceData[field] === null;
+      }
+      return !invoiceData[field];
+    });
     
     if (missingFields.length > 0) {
       throw new Error(`Missing required fields: ${missingFields.join(', ')}`);

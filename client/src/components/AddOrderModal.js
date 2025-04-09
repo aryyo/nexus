@@ -140,10 +140,10 @@ const AddOrderModal = ({ isOpen, onClose, onAdd, initialData, mode = "add" }) =>
         type: formData.type,
         status: formData.status,
         item: formData.productName,
-        subtotal: parseFloat(calculation.breakdown.productPrice),
-        tax: parseFloat(calculation.breakdown.salesTax),
-        shipping: parseFloat(calculation.breakdown.shippingCost),
-        total: parseFloat(calculation.total),
+        subtotal: Number(calculation.breakdown.productPrice),
+        tax: Number(calculation.breakdown.salesTax),
+        shipping: formData.type === "Pickup" ? 0 : Number(calculation.breakdown.shippingCost),
+        total: Number(calculation.total),
         datePlaced: new Date(formData.date)
       };
 
