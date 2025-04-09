@@ -203,7 +203,7 @@ const Billing = () => {
               </svg>
               <input
                 type="text"
-                placeholder="Search by ID, customer, or amount..."
+                placeholder="Search invoices..."
                 value={searchQuery}
                 onChange={handleSearch}
               />

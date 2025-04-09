@@ -160,7 +160,6 @@
   background-color: var(--primary-hover);
 }
 
-/* Make product card clickable in selection mode */
 .product-grid:has(.selection-circle) .product-card {
   cursor: pointer;
 }
@@ -169,7 +168,6 @@
   opacity: 0.8;
 }
 
-/* Only apply hover effects if no dropdown is active or if this is the active card */
 .product-grid:not(.has-active-dropdown) .product-card:hover,
 .product-card.active {
   box-shadow: 0 4px 6px -1px var(--card-hover), 0 2px 4px -1px var(--card-hover);
@@ -190,7 +188,6 @@
   transition: transform 0.3s ease;
 }
 
-/* Only apply image hover effect if no dropdown is active or if this is the active card */
 .product-grid:not(.has-active-dropdown) .product-card:hover .product-image,
 .product-card.active .product-image {
   transform: scale(1.05);
@@ -219,7 +216,7 @@
 
 .menu-container {
   position: relative;
-  z-index: 102;
+  z-index: 1;
   height: 24px;
   display: flex;
   align-items: center;
