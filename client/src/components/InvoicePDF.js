@@ -5,23 +5,40 @@ import autoTable from "jspdf-autotable";
 const InvoicePDF = ({ invoice }) => {
   const generatePDF = () => {
     const doc = new jsPDF();
+    const primaryColor = "#8657ff"; 
+    const textColor = "#0b0324"; 
+    const borderColor = "#e2dcf7"; 
 
-    doc.setFontSize(18);
-    doc.text("Invoice", 14, 22);
+    doc.setFillColor(primaryColor);
+    doc.rect(14, 10, 30, 30, "F");
+    doc.setTextColor("#ffffff");
+    doc.setFontSize(16);
+    doc.text("NEXUS", 19, 28);
 
-    doc.setFontSize(12);
-    doc.text(`Order ID: ${invoice.orderId}`, 14, 32);
-    doc.text(`Customer Name: ${invoice.customerName}`, 14, 40);
-    doc.text(`Order Type: ${invoice.type}`, 14, 48);
-    doc.text(`Status: ${invoice.status}`, 14, 56);
+    doc.setTextColor(textColor);
+    doc.setFontSize(10);
+    doc.text("Nexus Order Management", 50, 20);
+    doc.text("Riverside, CA 92503", 50, 25);
+    doc.text("909-736-9877", 50, 30);
+
+    doc.setFontSize(24);
+    doc.setTextColor(primaryColor);
+    doc.text("INVOICE", 14, 55);
+
+    doc.setFontSize(10);
+    doc.setTextColor(textColor);
+    doc.text(`Order ID: ${invoice.orderId}`, 14, 65);
+    doc.text(`Customer Name: ${invoice.customerName}`, 14, 70);
+    doc.text(`Order Type: ${invoice.type}`, 14, 75);
+    doc.text(`Status: ${invoice.status}`, 14, 80);
     doc.text(
       `Date Placed: ${new Date(invoice.datePlaced).toLocaleDateString()}`,
       14,
-      64
+      85
     );
 
     autoTable(doc, {
-      startY: 74,
+      startY: 95,
       head: [["Item", "Subtotal", "Tax", "Shipping", "Total"]],
       body: [
         [
@@ -32,7 +49,26 @@ const InvoicePDF = ({ invoice }) => {
           `$${invoice.total.toFixed(2)}`,
         ],
       ],
+      styles: {
+        textColor: textColor,
+        lineColor: borderColor,
+      },
+      headStyles: {
+        fillColor: primaryColor,
+        textColor: "#ffffff",
+      },
+      alternateRowStyles: {
+        fillColor: "#f8f6ff", 
+      },
     });
+
+    const pageHeight = doc.internal.pageSize.height;
+    doc.setDrawColor(borderColor);
+    doc.line(14, pageHeight - 30, 196, pageHeight - 30);
+    doc.setFontSize(8);
+    doc.setTextColor(textColor);
+    doc.text("Thank you for your business!", 14, pageHeight - 20);
+    doc.text("For questions about this invoice, please contact support@nexus.com", 14, pageHeight - 15);
 
     doc.save(`invoice-${invoice.orderId}.pdf`);
   };
