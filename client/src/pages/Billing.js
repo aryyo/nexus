@@ -4,15 +4,20 @@ import { LoadingSpinner, ErrorMessage } from "../components/LoadingState";
 import InvoicePDF from "../components/InvoicePDF";
 import "../styles/Billing.css";
 import "../styles/OrderList.css";
-
-const formatOrderId = (id) => {
-  if (!id) return "Unknown";
-  return `#${id.slice(0, 8)}`;
-};
+import { formatOrderId as orderFormatter } from "../utils/formatters";
 
 const formatName = (name) => {
   if (!name) return "Unknown";
   return name;
+};
+
+const formatDate = (date) => {
+  if (!date) return "N/A";
+  return new Date(date).toLocaleDateString("en-US", {
+    year: "numeric",
+    month: "short",
+    day: "numeric",
+  });
 };
 
 const formatTotal = (total) => {
@@ -23,17 +28,8 @@ const formatTotal = (total) => {
   }).format(total);
 };
 
-const formatDate = (date) => {
-  if (!date) return "Unknown";
-  return new Intl.DateTimeFormat("en-US", {
-    year: "numeric",
-    month: "short",
-    day: "numeric",
-  }).format(new Date(date));
-};
-
 const columns = [
-  { label: "Invoice ID", key: "orderId", formatter: formatOrderId },
+  { label: "Invoice ID", key: "orderId", formatter: orderFormatter },
   { label: "Customer", key: "customerName", formatter: formatName },
   { label: "Date", key: "datePlaced", formatter: formatDate },
   { label: "Total", key: "total", formatter: formatTotal },

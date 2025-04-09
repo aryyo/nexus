@@ -14,7 +14,7 @@ const formatType = (type) => {
 };
 
 const columns = [
-  { label: "Order", key: "_id", formatter: formatOrderId },
+  { label: "Order ID", key: "_id", formatter: formatOrderId },
   { label: "Customer", key: "customerName", formatter: formatName },
   { label: "Type", key: "type", component: StatusBadge },
   { label: "Status", key: "status", component: StatusBadge },
