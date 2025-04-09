@@ -46,6 +46,16 @@ const Billing = () => {
     setSearchQuery(e.target.value);
   };
 
+  const filteredInvoices = invoices?.filter((invoice) => {
+    const searchLower = searchQuery.toLowerCase();
+    const formattedTotal = formatTotal(invoice.total);
+    return (
+      orderFormatter(invoice.orderId).toLowerCase().includes(searchLower) ||
+      invoice.customerName.toLowerCase().includes(searchLower) ||
+      formattedTotal.toLowerCase().includes(searchLower)
+    );
+  }) || [];
+
   const toggleSelectionMode = () => {
     setIsSelectionMode(!isSelectionMode);
     setSelectedInvoices(new Set());
@@ -193,7 +203,7 @@ const Billing = () => {
               </svg>
               <input
                 type="text"
-                placeholder="Search invoices..."
+                placeholder="Search by ID, customer, or amount..."
                 value={searchQuery}
                 onChange={handleSearch}
               />
@@ -255,7 +265,7 @@ const Billing = () => {
                 ))}
               </div>
               <div className="table-body">
-                {invoices.map((invoice) => {
+                {filteredInvoices.map((invoice) => {
                   const isSelected = selectedInvoices.has(invoice._id);
                   return (
                     <div
