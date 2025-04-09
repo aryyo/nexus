@@ -20,6 +20,12 @@ const upload = multer({
   }
 }).single('profilePicture');
 
+// Email validation helper
+const validateEmail = (email) => {
+  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  return emailRegex.test(email);
+};
+
 router.get("/", auth, async (req, res) => {
   try {
     const user = await User.findById(req.user.id).select('-password');
@@ -48,6 +54,27 @@ router.put("/", auth, async (req, res) => {
         success: false,
         message: "User not found"
       });
+    }
+
+    if (req.body.email !== undefined && req.body.email !== user.email) {
+      if (!validateEmail(req.body.email)) {
+        return res.status(400).json({
+          success: false,
+          message: "Invalid email format"
+        });
+      }
+
+      const existingUser = await User.findOne({ 
+        email: req.body.email,
+        _id: { $ne: req.user.id } 
+      });
+
+      if (existingUser) {
+        return res.status(400).json({
+          success: false,
+          message: "Email already registered"
+        });
+      }
     }
 
     const allowedUpdates = ['name', 'email', 'phoneNumber', 'address', 'profilePicture'];
