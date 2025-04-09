@@ -327,7 +327,9 @@ const Navbar = ({ onToggleSidebar }) => {
         <button className="nav-button menu-toggle" onClick={onToggleSidebar}>
           {Icons.menu}
         </button>
-        {Icons.linux}
+        <div className="logo-container" onClick={() => navigate('/')}>
+          {Icons.linux}
+        </div>
         <div className="search-box">
           {Icons.search}
           <input type="text" placeholder="Search..." />

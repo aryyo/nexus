@@ -39,7 +39,7 @@
 .card-row-two {
   display: flex;
   align-items: baseline;
-  gap: 1rem;
+  justify-content: space-between;
 }
 
 .count {

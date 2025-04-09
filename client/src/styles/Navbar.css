@@ -22,6 +22,15 @@
   color: var(--primary);
 }
 
+.logo-container {
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  padding: 0.5rem;
+  border-radius: 0.5rem;
+  transition: all 0.2s ease;
+}
+
 .nav-right {
   display: flex;
   align-items: center;
