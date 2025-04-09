@@ -13,7 +13,7 @@
 .nav-left {
   display: flex;
   align-items: center;
-  gap: 1.5rem;
+  gap: 1rem;
 }
 
 .nav-left svg {
@@ -31,8 +31,19 @@
   transition: all 0.2s ease;
 }
 
+.logo-container:hover {
+  background-color: var(--input-bg);
+}
+
 .logo-container svg {
   scale: 1.2;
+}
+
+.welcome-message {
+  font-size: 1.125rem;
+  font-weight: 500;
+  color: var(--text);
+  margin-top: .2rem;
 }
 
 .nav-right {

@@ -330,9 +330,8 @@ const Navbar = ({ onToggleSidebar }) => {
         <div className="logo-container" onClick={() => navigate('/')}>
           {Icons.linux}
         </div>
-        <div className="search-box">
-          {Icons.search}
-          <input type="text" placeholder="Search..." />
+        <div className="welcome-message">
+           Welcome, {user?.name?.split(' ')[0] || ''}
         </div>
       </div>
       <div className="nav-right">
