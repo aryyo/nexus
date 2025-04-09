@@ -126,7 +126,6 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  transition: all 0.2s ease;
   cursor: pointer;
   flex-shrink: 0;
   margin-left: 1rem;
@@ -254,7 +253,7 @@
 
 .order-actions {
   display: flex;
-  gap: 8px;
+  gap: .5rem;
   align-items: center;
 }
 

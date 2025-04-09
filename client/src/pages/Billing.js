@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { useInvoices } from "../hooks/useInvoices";
 import { LoadingSpinner, ErrorMessage } from "../components/LoadingState";
 import InvoicePDF from "../components/InvoicePDF";
@@ -37,7 +37,37 @@ const columns = [
 ];
 
 const Billing = () => {
-  const { invoices, loading, error } = useInvoices(true);
+  const { invoices, loading, error, deleteInvoice, bulkDeleteInvoices } = useInvoices(true);
+  const [searchQuery, setSearchQuery] = useState("");
+  const [isSelectionMode, setIsSelectionMode] = useState(false);
+  const [selectedInvoices, setSelectedInvoices] = useState(new Set());
+
+  const handleSearch = (e) => {
+    setSearchQuery(e.target.value);
+  };
+
+  const toggleSelectionMode = () => {
+    setIsSelectionMode(!isSelectionMode);
+    setSelectedInvoices(new Set());
+  };
+
+  const handleDelete = async (invoiceId) => {
+    try {
+      await deleteInvoice(invoiceId);
+    } catch (error) {
+      console.error('Failed to delete invoice:', error);
+    }
+  };
+
+  const handleBulkDelete = async () => {
+    try {
+      await bulkDeleteInvoices(Array.from(selectedInvoices));
+      setSelectedInvoices(new Set());
+      setIsSelectionMode(false);
+    } catch (error) {
+      console.error('Failed to delete invoices:', error);
+    }
+  };
 
   if (loading) {
     return <LoadingSpinner fullPage />;
@@ -142,56 +172,176 @@ const Billing = () => {
           </p>
         </div>
       ) : (
-        <div className="orders-table-wrapper">
-          <div className="orders-table">
-            <div
-              className="table-header"
-              style={{ gridTemplateColumns: "repeat(5, minmax(0, 1fr))" }}
-            >
-              {columns.map((column) => (
-                <div key={column.key} className="header-cell">
-                  {column.label}
-                </div>
-              ))}
+        <>
+          <div className="header">
+            <div className="search-box">
+              <svg
+                width="20"
+                height="20"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="2"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+              >
+                <circle cx="11" cy="11" r="8" />
+                <line x1="21" y1="21" x2="16.65" y2="16.65" />
+              </svg>
+              <input
+                type="text"
+                placeholder="Search invoices..."
+                value={searchQuery}
+                onChange={handleSearch}
+              />
             </div>
-            <div className="table-body">
-              {invoices.map((invoice) => (
-                <div
-                  className="table-row"
-                  key={invoice._id}
-                  style={{ gridTemplateColumns: "repeat(5, minmax(0, 1fr))" }}
+            {selectedInvoices.size > 0 && isSelectionMode ? (
+              <button
+                className={`export active`}
+                onClick={handleBulkDelete}
+              >
+                <svg
+                  width="20"
+                  height="20"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="2"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
                 >
-                  {columns.map((column) => {
-                    if (column.key === "actions") {
-                      return (
-                        <div className="table-cell actions" key={column.key}>
-                          <InvoicePDF invoice={invoice} />
-                        </div>
-                      );
-                    }
-                    return (
-                      <div className="table-cell" key={column.key}>
-                        {column.component ? (
-                          <column.component
-                            {...{
-                              [column.key.toLowerCase()]: invoice[column.key],
-                            }}
-                          />
-                        ) : (
-                          <span>
-                            {column.formatter
-                              ? column.formatter(invoice[column.key])
-                              : invoice[column.key]}
-                          </span>
-                        )}
-                      </div>
-                    );
-                  })}
-                </div>
-              ))}
+                  <path d="M3 6h18" />
+                  <path d="M19 6v14c0 1-1 2-2 2H7c-1 0-2-1-2-2V6" />
+                  <path d="M8 6V4c0-1 1-2 2-2h4c1 0 2 1 2 2v2" />
+                </svg>
+                Remove ({selectedInvoices.size})
+              </button>
+            ) : (
+              <button
+                className={`export ${isSelectionMode ? 'active' : ''}`}
+                onClick={toggleSelectionMode}
+              >
+                <svg
+                  width="20"
+                  height="20"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="2"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                >
+                  <path d="M3 6h18" />
+                  <path d="M19 6v14c0 1-1 2-2 2H7c-1 0-2-1-2-2V6" />
+                  <path d="M8 6V4c0-1 1-2 2-2h4c1 0 2 1 2 2v2" />
+                </svg>
+                Remove
+              </button>
+            )}
+          </div>
+          <div className="orders-table-wrapper">
+            <div className="orders-table">
+              <div
+                className="table-header"
+                style={{ gridTemplateColumns: "repeat(5, minmax(0, 1fr))" }}
+              >
+                {columns.map((column) => (
+                  <div key={column.key} className="header-cell">
+                    {column.label}
+                  </div>
+                ))}
+              </div>
+              <div className="table-body">
+                {invoices.map((invoice) => {
+                  const isSelected = selectedInvoices.has(invoice._id);
+                  return (
+                    <div
+                      className={`table-row ${isSelectionMode ? 'selectable' : ''} ${isSelected ? 'selected' : ''}`}
+                      key={invoice._id}
+                      onClick={() => {
+                        if (isSelectionMode) {
+                          setSelectedInvoices(prev => {
+                            const newSelected = new Set(prev);
+                            if (newSelected.has(invoice._id)) {
+                              newSelected.delete(invoice._id);
+                            } else {
+                              newSelected.add(invoice._id);
+                            }
+                            return newSelected;
+                          });
+                        }
+                      }}
+                      style={{ gridTemplateColumns: "repeat(5, minmax(0, 1fr))" }}
+                    >
+                      {columns.map((column) => {
+                        if (column.key === "actions") {
+                          return (
+                            <div className="table-cell actions" key={column.key}>
+                              {isSelectionMode ? (
+                                <div className={`checkbox ${isSelected ? 'checked' : ''}`}>
+                                  {isSelected && (
+                                    <svg
+                                      viewBox="0 0 24 24"
+                                      fill="none"
+                                      stroke="currentColor"
+                                      strokeWidth="2"
+                                      strokeLinecap="round"
+                                      strokeLinejoin="round"
+                                    >
+                                      <polyline points="20 6 9 17 4 12" />
+                                    </svg>
+                                  )}
+                                </div>
+                              ) : (
+                                <div className="order-actions">
+                                  <InvoicePDF invoice={invoice} />
+                                  <button
+                                    className="icon-button delete"
+                                    onClick={(e) => {
+                                      e.stopPropagation();
+                                      handleDelete(invoice._id);
+                                    }}
+                                    title="Delete invoice"
+                                  >
+                                    <svg
+                                      width="16"
+                                      height="16"
+                                      viewBox="0 0 24 24"
+                                      fill="none"
+                                      stroke="currentColor"
+                                      strokeWidth="2"
+                                      strokeLinecap="round"
+                                      strokeLinejoin="round"
+                                    >
+                                      <path d="M3 6h18" />
+                                      <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6" />
+                                      <path d="M8 6V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2" />
+                                      <line x1="10" y1="11" x2="10" y2="17" />
+                                      <line x1="14" y1="11" x2="14" y2="17" />
+                                    </svg>
+                                  </button>
+                                </div>
+                              )}
+                            </div>
+                          );
+                        }
+                        return (
+                          <div className="table-cell" key={column.key}>
+                            <span>
+                              {column.formatter
+                                ? column.formatter(invoice[column.key])
+                                : invoice[column.key]}
+                            </span>
+                          </div>
+                        );
+                      })}
+                    </div>
+                  );
+                })}
+              </div>
             </div>
           </div>
-        </div>
+        </>
       )}
     </div>
   );

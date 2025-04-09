@@ -143,4 +143,43 @@ router.delete("/:invoiceId", auth, async (req, res) => {
   }
 });
 
+router.delete("/bulk/delete", auth, async (req, res) => {
+  try {
+    const { invoiceIds } = req.body;
+
+    if (!Array.isArray(invoiceIds) || invoiceIds.length === 0) {
+      return res.status(400).json({
+        success: false,
+        message: "Please provide an array of invoice IDs"
+      });
+    }
+
+    const user = await User.findById(req.user.id);
+    if (!user) {
+      return res.status(404).json({
+        success: false,
+        message: "User not found"
+      });
+    }
+
+    const invoiceIdsSet = new Set(invoiceIds);
+    user.invoices = user.invoices.filter(
+      invoice => !invoiceIdsSet.has(invoice._id.toString())
+    );
+
+    await user.save();
+
+    res.status(200).json({
+      success: true,
+      message: `Successfully deleted ${invoiceIds.length} invoices`
+    });
+  } catch (err) {
+    console.error("Error deleting invoices:", err);
+    res.status(500).json({
+      success: false,
+      message: "Failed to delete invoices"
+    });
+  }
+});
+
 module.exports = router;

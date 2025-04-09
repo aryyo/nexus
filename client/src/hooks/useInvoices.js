@@ -37,6 +37,65 @@ export const useInvoices = (shouldFetch = false) => {
     }
   }, []);
 
+  const deleteInvoice = useCallback(async (invoiceId) => {
+    const token = localStorage.getItem('token');
+    if (!token) {
+      throw new Error('No authentication token found');
+    }
+
+    try {
+      const response = await fetch(`http://localhost:3000/invoices/${invoiceId}`, {
+        method: 'DELETE',
+        headers: {
+          'Authorization': `Bearer ${token}`,
+          'Content-Type': 'application/json'
+        }
+      });
+
+      if (!response.ok) {
+        const errorData = await response.json();
+        throw new Error(errorData.message || 'Failed to delete invoice');
+      }
+
+      setInvoices(prevInvoices => prevInvoices.filter(invoice => invoice._id !== invoiceId));
+      return true;
+    } catch (err) {
+      console.error('Error deleting invoice:', err);
+      throw err;
+    }
+  }, []);
+
+  const bulkDeleteInvoices = useCallback(async (invoiceIds) => {
+    const token = localStorage.getItem('token');
+    if (!token) {
+      throw new Error('No authentication token found');
+    }
+
+    try {
+      const response = await fetch('http://localhost:3000/invoices/bulk/delete', {
+        method: 'DELETE',
+        headers: {
+          'Authorization': `Bearer ${token}`,
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ invoiceIds })
+      });
+
+      if (!response.ok) {
+        const errorData = await response.json();
+        throw new Error(errorData.message || 'Failed to delete invoices');
+      }
+
+      setInvoices(prevInvoices => 
+        prevInvoices.filter(invoice => !invoiceIds.includes(invoice._id))
+      );
+      return true;
+    } catch (err) {
+      console.error('Error deleting invoices:', err);
+      throw err;
+    }
+  }, []);
+
   const addInvoice = useCallback(async (invoiceData) => {
     const token = localStorage.getItem('token');
     if (!token) {
@@ -82,10 +141,7 @@ export const useInvoices = (shouldFetch = false) => {
       }
 
       const newInvoice = await response.json();
-      setInvoices(prevInvoices => {
-        // console.log('Added new invoice:', newInvoice.invoice);
-        return [...prevInvoices, newInvoice.invoice];
-      });
+      setInvoices(prevInvoices => [...prevInvoices, newInvoice.invoice]);
       
       return newInvoice.invoice;
     } catch (err) {
@@ -105,6 +161,8 @@ export const useInvoices = (shouldFetch = false) => {
     loading,
     error,
     fetchInvoices,
-    addInvoice
+    addInvoice,
+    deleteInvoice,
+    bulkDeleteInvoices
   };
 }; 
