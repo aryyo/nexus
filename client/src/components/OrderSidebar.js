@@ -84,12 +84,6 @@ const OrderSidebar = ({ orders, cachedMetrics }) => {
       <div className="receipt-of-goods">
         <div className="orders-sidebar-header">
           <h2>Receipt of Goods</h2>
-          {hasReceiptData && (
-            <div className="receipt-percentage">
-              <p className="percent">+8%</p>
-              <p className="date">vs last month</p>
-            </div>
-          )}
         </div>
         {!hasReceiptData ? (
           <EmptyState
@@ -186,12 +180,6 @@ const OrderSidebar = ({ orders, cachedMetrics }) => {
       <div className="orders-status">
         <div className="orders-sidebar-header">
           <h2>Order Status</h2>
-          {hasOrderStatusData && (
-            <div className="status-percentage">
-              <p className="percent">+12%</p>
-              <p className="date">vs last month</p>
-            </div>
-          )}
         </div>
         {!hasOrderStatusData ? (
           <EmptyState
@@ -285,12 +273,6 @@ const OrderSidebar = ({ orders, cachedMetrics }) => {
       <div className="orders-summary">
         <div className="orders-sidebar-header">
           <h2>Overview</h2>
-          {hasOverviewData && (
-            <div className="summary-percentage">
-              <p className="percent">+15%</p>
-              <p className="date">vs last month</p>
-            </div>
-          )}
         </div>
         {!hasOverviewData ? (
           <EmptyState
@@ -355,12 +337,6 @@ const OrderSidebar = ({ orders, cachedMetrics }) => {
       <div className="orders-top-seller">
         <div className="orders-sidebar-header">
           <h2>Top Seller</h2>
-          {hasTopSellerData && (
-            <div className="seller-percentage">
-              <p className="percent">+23%</p>
-              <p className="date">vs last month</p>
-            </div>
-          )}
         </div>
         {!hasTopSellerData ? (
           <EmptyState

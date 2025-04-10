@@ -242,9 +242,8 @@
   background-color: var(--card-bg);
   border-radius: 0.75rem;
   padding: 1.5rem;
-  width: 50%;
-  max-width: 640px;
   margin: 1rem;
+  width: 60%;
 }
 
 .navbar-modal-header {
@@ -561,5 +560,11 @@
 
   .logo-container {
     margin-left: 4.5rem;
+  }
+}
+
+@media (max-width: 375px) {
+  .navbar-modal-content {
+    width: 100%;
   }
 }

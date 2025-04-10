@@ -56,6 +56,10 @@
 
 @media (max-width: 640px) {
   .cards {
-    grid-template-columns: 1fr;
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .card-row-one p{
+    font-size: 0.75rem;
   }
 }
