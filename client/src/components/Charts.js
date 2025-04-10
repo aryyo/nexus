@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { Bar } from "react-chartjs-2";
 import {
   Chart as ChartJS,
@@ -23,6 +23,8 @@ ChartJS.register(
 );
 
 const Charts = ({ cachedMetrics }) => {
+  const [timeframe, setTimeframe] = useState("6months");
+
   const { labels, revenueData, expenseData, hasData } = useMemo(() => {
     if (
       !cachedMetrics ||
@@ -52,17 +54,36 @@ const Charts = ({ cachedMetrics }) => {
       "Dec",
     ];
     const currentMonth = new Date().getMonth();
-    const last6Months = months.slice(
-      Math.max(0, currentMonth - 5),
-      currentMonth + 1
-    );
+
+    let monthsToShow;
+    let startMonth;
+
+    switch (timeframe) {
+      case "3months":
+        monthsToShow = 3;
+        startMonth = Math.max(0, currentMonth - 2);
+        break;
+      case "year":
+        monthsToShow = 12;
+        startMonth = Math.max(0, currentMonth - 11);
+        break;
+      default: // 6months
+        monthsToShow = 6;
+        startMonth = Math.max(0, currentMonth - 5);
+    }
+
+    const selectedMonths = months.slice(startMonth, startMonth + monthsToShow);
+    if (startMonth + monthsToShow > 12) {
+      selectedMonths.push(...months.slice(0, (startMonth + monthsToShow) % 12));
+    }
+
     const revenueData = cachedMetrics.monthlyRevenue.slice(
-      Math.max(0, currentMonth - 5),
-      currentMonth + 1
+      startMonth,
+      startMonth + monthsToShow
     );
     const expenseData = cachedMetrics.monthlyExpenses.slice(
-      Math.max(0, currentMonth - 5),
-      currentMonth + 1
+      startMonth,
+      startMonth + monthsToShow
     );
 
     // Check if there's any non-zero data
@@ -70,12 +91,12 @@ const Charts = ({ cachedMetrics }) => {
       revenueData.some((val) => val > 0) || expenseData.some((val) => val > 0);
 
     return {
-      labels: last6Months,
+      labels: selectedMonths,
       revenueData,
       expenseData,
       hasData,
     };
-  }, [cachedMetrics]);
+  }, [cachedMetrics, timeframe]);
 
   const chartData = {
     labels,
@@ -191,8 +212,20 @@ const Charts = ({ cachedMetrics }) => {
     },
   };
 
+  const handleTimeframeChange = (e) => {
+    setTimeframe(e.target.value);
+  };
+
   return (
     <div className="charts">
+      <div className="charts-header">
+        <h2>Financial Performance</h2>
+        <select className="timeframe" value={timeframe} onChange={handleTimeframeChange}>
+          <option value="3months">Last 3 months</option>
+          <option value="6months">Last 6 months</option>
+          <option value="year">Last year</option>
+        </select>
+      </div>
       <div className="charts-graph">
         {!hasData ? (
           <EmptyState

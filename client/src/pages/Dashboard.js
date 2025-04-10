@@ -32,14 +32,6 @@ const Dashboard = () => {
       <Cards orders={orders} cachedMetrics={cachedMetrics} />
       <div className="data">
         <div className="data-graph">
-          <div className="charts-header">
-            <h2>Financial Performance</h2>
-            <select className="time-select">
-              <option>Last 6 months</option>
-              <option>Last year</option>
-              <option>Last 3 months</option>
-            </select>
-          </div>
           <Charts orders={orders} cachedMetrics={cachedMetrics} />
         </div>
         <div className="data-cards">
