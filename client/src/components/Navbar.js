@@ -39,10 +39,6 @@ const Navbar = ({ onToggleSidebar }) => {
         "data-sidebar-transparent",
         settings.transparentSidebar ? "true" : "false"
       );
-      document.documentElement.setAttribute(
-        "data-compact-view",
-        settings.tablePreference === "compact" ? "true" : "false"
-      );
     }
   }, [settings]);
 
@@ -142,16 +138,6 @@ const Navbar = ({ onToggleSidebar }) => {
       value ? "true" : "false"
     );
     handleSettingChange("transparentSidebar", value);
-  };
-
-  const handleCompactViewChange = (e) => {
-    e.stopPropagation();
-    const value = e.target.checked;
-    document.documentElement.setAttribute(
-      "data-compact-view",
-      value ? "true" : "false"
-    );
-    handleSettingChange("tablePreference", value ? "compact" : "default");
   };
 
   const toggleDropdown = (e) => {
@@ -463,20 +449,6 @@ const Navbar = ({ onToggleSidebar }) => {
                       type="checkbox"
                       checked={settings?.transparentSidebar || false}
                       onChange={handleSidebarTransparencyChange}
-                    />
-                    <span className="settings-toggle-slider"></span>
-                  </label>
-                </div>
-                <div className="settings-item">
-                  <div className="settings-label">Compact Spacing</div>
-                  <label
-                    className="settings-toggle"
-                    onClick={(e) => e.stopPropagation()}
-                  >
-                    <input
-                      type="checkbox"
-                      checked={settings?.tablePreference === "compact"}
-                      onChange={handleCompactViewChange}
                     />
                     <span className="settings-toggle-slider"></span>
                   </label>

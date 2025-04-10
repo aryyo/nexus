@@ -22,7 +22,6 @@ const invoiceSchema = new mongoose.Schema({
 })
 
 const settingsSchema = new mongoose.Schema({
-  tablePreference: String,
   interfaceTheme: String,
   transparentSidebar: Boolean,
   timeFrame: String,
