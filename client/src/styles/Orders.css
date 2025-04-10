@@ -147,12 +147,8 @@
 }
 
 @media (max-width: 768px) {
-  .orders-content {
-    padding: 1rem;
-    gap: 1rem;
-  }
 
-  .overview p {
+  .orders-overview p {
     font-size: 1.25rem;
   }
 

@@ -149,7 +149,6 @@
 
 @media (max-width: 640px) {
   .sidebar {
-    top: 57px;
     height: calc(100vh - 57px);
     padding: 1rem;
   }

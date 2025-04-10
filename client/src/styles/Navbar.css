@@ -13,7 +13,6 @@
 .nav-left {
   display: flex;
   align-items: center;
-  gap: 1rem;
 }
 
 .nav-left svg {
@@ -36,7 +35,7 @@
 }
 
 .logo-container svg {
-  scale: 1.2;
+  scale: 1;
 }
 
 .welcome-message {
@@ -410,34 +409,6 @@
   }
 }
 
-@media (max-width: 640px) {
-  .navbar {
-    padding: 0.75rem 1rem;
-  }
-
-  .nav-left {
-    gap: 1rem;
-  }
-
-  .search-box {
-    display: none;
-  }
-
-  .navbar-modal-header {
-    flex-direction: column;
-    gap: 1.5rem;
-  }
-
-  .navbar-profile-section {
-    align-items: center;
-  }
-
-  .navbar-profile-picture {
-    width: 100px;
-    height: 100px;
-  }
-}
-
 .dropdown-settings {
   padding: 0.5rem 1rem;
 }
@@ -567,4 +538,28 @@
 
 .settings-toggle input:checked + .settings-toggle-slider:before {
   transform: translateX(1rem);
+}
+
+@media (max-width: 640px) {
+  .navbar {
+    padding: 0.75rem 1rem;
+  }
+
+  .navbar-modal-header {
+    flex-direction: column;
+    gap: 1.5rem;
+  }
+
+  .navbar-profile-section {
+    align-items: center;
+  }
+
+  .navbar-profile-picture {
+    width: 100px;
+    height: 100px;
+  }
+
+  .logo-container {
+    margin-left: 4.5rem;
+  }
 }
