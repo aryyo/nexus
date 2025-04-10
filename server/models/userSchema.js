@@ -25,6 +25,7 @@ const settingsSchema = new mongoose.Schema({
   tablePreference: String,
   interfaceTheme: String,
   transparentSidebar: Boolean,
+  timeFrame: String,
 });
 
 const userSchema = new mongoose.Schema(

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Bar } from "react-chartjs-2";
 import {
   Chart as ChartJS,
@@ -10,6 +10,7 @@ import {
   Legend,
 } from "chart.js";
 import { useMemo } from "react";
+import { useUserSettings } from "../hooks/useUserSettings";
 import "../styles/Charts.css";
 import EmptyState from "./EmptyState";
 
@@ -22,8 +23,19 @@ ChartJS.register(
   Legend
 );
 
+const VALID_TIMEFRAMES = ["3months", "6months", "year"];
+
 const Charts = ({ cachedMetrics }) => {
+  const { settings, updateSettings, loading: settingsLoading, error: settingsError } = useUserSettings();
   const [timeframe, setTimeframe] = useState("6months");
+  const [updateError, setUpdateError] = useState(null);
+  const [isUpdating, setIsUpdating] = useState(false);
+
+  useEffect(() => {
+    if (settings?.timeFrame && VALID_TIMEFRAMES.includes(settings.timeFrame)) {
+      setTimeframe(settings.timeFrame);
+    }
+  }, [settings]);
 
   const { labels, revenueData, expenseData, hasData } = useMemo(() => {
     if (
@@ -56,47 +68,73 @@ const Charts = ({ cachedMetrics }) => {
     const currentMonth = new Date().getMonth();
 
     let monthsToShow;
-    let startMonth;
-
     switch (timeframe) {
       case "3months":
         monthsToShow = 3;
-        startMonth = Math.max(0, currentMonth - 2);
         break;
       case "year":
         monthsToShow = 12;
-        startMonth = Math.max(0, currentMonth - 11);
         break;
-      default: // 6months
+      default:
         monthsToShow = 6;
-        startMonth = Math.max(0, currentMonth - 5);
     }
 
-    const selectedMonths = months.slice(startMonth, startMonth + monthsToShow);
-    if (startMonth + monthsToShow > 12) {
-      selectedMonths.push(...months.slice(0, (startMonth + monthsToShow) % 12));
+    const selectedMonths = [];
+    const selectedRevenue = [];
+    const selectedExpenses = [];
+
+    for (let i = monthsToShow - 1; i >= 0; i--) {
+      let monthIndex = currentMonth - i;
+      if (monthIndex < 0) {
+        monthIndex += 12;
+      }
+
+      selectedMonths.push(months[monthIndex]);
+
+      let dataIndex = monthIndex;
+      if (monthIndex > currentMonth) {
+        dataIndex = cachedMetrics.monthlyRevenue.length - (12 - monthIndex);
+      }
+
+      selectedRevenue.push(cachedMetrics.monthlyRevenue[dataIndex] || 0);
+      selectedExpenses.push(cachedMetrics.monthlyExpenses[dataIndex] || 0);
     }
 
-    const revenueData = cachedMetrics.monthlyRevenue.slice(
-      startMonth,
-      startMonth + monthsToShow
-    );
-    const expenseData = cachedMetrics.monthlyExpenses.slice(
-      startMonth,
-      startMonth + monthsToShow
-    );
-
-    // Check if there's any non-zero data
     const hasData =
-      revenueData.some((val) => val > 0) || expenseData.some((val) => val > 0);
+      selectedRevenue.some((val) => val > 0) || selectedExpenses.some((val) => val > 0);
 
     return {
       labels: selectedMonths,
-      revenueData,
-      expenseData,
+      revenueData: selectedRevenue,
+      expenseData: selectedExpenses,
       hasData,
     };
   }, [cachedMetrics, timeframe]);
+
+  const handleTimeframeChange = async (e) => {
+    const newTimeframe = e.target.value;
+    
+    if (!VALID_TIMEFRAMES.includes(newTimeframe)) {
+      setUpdateError("Invalid timeframe selected");
+      return;
+    }
+
+    setTimeframe(newTimeframe);
+    setIsUpdating(true);
+    setUpdateError(null);
+    
+    try {
+      await updateSettings({
+        ...settings,
+        timeFrame: newTimeframe
+      });
+    } catch (error) {
+      console.error('Failed to update timeframe preference:', error);
+      setUpdateError("Failed to save your preference. Please try again.");
+    } finally {
+      setIsUpdating(false);
+    }
+  };
 
   const chartData = {
     labels,
@@ -212,19 +250,30 @@ const Charts = ({ cachedMetrics }) => {
     },
   };
 
-  const handleTimeframeChange = (e) => {
-    setTimeframe(e.target.value);
-  };
-
   return (
     <div className="charts">
       <div className="charts-header">
         <h2>Financial Performance</h2>
-        <select className="timeframe" value={timeframe} onChange={handleTimeframeChange}>
-          <option value="3months">Last 3 months</option>
-          <option value="6months">Last 6 months</option>
-          <option value="year">Last year</option>
-        </select>
+        <div className="timeframe-selector">
+          {(updateError || settingsError) && (
+            <span className="error-message">{updateError || settingsError}</span>
+          )}
+          <select 
+            className={`timeframe ${isUpdating ? 'updating' : ''}`}
+            value={timeframe} 
+            onChange={handleTimeframeChange}
+            disabled={settingsLoading || isUpdating}
+          >
+            <option value="3months">Last 3 months</option>
+            <option value="6months">Last 6 months</option>
+            <option value="year">Last 12 months</option>
+          </select>
+          {(settingsLoading || isUpdating) && (
+            <div className="loading-indicator-wrapper">
+              <span className="loading-indicator"></span>
+            </div>
+          )}
+        </div>
       </div>
       <div className="charts-graph">
         {!hasData ? (
