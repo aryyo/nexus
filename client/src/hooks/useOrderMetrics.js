@@ -237,7 +237,7 @@ export const useOrderMetrics = (shouldFetch = false) => {
       .filter((order) => order.status === "Paid")
       .reduce((acc, order) => {
         let cost = 2.99; // Small items
-        if (["Laptop", "Monitor"].includes(order.product)) cost = 9.99; // Larger items
+        if (order.total > 100) cost = 9.99; // assuming expensive items cost more to package
         return acc + cost;
       }, 0);
   

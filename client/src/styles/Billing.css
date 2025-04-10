@@ -162,7 +162,7 @@
 .card-info {
   display: flex;
   align-items: center;
-  gap: 1rem;
+  justify-content: space-between;
 }
 
 .card-info svg {
@@ -440,6 +440,72 @@
   .history-table td {
     padding: 0.75rem 1rem;
   }
+}
 
+.subscription-card {
+  background: linear-gradient(135deg, var(--primary) 0%, #4f46e5 100%);
+  border: none !important;
+  position: relative;
+  overflow: hidden;
+}
 
+.subscription-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(45deg, rgba(255, 255, 255, 0.1) 0%, rgba(255, 255, 255, 0) 100%);
+  z-index: 1;
+}
+
+.subscription-card .card-header h2 {
+  color: rgba(255, 255, 255, 0.9) !important;
+}
+
+.subscription-card .card-info {
+  position: relative;
+  z-index: 2;
+}
+
+.subscription-card .card-info svg {
+  color: rgba(255, 255, 255, 0.9);
+  width: 28px;
+  height: 28px;
+  background: rgba(255, 255, 255, 0.1);
+  padding: 6px;
+  border-radius: 50%;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+}
+
+.subscription-card .card-number {
+  color: white !important;
+  font-size: 1.25rem !important;
+  font-weight: 600 !important;
+  letter-spacing: 0.025em;
+  margin-bottom: 4px !important;
+}
+
+.subscription-card .card-expiry {
+  color: rgba(255, 255, 255, 0.9) !important;
+  font-size: 0.875rem !important;
+  font-weight: 500 !important;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.subscription-card .card-expiry::before {
+  content: '';
+  display: inline-block;
+  width: 8px;
+  height: 8px;
+  background-color: #4ade80;
+  border-radius: 50%;
+  box-shadow: 0 0 12px #4ade80;
+}
+
+.subscription-card:hover {
+  box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04) !important;
 }

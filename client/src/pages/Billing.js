@@ -92,6 +92,26 @@ const Billing = () => {
 
   const hasInvoices = invoices && invoices.length > 0;
 
+  const months = [
+    "January",
+    "February",
+    "March",
+    "April",
+    "May",
+    "June",
+    "July",
+    "August",
+    "September",
+    "October",
+    "November",
+    "December",
+  ];
+
+  const currentMonth = new Date().getMonth();
+  const lastMonthName = months[currentMonth === 0 ? 11 : currentMonth - 1];
+  const currentMonthName = months[currentMonth];
+  const currentYear = new Date().getFullYear();
+  
   return (
     <div className="billing-page">
       <div className="overview">
@@ -105,7 +125,7 @@ const Billing = () => {
           <div className="card-content">
             <p className="amount">$46.99</p>
             <p className="due-date">
-              Due on <span>March 1, 2024</span>
+              Due on <span>{lastMonthName} 1, {currentYear}</span>
             </p>
           </div>
         </div>
@@ -117,31 +137,21 @@ const Billing = () => {
           <div className="card-content">
             <p className="amount">$49.99</p>
             <p className="due-date">
-              Paid on <span>February 1, 2024</span>
+              Paid on <span>{currentMonthName} 1, {currentYear}</span>
             </p>
           </div>
         </div>
 
-        <div className="summary-card">
+        <div className="summary-card subscription-card">
           <div className="card-header">
-            <h2>Payment Method</h2>
-            <button className="card-action">
-              <svg
-                width="20"
-                height="20"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                strokeWidth="2"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-              >
-                <path d="M6 9l6 6 6-6" />
-              </svg>
-            </button>
+            <h2>Subscription Plan</h2>
           </div>
           <div className="card-content">
             <div className="card-info">
+              <div>
+                <p className="card-number">Premium Member</p>
+                <p className="card-expiry">Active</p>
+              </div>
               <svg
                 width="24"
                 height="24"
@@ -152,13 +162,9 @@ const Billing = () => {
                 strokeLinecap="round"
                 strokeLinejoin="round"
               >
-                <rect x="1" y="4" width="22" height="16" rx="2" ry="2" />
-                <line x1="1" y1="10" x2="23" y2="10" />
+                <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14" />
+                <polyline points="22 4 12 14.01 9 11.01" />
               </svg>
-              <div>
-                <p className="card-number">**** **** **** 1234</p>
-                <p className="card-expiry">Expires 12/25</p>
-              </div>
             </div>
           </div>
         </div>
