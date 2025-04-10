@@ -27,12 +27,47 @@
   color: var(--text);
 }
 
-.header {
-  display: flex;
-  flex-direction: row;
-  justify-content: flex-end;
+.invoice-table-wrapper {
+  background: white;
+  border-radius: 12px;
+  box-shadow: 0 1px 3px 0 rgb(0 0 0 / 0.1);
+  margin: 0;
+  overflow: hidden;
+}
+
+.invoice-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.invoice-table-header {
+  display: grid;
+  grid-template-columns: repeat(8, minmax(0, 1fr));
+  gap: 0.75rem;
+  padding: 0.5rem 1.25rem;
+  background-color: #f8fafc;
+  border-bottom: 1px solid #e2e8f0;
   align-items: center;
-  gap: 1rem;
+  width: 100%;
+}
+
+.invoice-header-cell {
+  font-weight: 600;
+  color: #64748b;
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.025em;
+}
+
+.invoice-table-cell {
+  font-size: 0.8125rem;
+  color: #1e293b;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  min-width: 0;
+  padding-right: 0.5rem;
+  width: 100%;
 }
 
 .calendar,
@@ -409,6 +444,7 @@
   .billing-page {
     padding: 1rem;
     gap: 1rem;
+    overflow-y: auto;
   }
 
   .overview p {
@@ -417,6 +453,21 @@
 
   .header {
     flex-wrap: wrap;
+  }
+
+  .invoice-table-header,
+  .invoice-table-row {
+    grid-template-columns: repeat(8, minmax(0, 1fr));
+    gap: 0.375rem;
+    padding: 0.5rem;
+  }
+
+  .invoice-header-cell {
+    font-size: 0.6875rem;
+  }
+
+  .invoice-table-cell {
+    font-size: 0.75rem;
   }
 
   .calendar {
@@ -439,6 +490,39 @@
   .history-table th,
   .history-table td {
     padding: 0.75rem 1rem;
+  }
+}
+
+@media (max-width: 375px) {
+  .invoice-table-wrapper {
+    height: auto;
+    overflow: visible;
+  }
+
+  .invoice-table-header,
+  .invoice-table-row {
+    grid-template-columns: repeat(4, minmax(0, .3fr));
+    gap: .5rem;
+  }
+
+  .invoice-header-cell,
+  .invoice-table-cell {
+    display: none;
+  }
+
+  .invoice-header-cell:nth-child(1),
+  .invoice-table-cell:nth-child(1),
+  .invoice-header-cell:nth-child(2),
+  .invoice-table-cell:nth-child(2),
+  .invoice-header-cell:nth-child(4),
+  .invoice-table-cell:nth-child(4),
+  .invoice-header-cell:nth-child(5),
+  .invoice-table-cell:nth-child(5) {
+    display: block;
+  }
+
+  .amount {
+    font-size: 1.25rem;
   }
 }
 

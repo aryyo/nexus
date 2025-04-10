@@ -258,14 +258,13 @@ const Billing = () => {
               </button>
             )}
           </div>
-          <div className="orders-table-wrapper">
-            <div className="orders-table">
+          <div className="invoice-table-wrapper">
+            <div className="invoice-table">
               <div
-                className="table-header"
-                style={{ gridTemplateColumns: "repeat(5, minmax(0, 1fr))" }}
+                className="invoice-table-header"
               >
                 {columns.map((column) => (
-                  <div key={column.key} className="header-cell">
+                  <div key={column.key} className="invoice-header-cell">
                     {column.label}
                   </div>
                 ))}
@@ -290,12 +289,11 @@ const Billing = () => {
                           });
                         }
                       }}
-                      style={{ gridTemplateColumns: "repeat(5, minmax(0, 1fr))" }}
                     >
                       {columns.map((column) => {
                         if (column.key === "actions") {
                           return (
-                            <div className="table-cell actions" key={column.key}>
+                            <div className="invoice-table-cell actions" key={column.key}>
                               {isSelectionMode ? (
                                 <div className={`checkbox ${isSelected ? 'checked' : ''}`}>
                                   {isSelected && (
@@ -345,7 +343,7 @@ const Billing = () => {
                           );
                         }
                         return (
-                          <div className="table-cell" key={column.key}>
+                          <div className="invoice-table-cell" key={column.key}>
                             <span>
                               {column.formatter
                                 ? column.formatter(invoice[column.key])
