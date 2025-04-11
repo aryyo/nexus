@@ -151,6 +151,7 @@
   .sidebar {
     height: calc(100vh - 57px);
     padding: 1rem;
+    top: 65px;
   }
 
   .sidebar-menu-button {

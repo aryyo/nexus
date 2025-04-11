@@ -304,8 +304,8 @@ export const Icons = {
     </svg>
   ),
 
-  // Linux logo
-  linux: (
+  // Nexus Logo
+  nexus: (
     <svg
       width="24"
       height="24"

@@ -31,7 +31,6 @@ body {
 
 .menu-toggle {
   display: none;
-  position: fixed;
   top: 1rem;
   left: 1rem;
   z-index: 1000;

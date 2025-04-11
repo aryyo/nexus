@@ -25,24 +25,36 @@
   cursor: pointer;
   display: flex;
   align-items: center;
-  padding: 0.5rem;
   border-radius: 0.5rem;
   transition: all 0.2s ease;
-}
-
-.logo-container:hover {
-  background-color: var(--input-bg);
+  padding-right: 0.5rem;
+  position: fixed;
+  z-index: 100;
 }
 
 .logo-container svg {
   scale: 1;
+  color: white;
 }
 
 .welcome-message {
-  font-size: 1.125rem;
+  font-size: 0.875rem;
   font-weight: 500;
-  color: var(--text);
-  margin-top: .2rem;
+  color: var(--background-alt);
+  background: linear-gradient(45deg, var(--primary) 0%, var(--secondary) 100%);
+  border-radius: 9999px;
+  padding: 0.5rem 1rem 0.5rem 2.5rem;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  transition: all 0.2s ease;
+  box-shadow: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+  position: relative;
+  overflow: hidden;
+}
+
+.welcome-message:hover {
+  color: var(--background);
 }
 
 .nav-right {
@@ -399,12 +411,12 @@
 }
 
 @media (max-width: 1024px) {
-  .menu-toggle {
-    display: flex;
-  }
-
   .search-box {
     min-width: 200px;
+  }
+
+  .logo-container {
+    margin-left: 16rem;
   }
 }
 
@@ -559,7 +571,7 @@
   }
 
   .logo-container {
-    margin-left: 4.5rem;
+    margin-left: 2.5rem;
   }
 }
 

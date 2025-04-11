@@ -18,6 +18,7 @@ html, body, #root {
   --primary: #8657ff;
   --primary-hover: #6e3fef;
   --secondary: #b794ff;
+  --secondary-hover: #a17eff;
   --success: #4caf50;
   --warning: #ff9800;
   --card-bg: #ffffff;
@@ -42,6 +43,7 @@ html, body, #root {
   --primary: #8657ff;
   --primary-hover: #6e3fef;
   --secondary: #b794ff;
+  --secondary-hover: #a17eff;
   --success: #4caf50;
   --warning: #ff9800;
   --card-bg: #121214;
@@ -62,26 +64,6 @@ html, body, #root {
   box-sizing: border-box;
   margin: 0;
   padding: 0;
-}
-
-:root[data-compact-view="true"] {
-  --spacing-xs: 0.25rem;
-  --spacing-sm: 0.5rem;
-  --spacing-md: 0.75rem;
-  --spacing-lg: 1rem;
-  --spacing-xl: 1.5rem;
-  --card-padding: 1rem;
-  --input-padding: 0.5rem;
-}
-
-:root:not([data-compact-view="true"]) {
-  --spacing-xs: 0.5rem;
-  --spacing-sm: 0.75rem;
-  --spacing-md: 1rem;
-  --spacing-lg: 1.5rem;
-  --spacing-xl: 2rem;
-  --card-padding: 1.5rem;
-  --input-padding: 0.75rem;
 }
 
 :root[data-sidebar-transparent="true"] .sidebar {

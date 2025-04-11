@@ -269,12 +269,12 @@ const Billing = () => {
                   </div>
                 ))}
               </div>
-              <div className="table-body">
+              <div className="invoice-table-body">
                 {filteredInvoices.map((invoice) => {
                   const isSelected = selectedInvoices.has(invoice._id);
                   return (
                     <div
-                      className={`table-row ${isSelectionMode ? 'selectable' : ''} ${isSelected ? 'selected' : ''}`}
+                      className={`invoice-table-row ${isSelectionMode ? 'selectable' : ''} ${isSelected ? 'selected' : ''}`}
                       key={invoice._id}
                       onClick={() => {
                         if (isSelectionMode) {

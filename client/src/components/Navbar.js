@@ -314,7 +314,7 @@ const Navbar = ({ onToggleSidebar }) => {
           {Icons.menu}
         </button>
         <div className="logo-container" onClick={() => navigate('/')}>
-          {Icons.linux}
+          {Icons.nexus}
         </div>
         <div className="welcome-message">
            Welcome, {user?.name?.split(' ')[0] || ''}
