@@ -217,11 +217,13 @@ export const useOrderMetrics = (shouldFetch = false) => {
       return acc;
     }, {});
   
-    const mostOrderedProduct = Object.entries(productCount).reduce(
-      (max, [product, count]) => (count > max.count ? { product, count } : max),
-      { product: "", count: 0 }
-    );
-  
+    const topSellers = Object.entries(productCount)
+      .sort(([, countA], [, countB]) => countB - countA)
+      .slice(0, 3)
+      .map(([product, count]) => ({ product, count }));
+
+    // console.log(topSellers);
+
     const salesTaxRate = 0.0725;
     const salesTax = totalRevenue * salesTaxRate;
   
@@ -284,7 +286,7 @@ export const useOrderMetrics = (shouldFetch = false) => {
       totalPickups,
       revenueFromShipments,
       revenueFromPickups,
-      mostOrderedProduct: mostOrderedProduct.product,
+      topSellers,      
       salesTax,
       shippingCosts,
       netProfit,

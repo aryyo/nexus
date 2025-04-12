@@ -77,7 +77,7 @@ const OrderSidebar = ({ orders, cachedMetrics }) => {
       cachedMetrics.totalCancelled > 0 ||
       cachedMetrics.totalRefunded > 0);
   const hasOverviewData = cachedMetrics && cachedMetrics.totalOrders > 0;
-  const hasTopSellerData = cachedMetrics && cachedMetrics.mostOrderedProduct;
+  const hasTopSellerData = cachedMetrics && cachedMetrics.topSellers.length > 0;
 
   return (
     <div className="orders-sidebar">
@@ -336,7 +336,7 @@ const OrderSidebar = ({ orders, cachedMetrics }) => {
       </div>
       <div className="orders-top-seller">
         <div className="orders-sidebar-header">
-          <h2>Top Seller</h2>
+          <h2>Top Sellers</h2>
         </div>
         {!hasTopSellerData ? (
           <EmptyState
@@ -360,33 +360,32 @@ const OrderSidebar = ({ orders, cachedMetrics }) => {
           />
         ) : (
           <div className="product-sold">
-            <div className="product-icon">
-              <svg
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                strokeWidth="1.5"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-              >
-                <path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z" />
-                <line x1="7" y1="7" x2="7.01" y2="7" />
-              </svg>
-            </div>
-            <div className="product-sold-details">
-              <p className="product-name">
-                {cachedMetrics.mostOrderedProduct || "No Product"}
-              </p>
-              <p className="product-count">
-                {
-                  orders.filter(
-                    (order) =>
-                      order.product === cachedMetrics.mostOrderedProduct
-                  ).length
-                }{" "}
-                sales
-              </p>
-            </div>
+            {cachedMetrics.topSellers.map((seller, index) => (
+              seller && seller.product ? (
+                <React.Fragment key={index}>
+                  <div className="product-container">
+                    <div className="product-icon">
+                      <svg
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        stroke="currentColor"
+                        strokeWidth="1.5"
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                      >
+                        <path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z" />
+                        <polyline points="3.29 7 12 12 20.71 7" />
+                        <line x1="12" y1="22" x2="12" y2="12" />
+                      </svg>
+                    </div>
+                    <div className="product-sold-details">
+                      <p className="product-name">{seller.product}</p>
+                      <p className="product-count">{seller.count} sales</p>
+                    </div>
+                  </div>
+                </React.Fragment>
+              ) : null
+            ))}
           </div>
         )}
       </div>
