@@ -178,7 +178,6 @@
   color: var(--text);
   opacity: 0.5;
   font-size: 0.875rem;
-  margin: 0.5rem 0;
 }
 
 .divider::before,
@@ -229,6 +228,7 @@
   text-align: center;
   color: var(--text);
   font-size: 0.875rem;
+  margin-top: 1rem;
 }
 
 .login-footer a {
