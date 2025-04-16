@@ -128,7 +128,6 @@
 
 .logout-confirm:hover {
   background-color: var(--warning);
-  opacity: 0.9;
 }
 
 @media (max-width: 1024px) {

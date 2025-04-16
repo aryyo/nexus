@@ -46,10 +46,8 @@ router.post("/", async (req, res) => {
       password: hashedPassword,
       name: email.split("@")[0],
       settings: {
-        darkMode: false,
-        tablePreference: "default",
         interfaceTheme: "light",
-        transparentSidebar: false,
+        timeFrame: "monthly",
       },
       products: [],
       reports: [],

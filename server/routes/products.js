@@ -42,6 +42,14 @@ router.post("/", auth, async (req, res) => {
       });
     }
 
+    const stockNum = parseInt(stock);
+    if (isNaN(stockNum) || stockNum < 0 || stockNum > 999999) {
+      return res.status(400).json({
+        success: false,
+        message: "Stock must be a valid number between 0 and 999,999",
+      });
+    }
+
     let status = "in-stock";
     if (stock <= 0) {
       status = "out-of-stock";
@@ -99,6 +107,14 @@ router.put("/:productId", auth, async (req, res) => {
       return res.status(400).json({
         success: false,
         message: "Price must be a valid number between 0 and 999,999.99 with up to 2 decimal places",
+      });
+    }
+
+    const stockNum = parseInt(stock);
+    if (isNaN(stockNum) || stockNum < 0 || stockNum > 999999) {
+      return res.status(400).json({
+        success: false,
+        message: "Stock must be a valid number between 0 and 999,999",
       });
     }
 

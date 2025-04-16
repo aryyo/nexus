@@ -31,7 +31,6 @@ html, body, #root {
   --header-border: #e2dcf7;
   --sidebar-border: #e2dcf7;
   --sidebar-bg: #ffffff;
-  --sidebar-bg-transparent: rgba(255, 255, 255, 0.8);
 }
 
 :root[data-theme="dark"] {
@@ -56,7 +55,6 @@ html, body, #root {
   --header-border: #392b54;
   --sidebar-border: #392b54;
   --sidebar-bg: #121214;
-  --sidebar-bg-transparent: rgba(0, 0, 0, 0);
 }
 
 * {
@@ -64,13 +62,4 @@ html, body, #root {
   box-sizing: border-box;
   margin: 0;
   padding: 0;
-}
-
-:root[data-sidebar-transparent="true"] .sidebar {
-  background-color: var(--sidebar-bg-transparent);
-  backdrop-filter: blur(8px);
-}
-
-:root:not([data-sidebar-transparent="true"]) .sidebar {
-  background-color: var(--sidebar-bg);
 }

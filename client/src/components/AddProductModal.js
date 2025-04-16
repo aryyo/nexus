@@ -27,22 +27,23 @@ const AddProductModal = ({
   }, [initialData]);
 
   const validateForm = () => {
-    const newErrors = {};
-    if (!formData.name.trim()) {
-      newErrors.name = "Product name is required";
-    }
+    const errors = {};
     
-    const priceRegex = /^\d+(\.\d{0,2})?$/;
-    if (!formData.price || !priceRegex.test(formData.price) || parseFloat(formData.price) <= 0) {
-      newErrors.price = "Price must be a valid number with up to 2 decimal places";
-    } else if (parseFloat(formData.price) > 999999.99) {
-      newErrors.price = "Price cannot exceed 999,999.99";
+    if (!formData.name.trim()) {
+      errors.name = "Product name is required";
     }
 
-    if (!formData.stock || formData.stock < 0) {
-      newErrors.stock = "Valid stock quantity is required";
+    const price = parseFloat(formData.price);
+    if (isNaN(price) || price <= 0 || price > 999999.99) {
+      errors.price = "Price must be between 0 and 999,999.99";
     }
-    return newErrors;
+
+    const stock = parseInt(formData.stock);
+    if (isNaN(stock) || stock < 0 || stock > 999999) {
+      errors.stock = "Stock must be between 0 and 999,999";
+    }
+
+    return errors;
   };
 
   const handleChange = (e) => {

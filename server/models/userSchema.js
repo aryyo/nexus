@@ -23,7 +23,6 @@ const invoiceSchema = new mongoose.Schema({
 
 const settingsSchema = new mongoose.Schema({
   interfaceTheme: String,
-  transparentSidebar: Boolean,
   timeFrame: String,
 });
 

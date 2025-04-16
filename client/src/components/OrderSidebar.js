@@ -379,7 +379,7 @@ const OrderSidebar = ({ orders, cachedMetrics }) => {
                       </svg>
                     </div>
                     <div className="product-sold-details">
-                      <p className="product-name">{seller.product}</p>
+                      <p className="order-product-name">{seller.product}</p>
                       <p className="product-count">{seller.count} sales</p>
                     </div>
                   </div>

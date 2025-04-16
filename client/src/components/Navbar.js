@@ -35,10 +35,6 @@ const Navbar = ({ onToggleSidebar }) => {
         "data-theme",
         settings.interfaceTheme || "light"
       );
-      document.documentElement.setAttribute(
-        "data-sidebar-transparent",
-        settings.transparentSidebar ? "true" : "false"
-      );
     }
   }, [settings]);
 
@@ -130,16 +126,6 @@ const Navbar = ({ onToggleSidebar }) => {
     handleSettingChange("interfaceTheme", selectedTheme);
   };
 
-  const handleSidebarTransparencyChange = (e) => {
-    e.stopPropagation();
-    const value = e.target.checked;
-    document.documentElement.setAttribute(
-      "data-sidebar-transparent",
-      value ? "true" : "false"
-    );
-    handleSettingChange("transparentSidebar", value);
-  };
-
   const toggleDropdown = (e) => {
     e.stopPropagation();
     setShowDropdown(!showDropdown);
@@ -175,14 +161,14 @@ const Navbar = ({ onToggleSidebar }) => {
     } catch (error) {
       console.error("Failed to update profile:", error);
       if (error.message === "Email already registered") {
-        setValidationErrors(prev => ({
+        setValidationErrors((prev) => ({
           ...prev,
-          email: "This email is already registered"
+          email: "This email is already registered",
         }));
       } else if (error.message === "Invalid email format") {
-        setValidationErrors(prev => ({
+        setValidationErrors((prev) => ({
           ...prev,
-          email: "Please enter a valid email address"
+          email: "Please enter a valid email address",
         }));
       } else {
         alert("Failed to update profile. Please try again.");
@@ -229,22 +215,25 @@ const Navbar = ({ onToggleSidebar }) => {
     }
 
     try {
-      const token = localStorage.getItem('token');
-      const response = await fetch('http://localhost:3000/user/change-password', {
-        method: 'POST',
-        headers: {
-          'Authorization': `Bearer ${token}`,
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({
-          currentPassword: passwordData.currentPassword,
-          newPassword: passwordData.newPassword
-        })
-      });
+      const token = localStorage.getItem("token");
+      const response = await fetch(
+        "http://localhost:3000/user/change-password",
+        {
+          method: "POST",
+          headers: {
+            Authorization: `Bearer ${token}`,
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            currentPassword: passwordData.currentPassword,
+            newPassword: passwordData.newPassword,
+          }),
+        }
+      );
 
       if (!response.ok) {
         const data = await response.json();
-        throw new Error(data.message || 'Failed to change password');
+        throw new Error(data.message || "Failed to change password");
       }
 
       setIsChangingPassword(false);
@@ -256,7 +245,7 @@ const Navbar = ({ onToggleSidebar }) => {
       setPasswordErrors({});
     } catch (error) {
       setPasswordErrors({
-        currentPassword: error.message
+        currentPassword: error.message,
       });
     }
   };
@@ -269,39 +258,42 @@ const Navbar = ({ onToggleSidebar }) => {
     const file = e.target.files?.[0];
     if (!file) return;
 
-    if (!file.type.startsWith('image/')) {
-      alert('Please select an image file');
+    if (!file.type.startsWith("image/")) {
+      alert("Please select an image file");
       return;
     }
 
     if (file.size > 5 * 1024 * 1024) {
-      alert('Image size should be less than 5MB');
+      alert("Image size should be less than 5MB");
       return;
     }
 
     setIsUploading(true);
     try {
       const formData = new FormData();
-      formData.append('profilePicture', file);
+      formData.append("profilePicture", file);
 
-      const token = localStorage.getItem('token');
-      const response = await fetch('http://localhost:3000/user/profile-picture', {
-        method: 'POST',
-        headers: {
-          'Authorization': `Bearer ${token}`
-        },
-        body: formData
-      });
+      const token = localStorage.getItem("token");
+      const response = await fetch(
+        "http://localhost:3000/user/profile-picture",
+        {
+          method: "POST",
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+          body: formData,
+        }
+      );
 
       if (!response.ok) {
-        throw new Error('Failed to upload image');
+        throw new Error("Failed to upload image");
       }
 
       const data = await response.json();
       await updateUser({ ...user, profilePicture: data.profilePicture });
     } catch (error) {
-      console.error('Failed to upload profile picture:', error);
-      alert('Failed to upload profile picture. Please try again.');
+      console.error("Failed to upload profile picture:", error);
+      alert("Failed to upload profile picture. Please try again.");
     } finally {
       setIsUploading(false);
     }
@@ -313,11 +305,11 @@ const Navbar = ({ onToggleSidebar }) => {
         <button className="nav-button menu-toggle" onClick={onToggleSidebar}>
           {Icons.menu}
         </button>
-        <div className="logo-container" onClick={() => navigate('/')}>
+        <div className="logo-container" onClick={() => navigate("/")}>
           {Icons.nexus}
         </div>
         <div className="welcome-message">
-           Welcome, {user?.name?.split(' ')[0] || ''}
+          Welcome, {user?.name?.split(" ")[0] || ""}
         </div>
       </div>
       <div className="nav-right">
@@ -363,7 +355,10 @@ const Navbar = ({ onToggleSidebar }) => {
                   </svg>
                 </span>
               </button>
-              <button className="dropdown-item" onClick={handleChangePasswordClick}>
+              <button
+                className="dropdown-item"
+                onClick={handleChangePasswordClick}
+              >
                 <div className="settings-label">Change Password</div>
                 <span>
                   <svg
@@ -439,20 +434,6 @@ const Navbar = ({ onToggleSidebar }) => {
                     </button>
                   </div>
                 </div>
-                <div className="settings-item">
-                  <div className="settings-label">Transparent Sidebar</div>
-                  <label
-                    className="settings-toggle"
-                    onClick={(e) => e.stopPropagation()}
-                  >
-                    <input
-                      type="checkbox"
-                      checked={settings?.transparentSidebar || false}
-                      onChange={handleSidebarTransparencyChange}
-                    />
-                    <span className="settings-toggle-slider"></span>
-                  </label>
-                </div>
               </div>
               <div className="dropdown-divider" />
               <button className="dropdown-item logout" onClick={handleLogout}>
@@ -489,8 +470,10 @@ const Navbar = ({ onToggleSidebar }) => {
                   alt="Profile"
                   className="navbar-profile-picture"
                 />
-                <button 
-                  className={`navbar-change-photo-btn ${isUploading ? 'uploading' : ''}`} 
+                <button
+                  className={`navbar-change-photo-btn ${
+                    isUploading ? "uploading" : ""
+                  }`}
                   onClick={handleChangePhoto}
                   disabled={isUploading}
                 >
@@ -555,7 +538,9 @@ const Navbar = ({ onToggleSidebar }) => {
                     className={validationErrors.name ? "error" : ""}
                   />
                   {validationErrors.name && (
-                    <span className="navbar-error-message">{validationErrors.name}</span>
+                    <span className="navbar-error-message">
+                      {validationErrors.name}
+                    </span>
                   )}
                 </div>
                 <div className="navbar-input-group">
@@ -572,7 +557,9 @@ const Navbar = ({ onToggleSidebar }) => {
                     className={validationErrors.email ? "error" : ""}
                   />
                   {validationErrors.email && (
-                    <span className="navbar-error-message">{validationErrors.email}</span>
+                    <span className="navbar-error-message">
+                      {validationErrors.email}
+                    </span>
                   )}
                 </div>
                 <div className="navbar-input-group">
@@ -584,7 +571,9 @@ const Navbar = ({ onToggleSidebar }) => {
                     className={validationErrors.phoneNumber ? "error" : ""}
                   />
                   {validationErrors.phoneNumber && (
-                    <span className="navbar-error-message">{validationErrors.phoneNumber}</span>
+                    <span className="navbar-error-message">
+                      {validationErrors.phoneNumber}
+                    </span>
                   )}
                 </div>
                 <div className="navbar-input-group">
@@ -595,22 +584,30 @@ const Navbar = ({ onToggleSidebar }) => {
                     onChange={(e) => {
                       setEditData({ ...editData, address: e.target.value });
                       if (e.target.value.trim()) {
-                        setValidationErrors({ ...validationErrors, address: "" });
+                        setValidationErrors({
+                          ...validationErrors,
+                          address: "",
+                        });
                       }
                     }}
                     className={validationErrors.address ? "error" : ""}
                   />
                   {validationErrors.address && (
-                    <span className="navbar-error-message">{validationErrors.address}</span>
+                    <span className="navbar-error-message">
+                      {validationErrors.address}
+                    </span>
                   )}
                 </div>
               </div>
             </div>
             <div className="navbar-modal-actions">
-              <button className="navbar-cancel-button" onClick={() => {
-                setIsEditing(false);
-                setValidationErrors({});
-              }}>
+              <button
+                className="navbar-cancel-button"
+                onClick={() => {
+                  setIsEditing(false);
+                  setValidationErrors({});
+                }}
+              >
                 Cancel
               </button>
               <button className="navbar-save-button" onClick={handleSave}>
@@ -633,15 +630,23 @@ const Navbar = ({ onToggleSidebar }) => {
                     value={passwordData.currentPassword}
                     placeholder="Current Password"
                     onChange={(e) => {
-                      setPasswordData({ ...passwordData, currentPassword: e.target.value });
+                      setPasswordData({
+                        ...passwordData,
+                        currentPassword: e.target.value,
+                      });
                       if (e.target.value) {
-                        setPasswordErrors({ ...passwordErrors, currentPassword: "" });
+                        setPasswordErrors({
+                          ...passwordErrors,
+                          currentPassword: "",
+                        });
                       }
                     }}
                     className={passwordErrors.currentPassword ? "error" : ""}
                   />
                   {passwordErrors.currentPassword && (
-                    <span className="navbar-error-message">{passwordErrors.currentPassword}</span>
+                    <span className="navbar-error-message">
+                      {passwordErrors.currentPassword}
+                    </span>
                   )}
                 </div>
                 <div className="navbar-input-group">
@@ -650,15 +655,23 @@ const Navbar = ({ onToggleSidebar }) => {
                     value={passwordData.newPassword}
                     placeholder="New Password"
                     onChange={(e) => {
-                      setPasswordData({ ...passwordData, newPassword: e.target.value });
+                      setPasswordData({
+                        ...passwordData,
+                        newPassword: e.target.value,
+                      });
                       if (e.target.value) {
-                        setPasswordErrors({ ...passwordErrors, newPassword: "" });
+                        setPasswordErrors({
+                          ...passwordErrors,
+                          newPassword: "",
+                        });
                       }
                     }}
                     className={passwordErrors.newPassword ? "error" : ""}
                   />
                   {passwordErrors.newPassword && (
-                    <span className="navbar-error-message">{passwordErrors.newPassword}</span>
+                    <span className="navbar-error-message">
+                      {passwordErrors.newPassword}
+                    </span>
                   )}
                 </div>
                 <div className="navbar-input-group">
@@ -667,22 +680,30 @@ const Navbar = ({ onToggleSidebar }) => {
                     value={passwordData.confirmPassword}
                     placeholder="Confirm New Password"
                     onChange={(e) => {
-                      setPasswordData({ ...passwordData, confirmPassword: e.target.value });
+                      setPasswordData({
+                        ...passwordData,
+                        confirmPassword: e.target.value,
+                      });
                       if (e.target.value) {
-                        setPasswordErrors({ ...passwordErrors, confirmPassword: "" });
+                        setPasswordErrors({
+                          ...passwordErrors,
+                          confirmPassword: "",
+                        });
                       }
                     }}
                     className={passwordErrors.confirmPassword ? "error" : ""}
                   />
                   {passwordErrors.confirmPassword && (
-                    <span className="navbar-error-message">{passwordErrors.confirmPassword}</span>
+                    <span className="navbar-error-message">
+                      {passwordErrors.confirmPassword}
+                    </span>
                   )}
                 </div>
               </div>
             </div>
             <div className="navbar-modal-actions">
-              <button 
-                className="navbar-cancel-button" 
+              <button
+                className="navbar-cancel-button"
                 onClick={() => {
                   setIsChangingPassword(false);
                   setPasswordErrors({});
@@ -690,7 +711,10 @@ const Navbar = ({ onToggleSidebar }) => {
               >
                 Cancel
               </button>
-              <button className="navbar-save-button" onClick={handlePasswordChange}>
+              <button
+                className="navbar-save-button"
+                onClick={handlePasswordChange}
+              >
                 Change Password
               </button>
             </div>
@@ -701,7 +725,7 @@ const Navbar = ({ onToggleSidebar }) => {
       <input
         type="file"
         ref={fileInputRef}
-        style={{ display: 'none' }}
+        style={{ display: "none" }}
         accept="image/*"
         onChange={handleFileChange}
       />

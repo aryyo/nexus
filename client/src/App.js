@@ -7,34 +7,21 @@ import { useUserSettings } from "./hooks/useUserSettings";
 
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(() => {
-    // Check if there's a token in localStorage on initial load
     return !!localStorage.getItem("token");
   });
 
   const { settings, loading: settingsLoading } = useUserSettings();
 
   useEffect(() => {
-    if (settings) {
-      if (settings.interfaceTheme) {
-        document.documentElement.setAttribute("data-theme", settings.interfaceTheme);
-      }
-
-      if (settings.transparentSidebar) {
-        document.documentElement.setAttribute("data-sidebar-transparent", "true");
-      } else {
-        document.documentElement.removeAttribute("data-sidebar-transparent");
-      }
-
-      if (settings.tablePreference === "compact") {
-        document.documentElement.setAttribute("data-compact-view", "true");
-      } else {
-        document.documentElement.removeAttribute("data-compact-view");
-      }
+    if (settings?.interfaceTheme) {
+      document.documentElement.setAttribute("data-theme", settings.interfaceTheme);
+    } else {
+      document.documentElement.setAttribute("data-theme", "light");
     }
   }, [settings]);
 
   if (isLoggedIn && settingsLoading) {
-    return null; //leave blank to avoid mismatch spinners
+    return null;
   }
 
   return (

@@ -459,7 +459,7 @@
 
 @media (max-width: 1200px) {
   .billing-summary {
-    grid-template-columns: repeat(2, 1fr);
+    grid-template-columns: repeat(3, 1fr);
   }
 
   .amount {
