@@ -305,14 +305,13 @@ const Navbar = ({ onToggleSidebar }) => {
         <button className="nav-button menu-toggle" onClick={onToggleSidebar}>
           {Icons.menu}
         </button>
+        <div className="welcome-message">
         <div className="logo-container" onClick={() => navigate("/")}>
           {Icons.nexus}
         </div>
-        <div className="welcome-message">
           Welcome, {user?.name?.split(" ")[0] || ""}
         </div>
-      </div>
-      <div className="nav-right">
+        <div className="nav-right">
         {/* <button className="nav-button">{Icons.mail}</button>
         <button className="nav-button">{Icons.bell}</button> */}
         <div
@@ -458,6 +457,7 @@ const Navbar = ({ onToggleSidebar }) => {
             </div>
           )}
         </div>
+      </div>
       </div>
 
       {isEditing && (

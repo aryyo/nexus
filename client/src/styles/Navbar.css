@@ -3,7 +3,6 @@
   border-bottom: 1px solid var(--border);
   padding: 1rem 1.5rem;
   display: flex;
-  justify-content: space-between;
   align-items: center;
   position: sticky;
   top: 0;
@@ -13,6 +12,9 @@
 .nav-left {
   display: flex;
   align-items: center;
+  flex: 1;
+  position: relative;
+  justify-content: space-between;
 }
 
 .nav-left svg {
@@ -21,20 +23,19 @@
   color: var(--primary);
 }
 
-.logo-container {
-  cursor: pointer;
+.menu-toggle {
   display: flex;
   align-items: center;
+  justify-content: center;
+  width: 2.5rem;
+  height: 2.5rem;
+  border: none;
+  background: none;
   border-radius: 0.5rem;
+  color: var(--input-text);
+  cursor: pointer;
   transition: all 0.2s ease;
-  padding-right: 0.5rem;
-  position: fixed;
-  z-index: 100;
-}
-
-.logo-container svg {
-  scale: 1;
-  color: white;
+  z-index: 41;
 }
 
 .welcome-message {
@@ -43,7 +44,7 @@
   color: var(--background-alt);
   background: linear-gradient(45deg, var(--primary) 0%, var(--secondary) 100%);
   border-radius: 9999px;
-  padding: 0.5rem 1rem 0.5rem 2.5rem;
+  padding: 0.25rem .5rem;
   display: inline-flex;
   align-items: center;
   gap: 0.5rem;
@@ -57,10 +58,21 @@
   color: var(--background);
 }
 
+.logo-container {
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  z-index: 100;
+}
+
+.logo-container svg {
+  scale: 1;
+  color: white;
+}
+
 .nav-right {
   display: flex;
   align-items: center;
-  gap: 1rem;
 }
 
 .nav-button {
@@ -85,10 +97,6 @@
 .nav-button svg {
   width: 20px;
   height: 20px;
-}
-
-.menu-toggle {
-  display: none;
 }
 
 .menu-toggle:hover {
@@ -414,10 +422,6 @@
   .search-box {
     min-width: 200px;
   }
-
-  .logo-container {
-    margin-left: 16rem;
-  }
 }
 
 .dropdown-settings {
@@ -487,7 +491,7 @@
 }
 
 .theme-toggle::after {
-  content: '';
+  content: "";
   position: absolute;
   top: 0.25rem;
   left: 0.25rem;
@@ -550,32 +554,4 @@
   transform: translateX(1rem);
 }
 
-@media (max-width: 640px) {
-  .navbar {
-    padding: 0.75rem 1rem;
-  }
 
-  .navbar-modal-header {
-    flex-direction: column;
-    gap: 1.5rem;
-  }
-
-  .navbar-profile-section {
-    align-items: center;
-  }
-
-  .navbar-profile-picture {
-    width: 100px;
-    height: 100px;
-  }
-
-  .logo-container {
-    margin-left: 2.5rem;
-  }
-}
-
-@media (max-width: 375px) {
-  .navbar-modal-content {
-    width: 100%;
-  }
-}

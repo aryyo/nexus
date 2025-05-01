@@ -31,8 +31,8 @@ body {
 
 .menu-toggle {
   display: none;
-  top: 1rem;
-  left: 1rem;
+  /* top: 1rem;
+  left: 1rem; */
   z-index: 1000;
   background: var(--background);
   border: 2px solid var(--border);
