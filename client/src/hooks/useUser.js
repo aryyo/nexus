@@ -1,5 +1,5 @@
 import { useState, useEffect, useCallback } from 'react';
-
+import { endpoints } from '../config/api';
 export const useUser = () => {
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
@@ -14,7 +14,7 @@ export const useUser = () => {
     }
 
     try {
-      const response = await fetch('http://localhost:3000/user', {
+      const response = await fetch(endpoints.user.profile, {
         headers: {
           'Authorization': `Bearer ${token}`,
           'Content-Type': 'application/json'
@@ -43,7 +43,7 @@ export const useUser = () => {
     }
 
     try {
-      const response = await fetch('http://localhost:3000/user', {
+      const response = await fetch(endpoints.user.profile, {
         method: 'PUT',
         headers: {
           'Authorization': `Bearer ${token}`,

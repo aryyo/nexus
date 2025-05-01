@@ -1,5 +1,5 @@
 import { useState, useEffect, useCallback } from "react";
-
+import { endpoints } from '../config/api';
 export const useProducts = (shouldFetch = false) => {
   const [products, setProducts] = useState([]);
   const [loading, setLoading] = useState(false);
@@ -21,7 +21,7 @@ export const useProducts = (shouldFetch = false) => {
 
     setLoading(true);
     try {
-      const response = await fetch("http://localhost:3000/products", {
+      const response = await fetch(endpoints.products.base, {
         headers: {
           Authorization: `Bearer ${token}`,
           "Content-Type": "application/json",
@@ -57,7 +57,7 @@ export const useProducts = (shouldFetch = false) => {
 
       const status = calculateStatus(productData.stock);
 
-      const response = await fetch("http://localhost:3000/products", {
+      const response = await fetch(endpoints.products.base, {
         method: "POST",
         headers: {
           Authorization: `Bearer ${token}`,
@@ -98,7 +98,7 @@ export const useProducts = (shouldFetch = false) => {
       const status = calculateStatus(productData.stock);
 
       const response = await fetch(
-        `http://localhost:3000/products/${productId}`,
+        endpoints.products.byId(productId),
         {
           method: "PUT",
           headers: {
@@ -144,7 +144,7 @@ export const useProducts = (shouldFetch = false) => {
       }
 
       const response = await fetch(
-        `http://localhost:3000/products/${productId}`,
+        endpoints.products.byId(productId),
         {
           method: "DELETE",
           headers: {

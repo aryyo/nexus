@@ -1,4 +1,5 @@
 import { useState, useEffect, useCallback } from 'react';
+import { endpoints } from '../config/api';
 
 export const useInvoices = (shouldFetch = false) => {
   const [invoices, setInvoices] = useState([]);
@@ -15,7 +16,7 @@ export const useInvoices = (shouldFetch = false) => {
 
     setLoading(true);
     try {
-      const response = await fetch('http://localhost:3000/invoices', {
+      const response = await fetch(endpoints.invoices.base, {
         headers: {
           'Authorization': `Bearer ${token}`,
           'Content-Type': 'application/json'
@@ -44,7 +45,7 @@ export const useInvoices = (shouldFetch = false) => {
     }
 
     try {
-      const response = await fetch(`http://localhost:3000/invoices/${invoiceId}`, {
+      const response = await fetch(endpoints.invoices.byId(invoiceId), {
         method: 'DELETE',
         headers: {
           'Authorization': `Bearer ${token}`,
@@ -72,7 +73,7 @@ export const useInvoices = (shouldFetch = false) => {
     }
 
     try {
-      const response = await fetch('http://localhost:3000/invoices/bulk/delete', {
+      const response = await fetch(endpoints.invoices.bulkDelete, {
         method: 'DELETE',
         headers: {
           'Authorization': `Bearer ${token}`,
@@ -115,7 +116,7 @@ export const useInvoices = (shouldFetch = false) => {
     }
 
     try {
-      const response = await fetch('http://localhost:3000/invoices', {
+      const response = await fetch(endpoints.invoices.base, {
         method: 'POST',
         headers: {
           'Authorization': `Bearer ${token}`,

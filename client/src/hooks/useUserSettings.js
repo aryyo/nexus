@@ -1,4 +1,5 @@
 import { useState, useEffect, useCallback } from 'react';
+import { endpoints } from '../config/api';
 
 export const useUserSettings = () => {
   const [settings, setSettings] = useState(null);
@@ -14,7 +15,7 @@ export const useUserSettings = () => {
     }
 
     try {
-      const response = await fetch('http://localhost:3000/settings', {
+      const response = await fetch(endpoints.user.settings, {
         headers: {
           'Authorization': `Bearer ${token}`,
           'Content-Type': 'application/json'
@@ -43,7 +44,7 @@ export const useUserSettings = () => {
     }
 
     try {
-      const response = await fetch('http://localhost:3000/settings', {
+      const response = await fetch(endpoints.user.settings, {
         method: 'PUT',
         headers: {
           'Authorization': `Bearer ${token}`,
@@ -59,7 +60,6 @@ export const useUserSettings = () => {
 
       const updatedSettings = await response.json();
       setSettings(updatedSettings);
-      // console.log('Updated settings:', updatedSettings);
       return updatedSettings;
     } catch (err) {
       console.error('Error updating settings:', err);
@@ -75,7 +75,7 @@ export const useUserSettings = () => {
     settings,
     loading,
     error,
-    fetchSettings,
-    updateSettings
+    updateSettings,
+    fetchSettings
   };
 }; 

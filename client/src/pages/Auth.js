@@ -1,7 +1,7 @@
 import { useState } from "react";
 import "../styles/Login.css";
 import { useNavigate } from "react-router-dom";
-
+import { endpoints } from "../config/api";
 const Auth = ({ setIsLoggedIn }) => {
   const navigate = useNavigate();
   const [showPassword, setShowPassword] = useState(false);
@@ -74,7 +74,8 @@ const Auth = ({ setIsLoggedIn }) => {
     const endpoint = isSignIn ? "/login" : "/register";
 
     try {
-      const response = await fetch(`http://localhost:3000${endpoint}`, {
+      console.log(`${endpoints.auth.base}${endpoint}`);
+      const response = await fetch(`${endpoints.auth.base}${endpoint}`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

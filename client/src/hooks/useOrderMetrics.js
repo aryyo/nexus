@@ -1,5 +1,5 @@
 import { useState, useEffect, useMemo, useCallback } from 'react';
-
+import { endpoints } from '../config/api';
 export const useOrderMetrics = (shouldFetch = false) => {
   const [orders, setOrders] = useState([]);
   const [loading, setLoading] = useState(false);
@@ -15,7 +15,7 @@ export const useOrderMetrics = (shouldFetch = false) => {
 
     setLoading(true);
     try {
-      const response = await fetch("http://localhost:3000/orders", {
+      const response = await fetch(endpoints.orders.base, {
         headers: {
           'Authorization': `Bearer ${token}`,
           'Content-Type': 'application/json'
@@ -44,7 +44,7 @@ export const useOrderMetrics = (shouldFetch = false) => {
     }
 
     try {
-      const response = await fetch("http://localhost:3000/orders", {
+      const response = await fetch(endpoints.orders.base, {
         method: 'POST',
         headers: {
           'Authorization': `Bearer ${token}`,
@@ -81,7 +81,7 @@ export const useOrderMetrics = (shouldFetch = false) => {
     }
 
     try {
-      const response = await fetch("http://localhost:3000/orders/bulk-delete", {
+      const response = await fetch(endpoints.orders.bulkDelete, {
         method: 'DELETE',
         headers: {
           'Authorization': `Bearer ${token}`,
@@ -113,7 +113,7 @@ export const useOrderMetrics = (shouldFetch = false) => {
     }
 
     try {
-      const response = await fetch(`http://localhost:3000/orders/${orderId}`, {
+      const response = await fetch(endpoints.orders.byId(orderId), {
         method: 'DELETE',
         headers: {
           'Authorization': `Bearer ${token}`,
@@ -144,7 +144,7 @@ export const useOrderMetrics = (shouldFetch = false) => {
     }
 
     try {
-      const response = await fetch(`http://localhost:3000/orders/${orderId}`, {
+      const response = await fetch(endpoints.orders.byId(orderId), {
         method: 'PUT',
         headers: {
           'Authorization': `Bearer ${token}`,
