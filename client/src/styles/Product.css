@@ -267,6 +267,21 @@
   color: #dc2626;
 }
 
+[data-theme="dark"] .product-status.in-stock {
+  background-color: #16a34a;
+  color: #dcfce7;
+}
+
+[data-theme="dark"] .product-status.low-stock {
+  background-color: #ca8a04;
+  color: #fef9c3;
+}
+
+[data-theme="dark"] .product-status.out-of-stock {
+  background-color: #dc2626;
+  color: #fee2e2;
+}
+
 .product-stock {
   margin: 0;
   font-size: 0.875rem;

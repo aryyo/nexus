@@ -20,7 +20,6 @@
 .nav-left svg {
   width: 32px;
   height: 32px;
-  color: var(--primary);
 }
 
 .menu-toggle {
@@ -44,7 +43,7 @@
   color: var(--background-alt);
   background: linear-gradient(45deg, var(--primary) 0%, var(--secondary) 100%);
   border-radius: 9999px;
-  padding: 0.25rem .5rem;
+  padding: 0.25rem 1rem 0.25rem .25rem;
   display: inline-flex;
   align-items: center;
   gap: 0.5rem;

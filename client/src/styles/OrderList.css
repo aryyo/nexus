@@ -100,6 +100,31 @@
   color: #86198f;
 }
 
+[data-theme="dark"] .status-badge.success {
+  background-color: #166534;
+  color: #dcfce7;
+}
+
+[data-theme="dark"] .status-badge.warning {
+  background-color: #92400e;
+  color: #fef3c7;
+}
+
+[data-theme="dark"] .status-badge.info {
+  background-color: #1e40af;
+  color: #dbeafe;
+}
+
+[data-theme="dark"] .status-badge.shipping {
+  background-color: #0369a1;
+  color: #f0f9ff;
+}
+
+[data-theme="dark"] .status-badge.pickup {
+  background-color: #86198f;
+  color: #fdf4ff;
+}
+
 .type-badge {
   display: inline-flex;
   align-items: center;
